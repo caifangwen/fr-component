@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tailwind HTML 页面骨架解析 — 从源码中提取的完整布局模式</title>
+    <meta name="description" content="深入解析 tailwind-html 目录中 500+ 个示例文件的页面骨架设计模式，涵盖 Sidebar、Stacked、Multi-column、Marketing、E-commerce 五大类型。">
+    <style>    :root {
+        --background: #ffffff;
+        --foreground: #09090b;
+        --card: #ffffff;
+        --card-foreground: #09090b;
+        --popover: #ffffff;
+        --popover-foreground: #09090b;
+        --primary: #18181b;
+        --primary-foreground: #fafafa;
+        --secondary: #f4f4f5;
+        --secondary-foreground: #18181b;
+        --muted: #f4f4f5;
+        --muted-foreground: #a1a1aa;
+        --accent: #f4f4f5;
+        --accent-foreground: #18181b;
+        --destructive: #ef4444;
+        --destructive-foreground: #ffffff;
+        --border: #e4e4e7;
+        --input: #e4e4e7;
+        --ring: #18181b;
+        --radius: 0.75rem;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --code-bg: #18181b;
+        --code-text: #f4f4f5;
+        --sidebar-width: 260px;
+        --primary-5: rgba(24,24,27,0.05);
+        --primary-8: rgba(24,24,27,0.08);
+        --primary-10: rgba(24,24,27,0.10);
+        --primary-12: rgba(24,24,27,0.12);
+        --primary-15: rgba(24,24,27,0.15);
+        --primary-20: rgba(24,24,27,0.20);
+        --primary-30: rgba(24,24,27,0.30);
+        --success-5: rgba(16,185,129,0.05);
+        --success-15: rgba(16,185,129,0.15);
+        --warning-5: rgba(245,158,11,0.05);
+        --warning-15: rgba(245,158,11,0.15);
+        --danger-5: rgba(239,68,68,0.05);
+        --danger-15: rgba(239,68,68,0.15);
+        --shadow: 0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.07);
+        --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.08);
+    }    [data-theme="dark"] {
+        --background: #09090b;
+        --foreground: #fafafa;
+        --card: #18181b;
+        --card-foreground: #fafafa;
+        --popover: #27272a;
+        --popover-foreground: #fafafa;
+        --primary: #fafafa;
+        --primary-foreground: #18181b;
+        --secondary: #27272a;
+        --secondary-foreground: #fafafa;
+        --muted: #27272a;
+        --muted-foreground: #d4d4d8;
+        --accent: #27272a;
+        --accent-foreground: #fafafa;
+        --destructive: #ef4444;
+        --destructive-foreground: #ffffff;
+        --border: rgba(255,255,255,0.10);
+        --input: rgba(255,255,255,0.10);
+        --ring: #fafafa;
+        --success: #34d399;
+        --warning: #fbbf24;
+        --danger: #f87171;
+        --code-bg: #09090b;
+        --code-text: #f4f4f5;
+        --primary-5: rgba(250,250,250,0.05);
+        --primary-8: rgba(250,250,250,0.08);
+        --primary-10: rgba(250,250,250,0.10);
+        --primary-12: rgba(250,250,250,0.12);
+        --primary-15: rgba(250,250,250,0.15);
+        --primary-20: rgba(250,250,250,0.20);
+        --primary-30: rgba(250,250,250,0.30);
+        --success-5: rgba(52,211,153,0.05);
+        --success-15: rgba(52,211,153,0.15);
+        --warning-5: rgba(251,191,36,0.05);
+        --warning-15: rgba(251,191,36,0.15);
+        --danger-5: rgba(248,113,113,0.05);
+        --danger-15: rgba(248,113,113,0.15);
+        --shadow: 0 1px 3px 0 rgba(0,0,0,0.2);
+        --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.3);
+        --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.4);
+    }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--background);
+            color: var(--foreground);
+            line-height: 1.7;
+        }
+        .wiki-layout { display: flex; min-height: 100vh; }
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--card);
+            border-right: 1px solid var(--border);
+            padding: 28px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            top: 0; left: 0; z-index: 100;
+        }
+        .sidebar h1 { font-size: 1.15rem; color: var(--primary); margin-bottom: 6px; }
+        .sidebar .version { font-size: 0.75rem; color: var(--muted-foreground); margin-bottom: 24px; display: block; }
+        .sidebar nav ul { list-style: none; margin: 0; }
+        .sidebar nav li { margin: 4px 0; }
+        .sidebar nav a { display: block; color: var(--foreground); text-decoration: none; font-size: 0.88rem; padding: 6px 10px; border-radius: 6px; transition: background .15s, color .15s; }
+        .sidebar nav a:hover { background: var(--primary-8); color: var(--primary); }
+        .sidebar nav a.active { background: var(--primary-12); color: var(--primary); font-weight: 600; }
+        .sidebar .nav-group { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--border); }
+        .sidebar .nav-group-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); margin-bottom: 8px; padding-left: 10px; }
+        .theme-toggle {
+            margin-top: 24px; padding: 10px 12px; background: var(--background); border: 1px solid var(--border);
+            border-radius: 8px; cursor: pointer; font-size: 0.85rem; color: var(--foreground); width: 100%;
+            display: flex; align-items: center; justify-content: center; gap: 6px; transition: all .3s cubic-bezier(.4,0,.2,1);
+        }
+        .theme-toggle:hover { border-color: var(--primary); color: var(--primary); }
+        .main { margin-left: var(--sidebar-width); margin-right: var(--sidebar-width); flex: 1; max-width: 800px; padding: 48px 40px; background: var(--card); min-height: 100vh; border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+        .main h2 { font-size: 1.6rem; color: var(--primary); margin: 48px 0 20px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
+        .main h2:first-child { margin-top: 0; }
+        .main h3 { font-size: 1.2rem; color: var(--foreground); margin: 32px 0 14px; }
+        .main h4 { font-size: 1rem; color: var(--muted-foreground); margin: 22px 0 10px; font-weight: 600; }
+        .main p { margin-bottom: 14px; }
+        .main ul, .main ol { margin: 12px 0 12px 22px; }
+        .main li { margin: 6px 0; }
+        code { background: var(--primary-8); color: var(--primary); padding: 2px 6px; border-radius: 4px; font-family: "SF Mono", Monaco, "Cascadia Code", Consolas, monospace; font-size: 0.9em; }
+        pre { background: var(--code-bg); color: var(--code-text); padding: 18px 22px; border-radius: var(--radius); overflow-x: auto; margin: 16px 0; font-size: 0.88rem; line-height: 1.6; }
+        pre code { background: transparent; color: inherit; padding: 0; font-size: inherit; }
+        .callout { background: var(--primary-5); border: 1px solid var(--primary-15); border-left: 4px solid var(--primary); padding: 16px 20px; border-radius: var(--radius); margin: 18px 0; }
+        .callout.success { background: var(--success-5); border-color: var(--success-15); border-left-color: var(--success); }
+        .callout.warning { background: var(--warning-5); border-color: var(--warning-15); border-left-color: var(--warning); }
+        .callout.danger { background: var(--danger-5); border-color: var(--danger-15); border-left-color: var(--danger); }
+        .callout-title { font-weight: 600; margin-bottom: 6px; display: block; }
+        table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.92rem; }
+        th, td { border: 1px solid var(--border); padding: 10px 14px; text-align: left; }
+        th { background: var(--background); font-weight: 600; }
+        .tag { display: inline-flex; align-items: center; gap: 4px; background: var(--primary-10); color: var(--primary); font-size: 0.75rem; padding: 3px 10px; border-radius: 6px; margin-right: 4px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.03em; font-weight: 500; border: 1px solid var(--primary-20); }
+        .toc-sidebar {
+            width: var(--sidebar-width);
+            background: var(--card);
+            border-left: 1px solid var(--border);
+            padding: 28px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            top: 0; right: 0; z-index: 100;
+        }
+        .toc-sidebar h2 { font-size: 0.85rem; color: var(--primary); margin-bottom: 16px; padding-left: 10px; font-weight: 600; }
+        .toc-sidebar nav ul { list-style: none; margin: 0; }
+        .toc-sidebar nav li { margin: 4px 0; }
+        .toc-sidebar nav a { display: block; color: var(--foreground); text-decoration: none; font-size: 0.85rem; padding: 5px 10px; border-radius: 6px; transition: background .15s, color .15s; }
+        .toc-sidebar nav a:hover { background: var(--primary-8); color: var(--primary); }
+        .toc-sidebar nav a.active { background: var(--primary-12); color: var(--primary); font-weight: 600; }
+        .toc-sidebar .nav-group { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+        .toc-sidebar .nav-group:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+        .toc-sidebar .nav-group-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); margin-bottom: 8px; padding-left: 10px; }
+        .pattern-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 16px 0; }
+        .pattern-card { padding: 16px; background: var(--background); border: 1px solid var(--border); border-radius: var(--radius); }
+        .pattern-card strong { display: block; font-size: 0.95rem; margin-bottom: 6px; color: var(--primary); }
+        .pattern-card span { font-size: 0.85rem; color: var(--muted-foreground); line-height: 1.5; }
+        @media (max-width: 1200px) { .toc-sidebar { display: none; } .main { margin-right: 0; border-right: none; } }
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); transition: transform .3s; box-shadow: 2px 0 12px rgba(0,0,0,0.1); }
+            .sidebar.open { transform: translateX(0); }
+            .main { margin-left: 0; padding: 24px 20px; max-width: 100%; }
+            .menu-toggle { display: block; position: fixed; top: 14px; left: 14px; z-index: 200; background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; font-size: 1rem; cursor: pointer; }
+        }
+        @media (min-width: 901px) { .menu-toggle { display: none; } }
+    </style>
+<link rel="stylesheet" href="../fr-themes.css">
+</head>
+<body>
+<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+<div class="wiki-layout">
+    <aside class="sidebar">
+        <h1>Tailwind 骨架解析</h1>
+        <span class="version">从 500+ 示例提取布局模式</span>
+        <select class="theme-select" id="theme-select" onchange="changeTheme(this.value)" style="margin-bottom:18px;width:100%;padding:8px 10px;border-radius:6px;border:1px solid var(--border);background:var(--background);color:var(--foreground);font-size:0.85rem;">
+            <option value="">Light (Default)</option>
+            <option value="dark">Dark</option>
+            <option value="claude">Claude</option>
+            <option value="claude-dark">Claude Dark</option>
+            <option value="bumblebee">Bumblebee</option>
+            <option value="bumblebee-dark">Bumblebee Dark</option>
+            <option value="emerald">Emerald</option>
+            <option value="emerald-dark">Emerald Dark</option>
+            <option value="nord">Nord</option>
+            <option value="nord-dark">Nord Dark</option>
+            <option value="sunset">Sunset</option>
+            <option value="sunset-dark">Sunset Dark</option>
+            <option value="abyss">Abyss</option>
+            <option value="abyss-dark">Abyss Dark</option>
+            <option value="dracula">Dracula</option>
+            <option value="dracula-dark">Dracula Dark</option>
+            <option value="amethyst">Amethyst</option>
+            <option value="amethyst-dark">Amethyst Dark</option>
+            <option value="slate">Slate</option>
+            <option value="slate-dark">Slate Dark</option>
+            <option value="twitter">Twitter</option>
+            <option value="twitter-dark">Twitter Dark</option>
+        </select>
+        <nav>
+            <div class="nav-group">
+                <div class="nav-group-title">Wiki 导航</div>
+                <ul>
+                    <li><a href="../index.html">首页</a></li>
+                    <li><a href="theme-wiki.html">主题定制 Wiki</a></li>
+                    <li><a href="wiki-html-guide.html">HTML 编写指南</a></li>
+                    <li><a href="wiki-tailwind.html">Tailwind 结合使用</a></li>
+                    <li><a href="wiki-usage-guide.html">组件库使用指南</a></li>
+                    <li><a href="wiki-build-guide.html">Wiki 构建指南</a></li>
+                    <li><a href="wiki-html-tags.html">HTML 标签手册</a></li>
+                    <li><a href="wiki-tailwind-skeletons.html" class="active">Tailwind 骨架解析</a></li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+    <aside class="toc-sidebar">
+        <h2>目录</h2>
+        <nav>
+            <div class="nav-group">
+                <div class="nav-group-title">概览</div>
+                <ul>
+                    <li><a href="#overview" class="active">设计哲学与三层模型</a></li>
+                    <li><a href="#breakpoints">响应式断点策略</a></li>
+                </ul>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-title">五大骨架类型</div>
+                <ul>
+                    <li><a href="#sidebar">Sidebar 侧栏型</a></li>
+                    <li><a href="#stacked">Stacked 顶部导航型</a></li>
+                    <li><a href="#multi-column">Multi-column 多栏型</a></li>
+                    <li><a href="#marketing">Marketing 营销型</a></li>
+                    <li><a href="#ecommerce">E-commerce 电商型</a></li>
+                </ul>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-title">核心机制</div>
+                <ul>
+                    <li><a href="#layout">布局系统</a></li>
+                    <li><a href="#container">容器约束模式</a></li>
+                    <li><a href="#mobile-menu">移动端菜单</a></li>
+                    <li><a href="#color-theme">色彩与主题</a></li>
+                </ul>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-title">实战</div>
+                <ul>
+                    <li><a href="#template">最小可复用模板</a></li>
+                    <li><a href="#checklist">检查清单</a></li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+    <main class="main">
+
+        <h2 id="overview">设计哲学与三层模型</h2>
+        <p>tailwind-html 目录中收集了 500+ 个官方示例，覆盖 Application UI、Marketing、E-commerce 三大场景。尽管视觉风格千差万别，但所有完整页面都遵循同一套<strong>三层骨架模型</strong>：</p>
+
+        <div class="pattern-grid">
+            <div class="pattern-card">
+                <strong>Wrapper 层</strong>
+                <span>html/body 设置 <code>h-full</code>，根 div 控制全局背景色 <code>bg-white</code> 或 <code>bg-gray-900</code></span>
+            </div>
+            <div class="pattern-card">
+                <strong>Shell 层</strong>
+                <span>导航、侧边栏、页眉等外围结构。决定页面属于哪种骨架类型</span>
+            </div>
+            <div class="pattern-card">
+                <strong>Content 层</strong>
+                <span>main  landmark 内部的内容区块，每个区块独立使用 <code>max-w-7xl mx-auto</code> 约束</span>
+            </div>
+        </div>
+
+        <div class="callout success">
+            <span class="callout-title">核心设计原则</span>
+            <ul>
+                <li><strong>移动优先</strong>：基础样式都是移动端，桌面增强用 <code>sm: md: lg:</code> 叠加</li>
+                <li><strong>lg: 是生死线</strong>：1024px 是绝大多数布局从"移动"切换到"桌面"的唯一断点</li>
+                <li><strong>零 JavaScript</strong>：所有 HTML 文件不含任何脚本，状态切换完全依赖框架注释标注</li>
+                <li><strong>显式颜色</strong>：不使用 <code>dark:</code> 前缀，而是直接写 <code>bg-gray-900 text-white</code></li>
+                <li><strong>骨架即文档</strong>：注释里直接写明了进入/离开动画的类名变化</li>
+            </ul>
+        </div>
+
+        <h2 id="breakpoints">响应式断点策略</h2>
+        <p>Tailwind 提供了 5 个默认断点，但在这个示例库中，实际起作用的其实只有两个层级：</p>
+
+        <table>
+            <tr><th>断点</th><th>阈值</th><th>在示例库中的真实用途</th></tr>
+            <tr><td>默认</td><td>&lt; 640px</td><td>移动端基础：单列、隐藏侧边栏、堆叠导航、小字号</td></tr>
+            <tr><td><code>sm:</code></td><td>640px</td><td>两列网格开始出现（<code>sm:grid-cols-2</code>），padding 增大到 <code>sm:px-6</code></td></tr>
+            <tr><td><code>md:</code></td><td>768px</td><td>桌面导航显示（<code>md:flex</code>），移动菜单隐藏（<code>md:hidden</code>）</td></tr>
+            <tr><td><code>lg:</code></td><td>1024px</td><td><strong>布局生死线</strong>：侧边栏显现、内容偏移、多列网格激活</td></tr>
+            <tr><td><code>xl:</code></td><td>1280px</td><td>额外列出现（<code>xl:block</code> 二级侧边栏）、更宽间距</td></tr>
+        </table>
+
+        <h2 id="sidebar">Sidebar 侧栏型（管理后台）</h2>
+        <p>最典型的后台管理骨架。核心特征：<strong>桌面端固定左侧边栏，移动端变为抽屉式 off-canvas</strong>。</p>
+
+        <h3>DOM 结构</h3>
+        <pre><code>&lt;!-- 1. 移动端抽屉侧边栏（lg 以下显示） --&gt;
+&lt;div class="relative z-50 lg:hidden" role="dialog"&gt;...&lt;/div&gt;
+
+&lt;!-- 2. 桌面端固定侧边栏（lg 以上显示） --&gt;
+&lt;div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col"&gt;...&lt;/div&gt;
+
+&lt;!-- 3. 可选：移动端顶部 sticky 标题栏 --&gt;
+&lt;div class="sticky top-0 z-40 flex items-center gap-x-6 ... lg:hidden"&gt;...&lt;/div&gt;
+
+&lt;!-- 4. 主内容区，lg 以上左偏移为侧边栏让位 --&gt;
+&lt;main class="py-10 lg:pl-72"&gt;
+  &lt;div class="px-4 sm:px-6 lg:px-8"&gt;...&lt;/div&gt;
+&lt;/main&gt;</code></pre>
+
+        <div class="callout warning">
+            <span class="callout-title">关键发现：侧边栏是双份的</span>
+            <p>同一个侧边栏的 markup 在 DOM 中出现两次——一次给移动端（带 backdrop 和滑入动画），一次给桌面端（固定列）。这不是代码重复，而是<strong>响应式隔离策略</strong>：通过 <code>lg:hidden</code> 和 <code>hidden lg:flex</code> 互斥显示，避免用 JS 操作 DOM。</p>
+        </div>
+
+        <h3>移动端抽屉的实现细节</h3>
+        <pre><code>&lt;!-- Backdrop --&gt;
+&lt;div class="fixed inset-0 bg-gray-900/80" aria-hidden="true"&gt;&lt;/div&gt;
+
+&lt;!-- Slide-over panel --&gt;
+&lt;div class="fixed inset-0 flex"&gt;
+  &lt;div class="relative mr-16 flex w-full max-w-xs flex-1"&gt;
+    &lt;!-- 侧边栏内容 --&gt;
+  &lt;/div&gt;
+  &lt;!-- 关闭按钮在面板外 --&gt;
+  &lt;div class="absolute top-0 left-full flex w-16 justify-center pt-5"&gt;
+    &lt;button type="button" class="-m-2.5 p-2.5"&gt;...&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+        <h2 id="stacked">Stacked 顶部导航型</h2>
+        <p>最常见的网站顶部导航模式，适合内容型网站、文档站、Landing Page。特征是一个水平导航条 + 下方堆叠的内容区。</p>
+
+        <h3>DOM 结构</h3>
+        <pre><code>&lt;div class="min-h-full"&gt;
+  &lt;nav class="border-b border-gray-200 bg-white"&gt;
+    &lt;div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"&gt;
+      &lt;div class="flex h-16 justify-between"&gt;
+        &lt;!-- Logo + 桌面链接 --&gt;
+        &lt;!-- 移动端菜单按钮 --&gt;
+        &lt;!-- 头像/下拉菜单 --&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;!-- 移动端展开面板：sm:hidden --&gt;
+  &lt;/nav&gt;
+
+  &lt;div class="py-10"&gt;
+    &lt;header&gt;...&lt;/header&gt;
+    &lt;main&gt;
+      &lt;div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8"&gt;
+        &lt;!-- 内容 --&gt;
+      &lt;/div&gt;
+    &lt;/main&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+        <h3>与 Sidebar 型的本质区别</h3>
+        <table>
+            <tr><th>维度</th><th>Sidebar 型</th><th>Stacked 型</th></tr>
+            <tr><td>导航位置</td><td>左侧固定列</td><td>顶部水平条</td></tr>
+            <tr><td>内容偏移</td><td><code>lg:pl-72</code></td><td>无偏移，全宽或居中</td></tr>
+            <tr><td>移动端</td><td>抽屉式侧边栏</td><td>汉堡菜单展开面板</td></tr>
+            <tr><td>适用场景</td><td>管理后台、SaaS 应用</td><td>官网、文档站、博客</td></tr>
+        </table>
+
+        <h2 id="multi-column">Multi-column 多栏型</h2>
+        <p>在 Sidebar 基础上增加二级侧边栏或三列布局，常用于邮件客户端、聊天应用、文档站（左导航 + 右目录）。</p>
+
+        <h3>三列布局的偏移叠加</h3>
+        <pre><code>&lt;!-- 一级侧边栏 --&gt;
+&lt;div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72"&gt;...&lt;/div&gt;
+
+&lt;!-- 二级侧边栏（仅在 xl 显示） --&gt;
+&lt;aside class="hidden xl:fixed xl:inset-y-0 xl:left-72 xl:z-50 xl:block xl:w-96"&gt;...&lt;/aside&gt;
+
+&lt;!-- 主内容：同时承受两级偏移 --&gt;
+&lt;main class="lg:pl-72"&gt;
+  &lt;div class="xl:pl-96"&gt;
+    &lt;div class="px-4 py-10 sm:px-6 lg:px-8 lg:py-6"&gt;...&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/main&gt;</code></pre>
+
+        <div class="callout success">
+            <span class="callout-title">偏移叠加的精妙之处</span>
+            <p>主内容区不直接写死总宽度，而是<strong>逐级继承</strong>：<code>lg:pl-72</code> 应对一级侧边栏，<code>xl:pl-96</code> 在 lg 基础上再叠加二级侧边栏。这样当屏幕从 xl 缩回 lg 时，二级侧边栏自动隐藏，内容区只保留一级偏移，无需额外逻辑。</p>
+        </div>
+
+        <h2 id="marketing">Marketing 营销型</h2>
+        <p>特点是<strong>视觉冲击力优先</strong>，常见 Hero 大图、渐变背景、绝对定位的导航覆盖在内容之上。</p>
+
+        <h3>DOM 结构</h3>
+        <pre><code>&lt;div class="bg-gray-900"&gt;
+  &lt;header class="absolute inset-x-0 top-0 z-50"&gt;
+    &lt;nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global"&gt;
+      &lt;!-- Logo --&gt;
+      &lt;!-- 桌面链接（hidden lg:flex） --&gt;
+      &lt;!-- 移动端汉堡按钮（lg:hidden） --&gt;
+    &lt;/nav&gt;
+    &lt;!-- 移动端 slide-over 菜单 --&gt;
+  &lt;/header&gt;
+
+  &lt;main&gt;
+    &lt;!-- Hero 区域 --&gt;
+    &lt;div class="relative isolate pt-14"&gt;...&lt;/div&gt;
+
+    &lt;!-- Feature 区域 --&gt;
+    &lt;div class="overflow-hidden bg-white py-24 sm:py-32"&gt;...&lt;/div&gt;
+
+    &lt;!-- Testimonials --&gt;
+    &lt;!-- Pricing --&gt;
+    &lt;!-- FAQ --&gt;
+  &lt;/main&gt;
+
+  &lt;footer&gt;...&lt;/footer&gt;
+&lt;/div&gt;</code></pre>
+
+        <h3>营销页的独特模式</h3>
+        <ul>
+            <li><strong>绝对定位导航</strong>：<code>absolute inset-x-0 top-0 z-50</code> 让导航悬浮在 Hero 之上，不占文档流</li>
+            <li><strong>Section 级背景切换</strong>：每个大区块独立设置 <code>bg-white</code> 或 <code>bg-gray-900</code>，形成强烈的明暗节奏</li>
+            <li><strong>超大间距</strong>：营销页使用 <code>py-24 sm:py-32</code> 甚至 <code>mt-16 sm:mt-32 lg:mt-56</code> 制造呼吸感</li>
+            <li><strong>装饰性元素</strong>：大量使用 <code>relative isolate</code> + 绝对定位的模糊色块（<code>blur-3xl</code>）作为背景装饰</li>
+        </ul>
+
+        <h2 id="ecommerce">E-commerce 电商型</h2>
+        <p>最复杂的骨架类型，特征是<strong>巨型移动端菜单</strong>、<strong>flyout 桌面导航</strong>、<strong>筛选+网格+分页</strong>的三段式内容结构。</p>
+
+        <h3>DOM 结构</h3>
+        <pre><code>&lt;div class="bg-white"&gt;
+  &lt;!-- 1. 巨型移动端 mega-menu（lg:hidden） --&gt;
+  &lt;div class="relative z-40 lg:hidden" role="dialog"&gt;...&lt;/div&gt;
+
+  &lt;!-- 2. 桌面端 header + flyout 菜单 --&gt;
+  &lt;header class="relative bg-white"&gt;
+    &lt;nav aria-label="Top" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"&gt;
+      &lt;!-- 促销条 --&gt;
+      &lt;!-- Logo + 分类 flyout + 搜索 + 账户/购物车 --&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+
+  &lt;main class="pb-24"&gt;
+    &lt;!-- 页面标题 + 面包屑 --&gt;
+    &lt;!-- 筛选栏（移动端为底部 sheet，桌面为左侧 sidebar） --&gt;
+    &lt;!-- 产品网格 --&gt;
+    &lt;!-- 分页 --&gt;
+  &lt;/main&gt;
+
+  &lt;footer&gt;...&lt;/footer&gt;
+&lt;/div&gt;</code></pre>
+
+        <h3>电商骨架的独特设计</h3>
+        <table>
+            <tr><th>特征</th><th>实现方式</th></tr>
+            <tr><td>分类 flyout</td><td>桌面端 hover 触发的大面板（<code>group</code> + <code>group-hover:block</code>），包含图片和子分类链接</td></tr>
+            <tr><td>移动筛选</td><td>底部固定 sheet 或全屏 modal，而桌面是左侧 sticky 筛选栏</td></tr>
+            <tr><td>产品网格</td><td><code>grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4</code>，带 <code>border-l border-t</code> 的细线分隔</td></tr>
+            <tr><td>购物车</td><td>右侧 slide-over（与 sidebar 移动端相同的模式），backdrop + 固定面板</td></tr>
+        </table>
+
+        <h2 id="layout">布局系统：Flexbox vs Grid</h2>
+        <p>整个示例库中，Flexbox 和 Grid 的分工极其明确，几乎从不混用：</p>
+
+        <table>
+            <tr><th>工具</th><th>用途</th><th>典型类名</th></tr>
+            <tr><td><strong>Flexbox</strong></td><td>一维排列：导航条、侧边栏内部堆叠、header 元素对齐</td><td><code>flex justify-between items-center gap-x-4</code></td></tr>
+            <tr><td><strong>Grid</strong></td><td>二维排列：产品网格、定价卡片、footer 多列、feature 区块</td><td><code>grid grid-cols-1 lg:grid-cols-3 gap-8</code></td></tr>
+            <tr><td><strong>Block + mx-auto</strong></td><td>单列居中：内容容器、文字区块</td><td><code>mx-auto max-w-7xl px-4</code></td></tr>
+        </table>
+
+        <h3>常见 Grid 模式</h3>
+        <pre><code>&lt;!-- 定价三列 --&gt;
+&lt;div class="grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3"&gt;...&lt;/div&gt;
+
+&lt;!-- 产品四列（带边框细线） --&gt;
+&lt;div class="grid grid-cols-2 border-l border-gray-200 sm:mx-0 md:grid-cols-3 lg:grid-cols-4"&gt;...&lt;/div&gt;
+
+&lt;!-- 详情页：主内容 + 右侧边栏 --&gt;
+&lt;div class="grid max-w-2xl grid-cols-1 items-start gap-x-8 gap-y-8 lg:mx-0 lg:max-w-none lg:grid-cols-3"&gt;...&lt;/div&gt;
+
+&lt;!-- Footer 多列 --&gt;
+&lt;div class="grid grid-cols-2 gap-8 border-t border-gray-200 py-20 sm:grid-cols-2 lg:grid-cols-4"&gt;...&lt;/div&gt;</code></pre>
+
+        <h2 id="container">容器约束模式</h2>
+        <p>如果你只能记住一组类名，必须是这个：</p>
+
+        <div class="callout success">
+            <span class="callout-title">黄金公式</span>
+            <pre style="margin:0"><code>mx-auto max-w-7xl px-4 sm:px-6 lg:px-8</code></pre>
+        </div>
+
+        <p>这个组合出现在 <strong>90% 以上的示例中</strong>，是每个内容区块的标配：</p>
+        <ul>
+            <li><code>mx-auto</code>：水平居中</li>
+            <li><code>max-w-7xl</code>：最大宽度 1280px，防止在大屏上过度拉伸</li>
+            <li><code>px-4</code>：移动端 16px 内边距</li>
+            <li><code>sm:px-6</code>：640px 以上增加到 24px</li>
+            <li><code>lg:px-8</code>：1024px 以上增加到 32px</li>
+        </ul>
+
+        <h3>容器宽度变体</h3>
+        <table>
+            <tr><th>类名</th><th>宽度</th><th>使用场景</th></tr>
+            <tr><td><code>max-w-7xl</code></td><td>1280px</td><td>默认全内容容器，出现频率最高</td></tr>
+            <tr><td><code>max-w-4xl</code></td><td>896px</td><td>中等宽度区块（定价介绍、文章正文）</td></tr>
+            <tr><td><code>max-w-2xl</code></td><td>672px</td><td>窄内容（标题介绍、表单、博客文章）</td></tr>
+            <tr><td><code>max-w-lg</code></td><td>512px</td><td>登录框、小卡片组</td></tr>
+        </table>
+
+        <h2 id="mobile-menu">移动端菜单：无 JS 哲学</h2>
+        <p>这是 tailwind-html 示例库最独特的设计决策：<strong>所有 HTML 文件都是纯静态模板，不含任何 JavaScript</strong>。</p>
+
+        <h3>状态通过注释标注</h3>
+        <pre><code>&lt;!-- 菜单状态注释 --&gt;
+&lt;!-- Menu open: "hidden", Menu closed: "block" --&gt;
+&lt;svg class="block size-6"&gt;...&lt;/svg&gt;  &lt;!-- 汉堡图标 --&gt;
+
+&lt;!-- Menu open: "block", Menu closed: "hidden" --&gt;
+&lt;svg class="hidden size-6"&gt;...&lt;/svg&gt;  &lt;!-- 关闭图标 --&gt;
+
+&lt;!-- Mobile menu, show/hide based on menu state. --&gt;
+&lt;div class="sm:hidden" id="mobile-menu"&gt;...&lt;/div&gt;</code></pre>
+
+        <h3>抽屉动画注释</h3>
+        <pre><code>&lt;!--
+  Off-canvas menu, show/hide based on off-canvas menu state.
+
+  Entering:
+    "transition ease-in-out duration-300 transform"
+    From: "-translate-x-full"
+    To: "translate-x-0"
+
+  Leaving:
+    "transition ease-in-out duration-300 transform"
+    From: "translate-x-0"
+    To: "-translate-x-full"
+--&gt;</code></pre>
+
+        <div class="callout warning">
+            <span class="callout-title">这意味着什么？</span>
+            <p>这些模板不是"开箱即用"的交互页面，而是<strong>框架集成蓝图</strong>。你需要在 React/Vue/Angular/Alpine 中维护一个状态变量（如 <code>mobileMenuOpen</code>），然后条件渲染对应的类名。这种设计让模板可以跨框架复用，但也要求开发者理解其背后的状态逻辑。</p>
+        </div>
+
+        <h2 id="color-theme">色彩与主题</h2>
+        <p>tailwind-html 示例库<strong>完全不使用 Tailwind 的 <code>dark:</code> 变体前缀</strong>，而是采用"显式颜色 + 独立文件"的策略：</p>
+
+        <table>
+            <tr><th>主题策略</th><th>实现方式</th><th>示例文件</th></tr>
+            <tr><td>浅色默认</td><td><code>bg-white</code> + <code>text-gray-900</code></td><td><code>light_sidebar.html</code></td></tr>
+            <tr><td>深色侧边栏</td><td>仅侧边栏 <code>bg-gray-900</code>，内容区仍白</td><td><code>dark_sidebar.html</code></td></tr>
+            <tr><td>全深色页</td><td>根 wrapper <code>bg-gray-900</code>，全局浅色文字</td><td>营销页的 dark hero</td></tr>
+            <tr><td>明暗交替</td><td>Section 级背景切换，无全局主题</td><td>带大图 hero + 白色 pricing</td></tr>
+        </table>
+
+        <h3>色彩使用规律</h3>
+        <pre><code>&lt;!-- 主行动按钮（浅色背景页） --&gt;
+&lt;a href="#" class="bg-indigo-600 text-white hover:bg-indigo-500"&gt;...&lt;/a&gt;
+
+&lt;!-- 主行动按钮（深色背景页） --&gt;
+&lt;a href="#" class="bg-indigo-500 text-white hover:bg-indigo-400"&gt;...&lt;/a&gt;
+
+&lt;!-- 深色页边框 --&gt;
+&lt;div class="border-white/10"&gt;...&lt;/div&gt;
+
+&lt;!-- 浅色页边框 --&gt;
+&lt;div class="border-gray-200"&gt;...&lt;/div&gt;</code></pre>
+
+        <h2 id="template">最小可复用模板</h2>
+        <p>基于上述分析，这里提供一个可以直接套用的通用骨架：</p>
+
+        <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN" class="h-full"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;页面标题&lt;/title&gt;
+  &lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body class="h-full bg-white"&gt;
+
+  &lt;!-- ====== Stacked 导航（可替换为 Sidebar） ====== --&gt;
+  &lt;nav class="border-b border-gray-200 bg-white"&gt;
+    &lt;div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"&gt;
+      &lt;div class="flex h-16 justify-between"&gt;
+        &lt;div class="flex items-center"&gt;
+          &lt;!-- Logo --&gt;
+          &lt;div class="shrink-0 text-xl font-bold"&gt;Brand&lt;/div&gt;
+          &lt;!-- 桌面导航（hidden md:flex） --&gt;
+          &lt;div class="hidden md:ml-6 md:flex md:space-x-8"&gt;...&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;!-- 移动端菜单按钮（md:hidden） --&gt;
+        &lt;div class="flex items-center md:hidden"&gt;...&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/nav&gt;
+
+  &lt;!-- ====== 主内容区 ====== --&gt;
+  &lt;main&gt;
+    &lt;!-- Section 1: Hero --&gt;
+    &lt;section class="bg-white py-24 sm:py-32"&gt;
+      &lt;div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"&gt;
+        &lt;h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl"&gt;
+          主标题
+        &lt;/h1&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;!-- Section 2: Features（Grid） --&gt;
+    &lt;section class="bg-gray-50 py-24 sm:py-32"&gt;
+      &lt;div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"&gt;
+        &lt;div class="grid grid-cols-1 gap-8 lg:grid-cols-3"&gt;
+          &lt;div&gt;Feature 1&lt;/div&gt;
+          &lt;div&gt;Feature 2&lt;/div&gt;
+          &lt;div&gt;Feature 3&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+
+  &lt;!-- ====== Footer ====== --&gt;
+  &lt;footer class="bg-white"&gt;
+    &lt;div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8"&gt;
+      &lt;p class="text-center text-sm text-gray-500"&gt;© 2026&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/footer&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+        <h2 id="checklist">检查清单</h2>
+        <p>基于 tailwind-html 示例库的规律，创建新页面时逐项确认：</p>
+        <ul>
+            <li><code>&lt;html class="h-full"&gt;</code> 和 <code>&lt;body class="h-full"&gt;</code> 已设置</li>
+            <li>根 wrapper 已设置背景色 <code>bg-white</code> 或 <code>bg-gray-900</code></li>
+            <li>每个内容区块都有独立的 <code>mx-auto max-w-7xl px-4 sm:px-6 lg:px-8</code></li>
+            <li>移动端和桌面端的导航/侧边栏是两套独立的 markup，通过 <code>lg:hidden / hidden lg:flex</code> 切换</li>
+            <li>布局切换的关键断点是 <code>lg:</code>（1024px）</li>
+            <li>主内容使用了 <code>&lt;main&gt;</code> landmark</li>
+            <li>所有交互状态通过 HTML 注释标注，而非内联 JS</li>
+            <li>深色模式不依赖 <code>dark:</code> 前缀，而是显式声明颜色类</li>
+            <li>移动端菜单有 backdrop（<code>bg-gray-900/80</code>）和关闭按钮</li>
+            <li>Footer 使用 Grid 进行多列布局，并在移动端自动折叠</li>
+        </ul>
+
+        <div class="callout success">
+            <span class="callout-title">最终建议</span>
+            <p>tailwind-html 的设计哲学是<strong>"骨架即文档"</strong>。每个 HTML 文件不仅是视觉模板，更是一份关于状态、动画、响应式行为的完整规范。你的框架代码只需要翻译这些注释中的状态描述即可。</p>
+        </div>
+
+    </main>
+</div>
+
+<script>
+    const html = document.documentElement;
+    const themeSelect = document.getElementById('theme-select');
+    function applyTheme(theme) {
+        if (theme && theme !== 'light') { html.setAttribute('data-theme', theme); }
+        else { html.removeAttribute('data-theme'); }
+        if (themeSelect) themeSelect.value = theme || '';
+    }
+    function changeTheme(theme) { applyTheme(theme); localStorage.setItem('theme', theme); }
+    const saved = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(saved || (prefersDark ? 'dark' : ''));
+    const links = document.querySelectorAll('.toc-sidebar nav a');
+    const sections = document.querySelectorAll('.main h2[id]');
+    function onScroll() { let cur = ''; sections.forEach(s => { if (s.getBoundingClientRect().top <= 120) cur = s.getAttribute('id'); }); links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + cur)); }
+    window.addEventListener('scroll', onScroll); onScroll();
+    links.forEach(l => l.addEventListener('click', () => document.querySelector('.sidebar').classList.remove('open')));
+</script>
+
+</body>
+</html>
