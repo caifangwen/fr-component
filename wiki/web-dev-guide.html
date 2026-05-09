@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML / CSS / JS 高效编辑与管理完全指南</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --code-bg: #0f172a;
+            --code-text: #e2e8f0;
+            --success: #059669;
+            --warning: #d97706;
+            --danger: #dc2626;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            margin-bottom: 40px;
+        }
+        header h1 { font-size: 2.2rem; margin-bottom: 12px; }
+        header p { opacity: 0.9; font-size: 1.1rem; }
+        nav.toc {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 24px 28px;
+            margin-bottom: 32px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid var(--border);
+        }
+        nav.toc h2 { font-size: 1.1rem; margin-bottom: 14px; color: var(--primary); }
+        nav.toc ul { list-style: none; }
+        nav.toc li { margin: 8px 0; }
+        nav.toc a { color: var(--text); text-decoration: none; font-size: 0.95rem; }
+        nav.toc a:hover { color: var(--primary); }
+        nav.toc a::before { content: "→ "; color: var(--primary); }
+        section {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 28px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+        }
+        section h2 {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border);
+        }
+        section h3 {
+            font-size: 1.15rem;
+            color: var(--text);
+            margin: 24px 0 12px;
+        }
+        section h4 {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin: 18px 0 10px;
+            font-weight: 600;
+        }
+        p { margin-bottom: 14px; }
+        ul, ol { margin: 12px 0 12px 22px; }
+        li { margin: 6px 0; }
+        code {
+            background: #f1f5f9;
+            color: var(--primary-dark);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: "SF Mono", Monaco, "Cascadia Code", Consolas, monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 18px 22px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 16px 0;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        pre code {
+            background: transparent;
+            color: inherit;
+            padding: 0;
+            font-size: inherit;
+        }
+        /* Prism 覆盖：保持 token 高亮色，但容器样式跟随页面 */
+        pre[class*="language-"] {
+            background: var(--code-bg);
+            border-radius: 10px;
+            padding: 18px 22px;
+            margin: 16px 0;
+        }
+        pre[class*="language-"] > code[class*="language-"] {
+            background: none;
+            text-shadow: none;
+        }
+        .highlight {
+            background: #eff6ff;
+            border-left: 4px solid var(--primary);
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 16px 0;
+        }
+        .warning {
+            background: #fffbeb;
+            border-left-color: var(--warning);
+        }
+        .success {
+            background: #ecfdf5;
+            border-left-color: var(--success);
+        }
+        .danger {
+            background: #fef2f2;
+            border-left-color: var(--danger);
+        }
+        .tag {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            font-size: 0.75rem;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.95rem;
+        }
+        th, td {
+            border: 1px solid var(--border);
+            padding: 12px 14px;
+            text-align: left;
+        }
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 640px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            header h1 { font-size: 1.6rem; }
+        }
+        .prompt-box {
+            background: #f0fdf4;
+            border: 1px dashed var(--success);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 14px 0;
+        }
+        .prompt-box strong { color: var(--success); }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>HTML / CSS / JS 高效编辑与管理完全指南</h1>
+    <p>从编辑器选择、AI 提示词工程、CSS 架构到 WordPress 集成的实战手册</p>
+</header>
+
+<div class="container">
+
+<nav class="toc">
+    <h2>📑 目录导航</h2>
+    <ul>
+        <li><a href="#edit-html">一、怎样编辑 HTML 比较方便</a></li>
+        <li><a href="#ai-prompt">二、怎样提示 AI 修改 HTML 最省资源</a></li>
+        <li><a href="#css-manage">三、CSS 文件管理与内联样式处理</a></li>
+        <li><a href="#master">四、熟练掌握原生三件套需要什么</a></li>
+        <li><a href="#wordpress">五、在 WordPress 中插入代码片段</a></li>
+        <li><a href="#ai-workflow">六、AI 辅助修改内容代码的工作流</a></li>
+    </ul>
+</nav>
+
+<!-- ==================== 第一部分 ==================== -->
+<section id="edit-html">
+    <h2>一、怎样编辑 HTML 比较方便</h2>
+
+    <h3>1.1 编辑器选择</h3>
+    <table>
+        <tr><th>编辑器</th><th>适用场景</th><th>核心优势</th></tr>
+        <tr><td><strong>VS Code</strong></td><td>日常开发、项目级工作</td><td>Emmet 内置、插件生态最强、Git 集成</td></tr>
+        <tr><td><strong>Sublime Text</strong></td><td>快速打开大文件</td><td>启动极速、资源占用低、多光标编辑</td></tr>
+        <tr><td><strong>Cursor / Windsurf</strong></td><td>AI 辅助编程</td><td>原生 AI 内联、代码生成、聊天式编辑</td></tr>
+        <tr><td><strong>CodePen / JSFiddle</strong></td><td>快速原型验证</td><td>实时预览、分享链接、零配置</td></tr>
+    </table>
+
+    <h3>1.2 必装插件与配置（VS Code）</h3>
+    <ul>
+        <li><strong>Emmet</strong>：已内置。输入 <code>div.container&gt;ul&gt;li*5</code> 按 Tab 即可展开完整结构。</li>
+        <li><strong>Auto Rename Tag</strong>：修改开始标签时自动同步结束标签。</li>
+        <li><strong>Live Server</strong>：本地实时刷新浏览器，保存即刷新。</li>
+        <li><strong>Prettier</strong>：统一格式化，避免缩进混乱。</li>
+        <li><strong>IntelliSense for CSS class names</strong>：自动提示已定义的 class。</li>
+    </ul>
+
+    <div class="highlight success">
+        <strong>💡 效率技巧：</strong>VS Code 按 <code>Ctrl + D</code> 选中下一个相同词，<code>Alt + 点击</code> 多光标同时编辑，<code>Ctrl + Shift + L</code> 选中所有匹配项。
+    </div>
+
+    <h3>1.3  Emmet 速查（节省时间 50% 以上）</h3>
+    <pre><code class="language-html">/* 基础结构 */
+header#top&gt;nav&gt;ul&gt;li*4&gt;a{链接 $}
+
+/* 展开为 */
+&lt;header id="top"&gt;
+  &lt;nav&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=""&gt;链接 1&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=""&gt;链接 2&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=""&gt;链接 3&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=""&gt;链接 4&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;
+
+/* 带属性的图片网格 */
+section.gallery&gt;img[src="img/$.jpg" alt="图片 $"]*9
+
+/*  siblings 与分组 */
+(main&gt;article*2&gt;h2+p)+(aside&gt;div.widget*3)</code></pre>
+
+    <h3>1.4 浏览器开发者工具</h3>
+    <p>按 <code>F12</code> 打开 DevTools，最实用的面板：</p>
+    <ul>
+        <li><strong>Elements</strong>：实时编辑 HTML/CSS，所见即所得，改完再复制回代码。</li>
+        <li><strong>Console</strong>：测试 JavaScript 片段，<code>$0</code> 引用当前选中元素。</li>
+        <li><strong>Network</strong>：查看 CSS/JS 文件是否加载、体积大小、缓存状态。</li>
+        <li><strong>Device Toolbar</strong>（<code>Ctrl+Shift+M</code>）：模拟手机、平板响应式布局。</li>
+    </ul>
+</section>
+
+<!-- ==================== 第二部分 ==================== -->
+<section id="ai-prompt">
+    <h2>二、怎样提示 AI 修改 HTML 最省资源</h2>
+
+    <h3>2.1 核心原则：上下文最小化</h3>
+    <p>AI 按 token 计费，发送冗余内容既浪费钱又降低精度。<strong>只发送需要改的部分，而非整个文件。</strong></p>
+
+    <h3>2.2 高效 Prompt 结构（推荐模板）</h3>
+    <div class="prompt-box">
+        <strong>角色设定 + 上下文 + 具体指令 + 输出格式</strong><br><br>
+        你是一个前端开发专家。请修改以下 HTML 片段：<br>
+        【粘贴 20-50 行需要修改的代码】<br><br>
+        要求：<br>
+        1. 将卡片布局改为 CSS Grid，3 列响应式；<br>
+        2. 图片添加懒加载属性；<br>
+        3. 不要改动任何 class 名称；<br>
+        4. 只返回修改后的 HTML 代码块，无需解释。
+    </div>
+
+    <h3>2.3 节省 Token 的具体技巧</h3>
+    <table>
+        <tr><th>低效做法</th><th>高效做法</th><th>节省估算</th></tr>
+        <tr>
+            <td>发送整个 500 行 HTML 文件</td>
+            <td>只发送相关 30 行，用注释标记修改位置</td>
+            <td>~80%</td>
+        </tr>
+        <tr>
+            <td>"帮我看看这个网页有什么问题"</td>
+            <td>"以下导航栏在 Safari 下错位，只返回修正后的 CSS"</td>
+            <td>~60%</td>
+        </tr>
+        <tr>
+            <td>让 AI 从零写完整页面</td>
+            <td>提供组件模板，让 AI 填充内容/变体</td>
+            <td>~70%</td>
+        </tr>
+        <tr>
+            <td>重复粘贴相同的 CSS 变量</td>
+            <td>"使用项目已有的 :root 变量，不重新定义"</td>
+            <td>~30%</td>
+        </tr>
+    </table>
+
+    <h3>2.4 标记法：精确定位修改点</h3>
+    <p>在代码中用特殊注释包裹需要 AI 处理的区域：</p>
+    <pre><code class="language-html">&lt;!-- AI-MODIFY-START --&gt;
+&lt;div class="old-card"&gt;
+  &lt;h2&gt;标题&lt;/h2&gt;
+  &lt;p&gt;描述文字&lt;/p&gt;
+&lt;/div&gt;
+&lt;!-- AI-MODIFY-END --&gt;
+
+&lt;!-- 提示词：请将 AI-MODIFY 区域内的代码转换为 article 语义标签，
+     并添加 schema.org 的 Article 结构化数据，其余部分保持原样。 --&gt;</code></pre>
+
+    <div class="highlight warning">
+        <strong>⚠️ 避免陷阱：</strong>不要一次给 AI 太多任务（超过 3 个独立修改点）。分批处理，每轮只聚焦一个目标，出错率显著降低。
+    </div>
+
+    <h3>2.5 让 AI " diff 模式 "输出</h3>
+    <p>如果只需要小改动，要求 AI 以 diff 格式返回，再手动应用：</p>
+    <pre><code class="language-text">请以下列格式输出修改：
+- 删除的行前缀：-
++ 新增的行前缀：+
+未改行不输出</code></pre>
+</section>
+
+<!-- ==================== 第三部分 ==================== -->
+<section id="css-manage">
+    <h2>三、CSS 文件管理与内联样式处理</h2>
+
+    <h3>3.1 CSS 文件组织策略</h3>
+
+    <h4>方案 A：单文件小型项目（推荐 &lt; 500 行）</h4>
+    <pre><code class="language-text">styles.css          /* 唯一样式表 */
+  ├── CSS Variables (:root)
+  ├── Reset / Normalize
+  ├── Utility classes
+  ├── Layout (header, footer, sidebar)
+  ├── Components (buttons, cards, forms)
+  └── Media Queries (放在底部或紧跟组件)</code></pre>
+
+    <h4>方案 B：多文件中型项目</h4>
+    <pre><code class="language-text">css/
+  ├── base/
+  │   ├── reset.css       /* 清除默认样式 */
+  │   ├── variables.css   /* 颜色、间距、字体变量 */
+  │   └── typography.css  /* 标题、段落、链接 */
+  ├── layout/
+  │   ├── grid.css        /* 网格系统 */
+  │   ├── header.css
+  │   └── footer.css
+  ├── components/
+  │   ├── buttons.css
+  │   ├── cards.css
+  │   └── forms.css
+  ├── pages/
+  │   ├── home.css        /* 仅首页需要的特殊样式 */
+  │   └── article.css
+  └── main.css            /* @import 或构建工具合并 */</code></pre>
+
+    <h4>方案 C：WordPress / 无构建工具场景</h4>
+    <pre><code class="language-text">assets/
+  ├── css/
+  │   ├── global.css      /* 全站通用：排版、工具类 */
+  │   ├── header.css      /* 导航、页头 */
+  │   ├── content.css     /* 文章正文样式 */
+  │   └── components.css  /* 按钮、卡片等复用组件 */
+  └── js/
+      └── main.js</code></pre>
+
+    <h3>3.2 CSS 变量系统（设计令牌）</h3>
+    <pre><code class="language-css">:root {
+  /* 颜色 */
+  --color-primary: #2563eb;
+  --color-primary-dark: #1d4ed8;
+  --color-text: #1e293b;
+  --color-text-light: #64748b;
+  --color-bg: #f8fafc;
+  --color-surface: #ffffff;
+  --color-border: #e2e8f0;
+
+  /* 间距 */
+  --space-xs: 0.25rem;   /* 4px  */
+  --space-sm: 0.5rem;    /* 8px  */
+  --space-md: 1rem;      /* 16px */
+  --space-lg: 1.5rem;    /* 24px */
+  --space-xl: 2rem;      /* 32px */
+
+  /* 字体 */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "SF Mono", Monaco, Consolas, monospace;
+
+  /* 圆角与阴影 */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+}</code></pre>
+
+    <div class="highlight success">
+        <strong>✅ 好处：</strong>AI 修改时只需引用变量名，不会出现"把蓝色改成另一种蓝色"的歧义。提示词里写"使用 --color-primary"比描述颜色精确得多。
+    </div>
+
+    <h3>3.3 内联样式（style 属性）处理策略</h3>
+
+    <table>
+        <tr><th>场景</th><th>处理方式</th><th>示例</th></tr>
+        <tr>
+            <td>完全静态样式</td>
+            <td><strong>必须移入 CSS 文件</strong></td>
+            <td><code>&lt;div style="color:red"&gt;</code> → <code>.alert { color: red; }</code></td>
+        </tr>
+        <tr>
+            <td>动态计算值（JS）</td>
+            <td>用 JS 修改 style 属性</td>
+            <td><code>el.style.width = computedValue + 'px'</code></td>
+        </tr>
+        <tr>
+            <td>仅个别元素微调</td>
+            <td>使用 Utility class</td>
+            <td><code>&lt;div class="mt-0"&gt;</code>（margin-top: 0）</td>
+        </tr>
+        <tr>
+            <td>第三方嵌入代码</td>
+            <td>保留但用 !important 覆盖</td>
+            <td><code>.my-widget { width: 100% !important; }</code></td>
+        </tr>
+    </table>
+
+    <div class="highlight danger">
+        <strong>🚫 绝对避免：</strong>内联样式难以被 AI 批量修改、无法响应媒体查询、增加 HTML 体积、不利于缓存。WordPress 古腾堡块常生成内联样式，建议通过主题 CSS 覆盖。
+    </div>
+
+    <h3>3.4 Utility Class 设计（不依赖框架）</h3>
+    <pre><code class="language-css">/* 小型项目自己维护一套 utility，比引入 Tailwind 更轻 */
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: var(--space-sm); }
+.mt-2 { margin-top: var(--space-md); }
+.text-center { text-align: center; }
+.flex { display: flex; }
+.gap-2 { gap: var(--space-md); }
+.rounded { border-radius: var(--radius-md); }</code></pre>
+</section>
+
+<!-- ==================== 第四部分 ==================== -->
+<section id="master">
+    <h2>四、熟练掌握原生三件套需要什么（内容层面）</h2>
+
+    <h3>4.1 HTML：语义与结构</h3>
+    <div class="grid-2">
+        <div>
+            <strong>必须掌握：</strong>
+            <ul>
+                <li>语义标签：article, section, nav, aside, header, footer, main</li>
+                <li>表单元素与属性：type, required, pattern, label 关联</li>
+                <li>可访问性：alt, aria-label, aria-expanded, role</li>
+                <li>元数据：meta viewport, description, Open Graph</li>
+                <li>结构化数据：JSON-LD / schema.org</li>
+            </ul>
+        </div>
+        <div>
+            <strong>进阶：</strong>
+            <ul>
+                <li>模板元素：template, slot, Shadow DOM 基础</li>
+                <li>懒加载：loading="lazy", decoding="async"</li>
+                <li>响应式图片：srcset, sizes, picture 元素</li>
+                <li>自定义数据属性：data-* 与 JS 交互</li>
+            </ul>
+        </div>
+    </div>
+
+    <h3>4.2 CSS：布局与视觉</h3>
+    <div class="grid-2">
+        <div>
+            <strong>必须掌握：</strong>
+            <ul>
+                <li>现代布局：<strong>Flexbox</strong> 和 <strong>CSS Grid</strong></li>
+                <li>响应式：媒体查询 @media，移动优先写法</li>
+                <li>定位：static, relative, absolute, fixed, sticky</li>
+                <li>层叠与优先级：特异性计算、!important 慎用原则</li>
+                <li>盒模型：content-box vs border-box</li>
+                <li>变量与计算：var(), calc(), clamp()</li>
+            </ul>
+        </div>
+        <div>
+            <strong>进阶：</strong>
+            <ul>
+                <li>动画：transition, @keyframes, 性能优化（transform/opacity）</li>
+                <li>现代选择器：:is(), :where(), :has()</li>
+                <li>容器查询：@container（组件级响应式）</li>
+                <li>逻辑属性：margin-inline, padding-block</li>
+                <li>混合模式与滤镜：mix-blend-mode, backdrop-filter</li>
+            </ul>
+        </div>
+    </div>
+
+    <h3>4.3 JavaScript：交互与逻辑</h3>
+    <div class="grid-2">
+        <div>
+            <strong>必须掌握：</strong>
+            <ul>
+                <li>DOM 操作：querySelector, addEventListener, createElement</li>
+                <li>事件机制：冒泡、捕获、委托</li>
+                <li>异步：Promise, async/await, fetch API</li>
+                <li>ES6+：解构、展开、模板字符串、箭头函数、模块化</li>
+                <li>数据类型与转换：深拷贝、JSON 序列化</li>
+                <li>调试：console 全家桶、断点、错误处理 try/catch</li>
+            </ul>
+        </div>
+        <div>
+            <strong>进阶：</strong>
+            <ul>
+                <li>Web API：Intersection Observer, Resize Observer</li>
+                <li>存储：localStorage, sessionStorage, IndexedDB</li>
+                <li>性能：防抖 debounce、节流 throttle、requestAnimationFrame</li>
+                <li>模块化：ES Modules, 动态 import()</li>
+                <li>安全：XSS 防范、CSRF Token、内容转义</li>
+            </ul>
+        </div>
+    </div>
+
+    <h3>4.4 知识检验清单</h3>
+    <pre><code class="language-text">□ 能不看文档写出三栏布局（Grid + Flex）
+□ 能解释 "盒模型" 并用 border-box 修复布局问题
+□ 能手写防抖函数并说明适用场景
+□ 能正确使用事件委托处理动态生成的列表
+□ 能写出符合 WCAG 2.1 AA 标准的表单
+□ 能用 Fetch 完成 GET/POST 并处理错误边界
+□ 能诊断并修复 specificity 导致的样式覆盖失败</code></pre>
+</section>
+
+<!-- ==================== 第五部分 ==================== -->
+<section id="wordpress">
+    <h2>五、在 WordPress 中插入代码片段</h2>
+
+    <h3>5.1 插入位置决策树</h3>
+    <pre><code class="language-text">需要添加代码？
+  ├── 仅特定页面/文章？
+  │     └── 使用「自定义 HTML 块」或「短代码」
+  ├── 全站生效的 CSS？
+  │     └── 外观 → 自定义 → 额外 CSS
+  ├── 全站生效的 JS / &lt;head&gt; 代码？
+  │     └── 子主题 functions.php 或专用插件
+  └── 复杂的交互组件？
+        └── 自定义短代码 + 外部 CSS/JS 文件</code></pre>
+
+    <h3>5.2 方法 1：主题定制器（额外 CSS）</h3>
+    <p>路径：<strong>WordPress 后台 → 外观 → 自定义 → 额外 CSS</strong></p>
+    <div class="highlight success">
+        ✅ 适合：快速修复、小范围样式调整、不修改文件。<br>
+        ❌ 缺点：代码分散、无法版本控制、换主题会丢失。
+    </div>
+
+    <h3>5.3 方法 2：子主题（推荐长期维护）</h3>
+    <pre><code class="language-php">/* 1. 在 wp-content/themes/ 创建子主题文件夹，例如 my-child/ */
+
+/* 2. 创建 style.css，头部必须包含： */
+/*
+Theme Name:   My Child Theme
+Template:     twentytwentyfour    ← 父主题文件夹名称
+Version:      1.0
+*/
+
+/* 3. 创建 functions.php 引入父主题样式和自定义 JS */
+&lt;?php
+add_action('wp_enqueue_scripts', function () {
+    // 继承父主题样式
+    wp_enqueue_style('parent-style', get_template_directory_uri() . '/style.css');
+    
+    // 添加自定义全局样式
+    wp_enqueue_style('custom-style', get_stylesheet_directory_uri() . '/css/custom.css', [], '1.0');
+    
+    // 添加自定义 JS（footer 加载）
+    wp_enqueue_script('custom-script', get_stylesheet_directory_uri() . '/js/custom.js', [], '1.0', true);
+});
+?&gt;</code></pre>
+
+    <h3>5.4 方法 3：使用插件管理代码</h3>
+    <table>
+        <tr><th>插件</th><th>用途</th><th>适用场景</th></tr>
+        <tr><td><strong>Insert Headers and Footers</strong></td><td>在 &lt;head&gt; 或 &lt;/body&gt; 前插入代码</td><td>统计代码、第三方脚本</td></tr>
+        <tr><td><strong>Code Snippets</strong></td><td>安全添加 PHP 片段</td><td>替代 functions.php，防止主题更新丢失</td></tr>
+        <tr><td><strong>WPCode</strong></strong></td><td>条件逻辑插入 CSS/JS/PHP</td><td>只在特定页面加载特定代码</td></tr>
+        <tr><td><strong>Custom CSS-JS-PHP</strong></td><td>按页面管理代码</td><td>页面级微调</td></tr>
+    </table>
+
+    <h3>5.5 方法 4：自定义短代码（Shortcode）</h3>
+    <p>在子主题的 <code>functions.php</code> 或 Code Snippets 插件中添加：</p>
+    <pre><code class="language-php">&lt;?php
+// 注册短代码 [info_box title="标题" color="blue"]内容[/info_box]
+add_shortcode('info_box', function ($atts, $content = null) {
+    $atts = shortcode_atts([
+        'title' => '提示',
+        'color' => 'blue',
+    ], $atts, 'info_box');
+    
+    $colors = [
+        'blue'   => ['bg' => '#eff6ff', 'border' => '#2563eb', 'text' => '#1e40af'],
+        'green'  => ['bg' => '#ecfdf5', 'border' => '#059669', 'text' => '#065f46'],
+        'orange' => ['bg' => '#fffbeb', 'border' => '#d97706', 'text' => '#92400e'],
+    ];
+    $c = $colors[$atts['color']] ?? $colors['blue'];
+    
+    return '&lt;div style="background:' . esc_attr($c['bg']) . ';' .
+           'border-left:4px solid ' . esc_attr($c['border']) . ';' .
+           'padding:16px 20px;margin:16px 0;border-radius:0 8px 8px 0;"&gt;' .
+           '&lt;strong style="color:' . esc_attr($c['text']) . ';display:block;margin-bottom:6px;"&gt;' .
+           esc_html($atts['title']) . '&lt;/strong&gt;' .
+           '&lt;div style="color:' . esc_attr($c['text']) . ';"&gt;' . do_shortcode($content) . '&lt;/div&gt;' .
+           '&lt;/div&gt;';
+});
+?&gt;</code></pre>
+    <p>然后在古腾堡编辑器中使用「短代码」块输入：<code>[info_box title="注意" color="orange"]这里是警告内容[/info_box]</code></p>
+
+    <h3>5.6 WordPress 中 AI 修改的最佳实践</h3>
+    <ol>
+        <li><strong>先在本地/ staging 环境测试</strong>：用 LocalWP、DevKinsta 或 Docker 搭建本地 WordPress。</li>
+        <li><strong>导出代码片段</strong>：从「额外 CSS」或插件中复制目标代码，粘贴给 AI，而非发送整个主题文件。</li>
+        <li><strong>要求 WordPress 安全输出</strong>：提示词中强调使用 <code>esc_html()</code>, <code>esc_attr()</code>, <code>wp_kses_post()</code> 防止 XSS。</li>
+        <li><strong>版本控制</strong>：即使是「额外 CSS」，也建议在本地备份到 <code>wordpress-css-backup.css</code>，方便 AI 对比修改。</li>
+    </ol>
+</section>
+
+<!-- ==================== 第六部分 ==================== -->
+<section id="ai-workflow">
+    <h2>六、AI 辅助修改内容代码的工作流</h2>
+
+    <h3>6.1 推荐工作流（逐轮迭代）</h3>
+    <pre><code class="language-text">第 1 轮：需求描述
+    ↓ 你 → AI
+    "我需要把以下博客文章中的引用块改成带左侧彩色边框的提示框样式"
+
+第 2 轮：提供上下文（精简）
+    ↓ 你 → AI
+    【粘贴文章 HTML 中的 3-5 个 blockquote 示例，共约 40 行】
+    "项目使用 CSS 变量，主色调 --color-primary: #2563eb"
+
+第 3 轮：获取方案
+    ↓ AI → 你
+    【AI 返回 HTML + CSS 代码块】
+
+第 4 轮：本地验证
+    ↓ 你
+    在 CodePen / 本地文件中粘贴测试，截图或描述问题
+
+第 5 轮：精准修正
+    ↓ 你 → AI
+    "很好，但移动端下左边框太宽。请把 border-left 在 @media (max-width:640px) 下改为 3px，其余不变。"
+
+第 6 轮：应用与备份
+    ↓ 你
+    将最终代码写入 WordPress 子主题或「额外 CSS」，同时保存到本地备份文件</code></pre>
+
+    <h3>6.2 分场景 Prompt 模板</h3>
+
+    <h4>场景 A：修改现有组件样式</h4>
+    <div class="prompt-box">
+        <strong>【角色】</strong>资深前端工程师<br>
+        <strong>【上下文】</strong>以下是我项目中的按钮组件 CSS，使用 CSS 变量：<br>
+        [粘贴 CSS，约 20 行]<br>
+        <strong>【任务】</strong>添加一个 <code>.btn-ghost</code> 变体：透明背景、带 1px 边框、hover 时背景填充为主色。<br>
+        <strong>【约束】</strong>复用已有变量，不要新增颜色值；输出完整的 .btn-ghost 规则即可。
+    </div>
+
+    <h4>场景 B：HTML 结构重构</h4>
+    <div class="prompt-box">
+        <strong>【角色】</strong>语义化 HTML 专家<br>
+        <strong>【上下文】</strong>以下是我 WordPress 文章中的纯 div 结构：<br>
+        [粘贴 HTML]<br>
+        <strong>【任务】</strong>将所有 div 替换为合适的语义标签（article, section, time, figure 等），保留所有 class 和 id。<br>
+        <strong>【约束】</strong>确保 schema.org 的 Article 结构化数据可以正确附着；只输出修改后的 HTML。
+    </div>
+
+    <h4>场景 C：调试样式问题</h4>
+    <div class="prompt-box">
+        <strong>【角色】</strong>CSS 调试专家<br>
+        <strong>【上下文】</strong>在 iOS Safari 下，以下导航栏出现横向滚动条：<br>
+        [粘贴相关 HTML + CSS，约 30 行]<br>
+        <strong>【任务】</strong>找出导致溢出的原因并给出修复代码。<br>
+        <strong>【约束】</strong>不要改变桌面端布局；优先使用 CSS 方案，不用 JS。
+    </div>
+
+    <h3>6.3 与 AI 协作的代码审查清单</h3>
+    <ul>
+        <li><strong>检查特异性：</strong>AI 是否随意使用了 <code>!important</code> 或过度嵌套的选择器？</li>
+        <li><strong>检查可访问性：</strong>AI 生成的交互组件是否有 keyboard 支持、ARIA 属性？</li>
+        <li><strong>检查性能：</strong>是否有不必要的重绘属性（如频繁修改 width/height/top/left）？</li>
+        <li><strong>检查响应式：</strong>AI 是否只在桌面端测试？要求补充移动端规则。</li>
+        <li><strong>检查安全性：</strong>WordPress 代码中是否有未转义的输出？</li>
+    </ul>
+
+    <h3>6.4 建立个人代码片段库</h3>
+    <p>用 AI 生成常用组件后，保存到本地或 GitHub Gist，形成可复用资产：</p>
+    <pre><code class="language-text">snippets/
+  ├── html/
+  │   ├── responsive-table.html
+  │   ├── image-lightbox.html
+  │   └── breadcrumb-schema.html
+  ├── css/
+  │   ├── flex-center.css
+  │   ├── card-grid.css
+  │   ├── underline-animation.css
+  │   └── dark-mode-toggle.css
+  └── js/
+      ├── mobile-nav-toggle.js
+      ├── scroll-reveal.js
+      └── lazy-load-images.js</code></pre>
+    <p>下次需要时，直接复制基础版本给 AI："基于我的卡片网格模板，改为 4 列并添加悬停放大效果"。</p>
+
+    <div class="highlight">
+        <strong>🎯 最终建议：</strong>把 AI 当作"超级自动补全 + 代码审查员"，而非替代你思考的魔法工具。你负责定义问题、验证结果、理解原理；AI 负责生成草稿、提供变体、解释语法。这样的分工最高效，也最利于你持续精进原生三件套的能力。
+    </div>
+</section>
+
+<footer style="text-align:center; padding:40px 20px; color:var(--text-light); font-size:0.9rem;">
+    <p>本指南以原生 HTML/CSS/JS 为核心，适用于所有无框架或 WordPress 环境。</p>
+    <p style="margin-top:8px;">生成时间：2026-04-27</p>
+    <p style="margin-top:20px;"><a href="index.html" style="display:inline-block;padding:10px 24px;background:var(--primary);color:#fff;text-decoration:none;border-radius:8px;font-weight:500;">← 回到首页</a></p>
+</footer>
+
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html>

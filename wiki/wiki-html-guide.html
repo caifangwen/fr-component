@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML 编写指南 — 原生三件套最佳实践</title>
+    <style>    :root {
+        --background: #ffffff;
+        --foreground: #09090b;
+        --card: #ffffff;
+        --card-foreground: #09090b;
+        --popover: #ffffff;
+        --popover-foreground: #09090b;
+        --primary: #18181b;
+        --primary-foreground: #fafafa;
+        --secondary: #f4f4f5;
+        --secondary-foreground: #18181b;
+        --muted: #f4f4f5;
+        --muted-foreground: #a1a1aa;
+        --accent: #f4f4f5;
+        --accent-foreground: #18181b;
+        --destructive: #ef4444;
+        --destructive-foreground: #ffffff;
+        --border: #e4e4e7;
+        --input: #e4e4e7;
+        --ring: #18181b;
+        --radius: 0.75rem;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --code-bg: #18181b;
+        --code-text: #f4f4f5;
+        --sidebar-width: 260px;
+        --primary-5: rgba(24,24,27,0.05);
+        --primary-8: rgba(24,24,27,0.08);
+        --primary-10: rgba(24,24,27,0.10);
+        --primary-12: rgba(24,24,27,0.12);
+        --primary-15: rgba(24,24,27,0.15);
+        --primary-20: rgba(24,24,27,0.20);
+        --primary-30: rgba(24,24,27,0.30);
+        --success-5: rgba(16,185,129,0.05);
+        --success-15: rgba(16,185,129,0.15);
+        --warning-5: rgba(245,158,11,0.05);
+        --warning-15: rgba(245,158,11,0.15);
+        --danger-5: rgba(239,68,68,0.05);
+        --danger-15: rgba(239,68,68,0.15);
+        --shadow: 0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.07);
+        --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.08);
+    }    [data-theme="dark"] {
+        --background: #09090b;
+        --foreground: #fafafa;
+        --card: #18181b;
+        --card-foreground: #fafafa;
+        --popover: #27272a;
+        --popover-foreground: #fafafa;
+        --primary: #fafafa;
+        --primary-foreground: #18181b;
+        --secondary: #27272a;
+        --secondary-foreground: #fafafa;
+        --muted: #27272a;
+        --muted-foreground: #d4d4d8;
+        --accent: #27272a;
+        --accent-foreground: #fafafa;
+        --destructive: #ef4444;
+        --destructive-foreground: #ffffff;
+        --border: rgba(255,255,255,0.10);
+        --input: rgba(255,255,255,0.10);
+        --ring: #fafafa;
+        --success: #34d399;
+        --warning: #fbbf24;
+        --danger: #f87171;
+        --code-bg: #09090b;
+        --code-text: #f4f4f5;
+        --primary-5: rgba(250,250,250,0.05);
+        --primary-8: rgba(250,250,250,0.08);
+        --primary-10: rgba(250,250,250,0.10);
+        --primary-12: rgba(250,250,250,0.12);
+        --primary-15: rgba(250,250,250,0.15);
+        --primary-20: rgba(250,250,250,0.20);
+        --primary-30: rgba(250,250,250,0.30);
+        --success-5: rgba(52,211,153,0.05);
+        --success-15: rgba(52,211,153,0.15);
+        --warning-5: rgba(251,191,36,0.05);
+        --warning-15: rgba(251,191,36,0.15);
+        --danger-5: rgba(248,113,113,0.05);
+        --danger-15: rgba(248,113,113,0.15);
+        --shadow: 0 1px 3px 0 rgba(0,0,0,0.2);
+        --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.3);
+        --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.4);
+    }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--background);
+            color: var(--foreground);
+            line-height: 1.7;
+        }
+        .wiki-layout { display: flex; min-height: 100vh; }
+        .sidebar {
+            width: 260px;
+            background: var(--card);
+            border-right: 1px solid var(--border);
+            padding: 28px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            top: 0; left: 0; z-index: 100;
+        }
+        .sidebar h1 { font-size: 1.15rem; color: var(--primary); margin-bottom: 6px; }
+        .sidebar .version { font-size: 0.75rem; color: var(--muted-foreground); margin-bottom: 24px; display: block; }
+        .sidebar nav ul { list-style: none; margin: 0; }
+        .sidebar nav li { margin: 4px 0; }
+        .sidebar nav a { display: block; color: var(--foreground); text-decoration: none; font-size: 0.88rem; padding: 6px 10px; border-radius: 6px; transition: background .15s, color .15s; }
+        .sidebar nav a:hover { background: var(--primary-8); color: var(--primary); }
+        .sidebar nav a.active { background: var(--primary-12); color: var(--primary); font-weight: 600; }
+        .sidebar .nav-group { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--border); }
+        .sidebar .nav-group-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); margin-bottom: 8px; padding-left: 10px; }
+        .theme-toggle {
+        margin-top: 24px; padding: 10px 12px; background: var(--background); border: 1px solid var(--border);
+            border-radius: 8px; cursor: pointer; font-size: 0.85rem; color: var(--foreground); width: 100%;
+            display: flex; align-items: center; justify-content: center; gap: 6px; transition: all .3s cubic-bezier(.4,0,.2,1);
+        }
+        .theme-toggle:hover { border-color: var(--primary); color: var(--primary); }
+        .main { margin-left: var(--sidebar-width); margin-right: var(--sidebar-width); flex: 1; max-width: 800px; padding: 48px 40px; background: var(--card); min-height: 100vh; border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+        .main h2 { font-size: 1.6rem; color: var(--primary); margin: 48px 0 20px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
+        .main h2:first-child { margin-top: 0; }
+        .main h3 { font-size: 1.2rem; color: var(--foreground); margin: 32px 0 14px; }
+        .main h4 { font-size: 1rem; color: var(--muted-foreground); margin: 22px 0 10px; font-weight: 600; }
+        .main p { margin-bottom: 14px; }
+        .main ul, .main ol { margin: 12px 0 12px 22px; }
+        .main li { margin: 6px 0; }
+        code { background: var(--primary-8); color: var(--primary); padding: 2px 6px; border-radius: 4px; font-family: "SF Mono", Monaco, "Cascadia Code", Consolas, monospace; font-size: 0.9em; }
+        pre { background: var(--code-bg); color: var(--code-text); padding: 18px 22px; border-radius: var(--radius); overflow-x: auto; margin: 16px 0; font-size: 0.88rem; line-height: 1.6; }
+        pre code { background: transparent; color: inherit; padding: 0; font-size: inherit; }
+        .callout { background: var(--primary-5); border: 1px solid var(--primary-15); border-left: 4px solid var(--primary); padding: 16px 20px; border-radius: var(--radius); margin: 18px 0; }
+        .callout.success { background: var(--success-5); border-color: var(--success-15); border-left-color: var(--success); }
+        .callout.warning { background: var(--warning-5); border-color: var(--warning-15); border-left-color: var(--warning); }
+        .callout.danger { background: var(--danger-5); border-color: var(--danger-15); border-left-color: var(--danger); }
+        .callout-title { font-weight: 600; margin-bottom: 6px; display: block; }
+        table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.92rem; }
+        th, td { border: 1px solid var(--border); padding: 10px 14px; text-align: left; }
+        th { background: var(--background); font-weight: 600; }
+        .tag { display: inline-flex; align-items: center; gap: 4px; background: var(--primary-10); color: var(--primary); font-size: 0.75rem; padding: 3px 10px; border-radius: 6px; margin-right: 4px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.03em; font-weight: 500; border: 1px solid var(--primary-20); }
+        .tag.outline { background: transparent; color: var(--primary); border: 1px solid var(--primary-30); }
+        .toc-sidebar {
+            width: var(--sidebar-width);
+            background: var(--card);
+            border-left: 1px solid var(--border);
+            padding: 28px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            top: 0; right: 0; z-index: 100;
+        }
+        .toc-sidebar h2 {
+            font-size: 0.85rem;
+            color: var(--primary);
+            margin-bottom: 16px;
+            padding-left: 10px;
+            font-weight: 600;
+        }
+        .toc-sidebar nav ul { list-style: none; margin: 0; }
+        .toc-sidebar nav li { margin: 4px 0; }
+        .toc-sidebar nav a {
+            display: block; color: var(--foreground); text-decoration: none;
+            font-size: 0.85rem; padding: 5px 10px; border-radius: 6px;
+            transition: background .15s, color .15s;
+        }
+        .toc-sidebar nav a:hover { background: var(--primary-8); color: var(--primary); }
+        .toc-sidebar nav a.active { background: var(--primary-12); color: var(--primary); font-weight: 600; }
+        .toc-sidebar .nav-group { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+        .toc-sidebar .nav-group:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+        .toc-sidebar .nav-group-title {
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em;
+            color: var(--muted-foreground); margin-bottom: 8px; padding-left: 10px;
+        }
+        @media (max-width: 1200px) {
+            .toc-sidebar { display: none; }
+            .main { margin-right: 0; border-right: none; }
+        }
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); transition: transform .3s; box-shadow: 2px 0 12px rgba(0,0,0,0.1); }
+            .sidebar.open { transform: translateX(0); }
+            .main { margin-left: 0; padding: 24px 20px; max-width: 100%; }
+            .menu-toggle { display: block; position: fixed; top: 14px; left: 14px; z-index: 200; background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; font-size: 1rem; cursor: pointer; }
+        }
+        @media (min-width: 901px) { .menu-toggle { display: none; } }
+    </style>
+<link rel="stylesheet" href="../fr-themes.css">
+</head>
+<body>
+<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+<div class="wiki-layout">
+    <aside class="sidebar">
+        <h1>HTML 编写指南</h1>
+        <span class="version">原生三件套最佳实践</span>
+        <select class="theme-select" id="theme-select" onchange="changeTheme(this.value)">
+            <option value="">Light (Default)</option>
+            <option value="dark">Dark</option>
+            <option value="claude">Claude</option>
+            <option value="claude-dark">Claude Dark</option>
+            <option value="bumblebee">Bumblebee</option>
+            <option value="bumblebee-dark">Bumblebee Dark</option>
+            <option value="emerald">Emerald</option>
+            <option value="emerald-dark">Emerald Dark</option>
+            <option value="nord">Nord</option>
+            <option value="nord-dark">Nord Dark</option>
+            <option value="sunset">Sunset</option>
+            <option value="sunset-dark">Sunset Dark</option>
+            <option value="abyss">Abyss</option>
+            <option value="abyss-dark">Abyss Dark</option>
+            <option value="dracula">Dracula</option>
+            <option value="dracula-dark">Dracula Dark</option>
+            <option value="amethyst">Amethyst</option>
+            <option value="amethyst-dark">Amethyst Dark</option>
+            <option value="slate">Slate</option>
+            <option value="slate-dark">Slate Dark</option>
+            <option value="twitter">Twitter</option>
+            <option value="twitter-dark">Twitter Dark</option>
+        </select>
+        <nav>
+            <div class="nav-group">
+                <div class="nav-group-title">Wiki 导航</div>
+                <ul>
+                    <li><a href="../index.html">首页</a></li>
+                    <li><a href="theme-wiki.html">主题定制 Wiki</a></li>
+                    <li><a href="wiki-html-guide.html">HTML 编写指南</a></li>
+                    <li><a href="wiki-tailwind.html">Tailwind 结合使用</a></li>
+                    <li><a href="wiki-usage-guide.html">组件库使用指南</a></li>
+                    <li><a href="wiki-build-guide.html">Wiki 构建指南</a></li>
+                    <li><a href="wiki-html-tags.html">HTML 标签手册</a></li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+    <aside class="toc-sidebar">
+        <h2>目录</h2>
+        <nav>
+            <div class="nav-group">
+                <div class="nav-group-title">核心问题</div>
+                <ul>
+                    <li><a href="#html-how" class="active">CSS 设计好后如何写 HTML</a></li>
+                    <li><a href="#native-vs-framework">原生三件套落后吗</a></li>
+                </ul>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-title">实战</div>
+                <ul>
+                    <li><a href="#workflow">三步工作流</a></li>
+                    <li><a href="#naming">Class 命名策略</a></li>
+                    <li><a href="#template">可直接套用的模板</a></li>
+                </ul>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-title">决策</div>
+                <ul>
+                    <li><a href="#when-native">什么时候用原生</a></li>
+                    <li><a href="#when-framework">什么时候用框架</a></li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+    <main class="main">
+
+        <h2 id="html-how">设计好 CSS 后，怎么写 HTML？</h2>
+        <p>核心原则：<strong>先写语义结构，再加 class，最后映射到 CSS 变量。</strong> 不要反过来——不要先想"这个 div 应该怎么美化"。</p>
+
+        <h3>步骤 1：语义化骨架（不要管样式）</h3>
+        <p>先忽略视觉，只考虑内容含义。这是 HTML 的灵魂。</p>
+        <pre><code>&lt;!-- ✅ 好：语义清晰，无障碍友好 --&gt;
+&lt;article&gt;
+  &lt;header&gt;
+    &lt;h2&gt;文章标题&lt;/h2&gt;
+    &lt;time datetime="2026-05-08"&gt;2026年5月8日&lt;/time&gt;
+  &lt;/header&gt;
+  &lt;section&gt;
+    &lt;p&gt;正文内容...&lt;/p&gt;
+  &lt;/section&gt;
+  &lt;footer&gt;
+    &lt;button&gt;点赞&lt;/button&gt;
+    &lt;button&gt;分享&lt;/button&gt;
+  &lt;/footer&gt;
+&lt;/article&gt;
+
+&lt;!-- ❌ 坏：全是 div，没有语义 --&gt;
+&lt;div class="wrapper"&gt;
+  &lt;div class="top"&gt;
+    &lt;div class="title"&gt;文章标题&lt;/div&gt;
+    &lt;div class="date"&gt;2026-05-08&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="body"&gt;
+    &lt;div class="text"&gt;正文内容...&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+        <div class="callout success">
+            <span class="callout-title">为什么语义化如此重要？</span>
+            <ul>
+                <li><strong>SEO</strong>：搜索引擎通过 <code>&lt;article&gt;</code>、<code>&lt;time&gt;</code> 理解内容结构</li>
+                <li><strong>无障碍</strong>：屏幕阅读器依赖语义标签导航</li>
+                <li><strong>AI 理解</strong>：AI 处理语义化 HTML 的准确率远高于纯 div 堆砌</li>
+                <li><strong>维护性</strong>：6 个月后回看代码，语义标签一眼就知道这块是什么</li>
+            </ul>
+        </div>
+
+        <h3>步骤 2：加 class，对接 CSS 变量系统</h3>
+        <p>class 命名采用<strong>"组件 + 变体"</strong>策略（BEM 命名法）：</p>
+        <pre><code>&lt;article class="card"&gt;
+  &lt;header class="card__header"&gt;
+    &lt;h2 class="card__title"&gt;文章标题&lt;/h2&gt;
+    &lt;time class="card__meta"&gt;2026-05-08&lt;/time&gt;
+  &lt;/header&gt;
+  &lt;section class="card__body"&gt;
+    &lt;p&gt;正文内容...&lt;/p&gt;
+  &lt;/section&gt;
+  &lt;footer class="card__footer"&gt;
+    &lt;button class="btn btn--primary"&gt;点赞&lt;/button&gt;
+    &lt;button class="btn btn--ghost"&gt;分享&lt;/button&gt;
+  &lt;/footer&gt;
+&lt;/article&gt;</code></pre>
+
+        <p>对应的 CSS（使用你的设计令牌）：</p>
+        <pre><code>.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+}
+
+.card__title {
+  color: var(--color-text);
+  font-size: var(--text-lg);
+}
+
+.btn {
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+}
+
+.btn--primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.btn--ghost {
+  background: transparent;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+}</code></pre>
+
+        <h3>步骤 3：Utility Class 处理微调</h3>
+        <p>对于一次性的边距、对齐等微调，不用新建组件，直接用 utility：</p>
+        <pre><code>&lt;div class="card mt-4 text-center"&gt;
+  &lt;!-- mt-4 = margin-top: var(--space-4) --&gt;
+&lt;/div&gt;</code></pre>
+
+        <h3 id="naming">三种命名方式对比</h3>
+        <table>
+            <tr><th>命名法</th><th>示例</th><th>适用场景</th></tr>
+            <tr><td><strong>BEM</strong></td><td><code>.card__title--large</code></td><td>中型项目，团队协作，防止命名冲突</td></tr>
+            <tr><td><strong>Semantic</strong></td><td><code>.article-header</code></td><td>内容型网站，可读性优先</td></tr>
+            <tr><td><strong>Utility</strong></td><td><code>.flex .gap-2 .p-4</code></td><td>快速原型，配合 Tailwind 使用</td></tr>
+        </table>
+        <div class="callout">
+            <span class="callout-title">建议</span>
+            <p>原生三件套项目用 <strong>BEM + 少量 Utility</strong> 是最佳平衡。既有组件边界，又能快速微调。</p>
+        </div>
+
+        <h2 id="native-vs-framework">纯 CSS + HTML + JS 落后吗？</h2>
+        <p><strong>完全不落后。</strong> 甚至在 2026 年，原生三件套正在强势复兴。</p>
+
+        <h3>原生 vs 框架对比</h3>
+        <table>
+            <tr><th>维度</th><th>原生三件套</th><th>React / Vue 框架</th></tr>
+            <tr><td><strong>加载性能</strong></td><td>零依赖，首屏毫秒级</td><td>需加载运行时（40KB+）</td></tr>
+            <tr><td><strong>构建复杂度</strong></td><td>保存即刷新，无 node_modules</td><td>需要 Webpack / Vite 构建</td></tr>
+            <tr><td><strong>长期维护</strong></td><td>10 年后照样打开，不担心版本过期</td><td>依赖升级可能引发连锁问题</td></tr>
+            <tr><td><strong>SEO</strong></td><td>完美，爬虫直接读内容</td><td>需要 SSR / SSG 额外处理</td></tr>
+            <tr><td><strong>部署</strong></td><td>直接丢到服务器或 CDN</td><td>需要构建流水线</td></tr>
+            <tr><td><strong>AI 辅助</strong></td><td>AI 对原生代码理解最准确</td><td>框架语法糖可能让 AI 混淆</td></tr>
+        </table>
+
+        <h3 id="when-native">原生三件套适合哪些场景</h3>
+        <ul>
+            <li><span class="tag">✓</span> <strong>内容型网站</strong>：博客、文档、Wiki、企业官网（你现在的项目就是）</li>
+            <li><span class="tag">✓</span> <strong>WordPress 主题</strong>：PHP 输出 HTML + 自定义 CSS，最稳定</li>
+            <li><span class="tag">✓</span> <strong>快速原型</strong>：验证想法时，原生比搭框架快 10 倍</li>
+            <li><span class="tag">✓</span> <strong>长期存档</strong>：知识库、简历页、作品展示，要求 10 年后还能打开</li>
+            <li><span class="tag">✓</span> <strong>嵌入式页面</strong>：营销活动页、落地页，要求极致轻量和加载速度</li>
+        </ul>
+
+        <h3 id="when-framework">什么时候应该上框架</h3>
+        <ul>
+            <li><span class="tag outline">✗</span> <strong>复杂单页应用（SPA）</strong>：大量状态管理、路由切换（如后台管理系统）</li>
+            <li><span class="tag outline">✗</span> <strong>超大型团队协作</strong>：组件复用率极高，需要类型约束（TypeScript）</li>
+            <li><span class="tag outline">✗</span> <strong>实时交互密集型</strong>：在线文档协作、即时通讯、复杂数据可视化</li>
+        </ul>
+
+        <div class="callout success">
+            <span class="callout-title">关键结论</span>
+            <p>落后不落后，不看技术栈，看的是<strong>能不能稳定交付、长期维护、快速迭代</strong>。原生三件套在这三点上，依然是最强的。</p>
+        </div>
+
+        <h2 id="workflow">HTML + CSS 配合的三步工作流</h2>
+        <ol>
+            <li><strong>写语义 HTML</strong>：用正确的标签（article, nav, time, figure 等），不加 class 也能读通结构。</li>
+            <li><strong>加 BEM class</strong>：组件块（Block）、元素（Element）、修饰符（Modifier）。</li>
+            <li><strong>CSS 只引用变量</strong>：<code>var(--color-primary)</code>，不写死任何值。</li>
+        </ol>
+
+        <pre><code>/* 错误的顺序：先想样式，再套结构 */
+.div-box { width: 300px; background: white; }
+&lt;div class="div-box"&gt;内容&lt;/div&gt;
+
+/* 正确的顺序：先语义，再组件，再变量 */
+&lt;article class="card"&gt;
+  &lt;h2 class="card__title"&gt;标题&lt;/h2&gt;
+&lt;/article&gt;
+
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+}</code></pre>
+
+        <h2 id="template">可直接套用的页面模板</h2>
+        <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;页面标题&lt;/title&gt;
+  &lt;!-- 1. 主题变量和基础样式 --&gt;
+  &lt;link rel="stylesheet" href="components/base/variables.css"&gt;
+  &lt;link rel="stylesheet" href="components/base/reset.css"&gt;
+  &lt;link rel="stylesheet" href="components/base/typography.css"&gt;
+  &lt;!-- 2. 布局与组件 --&gt;
+  &lt;link rel="stylesheet" href="components/layout/container.css"&gt;
+  &lt;link rel="stylesheet" href="components/layout/grid.css"&gt;
+  &lt;link rel="stylesheet" href="components/components/button.css"&gt;
+  &lt;link rel="stylesheet" href="components/components/card.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;!-- 3. 语义化结构 --&gt;
+  &lt;header class="site-header"&gt;
+    &lt;nav class="nav container"&gt;
+      &lt;a class="nav__logo" href="/"&gt;Logo&lt;/a&gt;
+      &lt;ul class="nav__menu"&gt;
+        &lt;li&gt;&lt;a class="nav__link" href="#about"&gt;关于&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a class="nav__link" href="#contact"&gt;联系&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+
+  &lt;main class="container"&gt;
+    &lt;article class="card"&gt;
+      &lt;h1 class="card__title"&gt;文章标题&lt;/h1&gt;
+      &lt;p class="card__text"&gt;使用 var(--color-text) 自动适配暗色主题。&lt;/p&gt;
+      &lt;div class="card__actions"&gt;
+        &lt;button class="btn btn--primary"&gt;确认&lt;/button&gt;
+        &lt;button class="btn btn--ghost"&gt;取消&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/article&gt;
+  &lt;/main&gt;
+
+  &lt;footer class="site-footer"&gt;
+    &lt;p&gt;© 2026&lt;/p&gt;
+  &lt;/footer&gt;
+
+  &lt;!-- 4. 交互逻辑 --&gt;
+  &lt;script src="demo.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+        <div class="callout warning">
+            <span class="callout-title">团队纪律</span>
+            <p>所有成员在写 HTML 前，先确认 CSS 变量表（<code>variables.css</code>）中是否已有对应令牌。如果没有，先在变量表中注册，再在 HTML/CSS 中使用。<strong>禁止私自创造新的颜色或间距值。</strong></p>
+        </div>
+
+    </main>
+</div>
+
+<script>
+    const html = document.documentElement;
+    const themeSelect = document.getElementById('theme-select');
+    function applyTheme(theme) {
+        if (theme && theme !== 'light') { html.setAttribute('data-theme', theme); }
+        else { html.removeAttribute('data-theme'); }
+        if (themeSelect) themeSelect.value = theme || '';
+    }
+    function changeTheme(theme) { applyTheme(theme); localStorage.setItem('theme', theme); }
+    const saved = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(saved || (prefersDark ? 'dark' : ''));
+    const links = document.querySelectorAll('.sidebar nav a');
+    const sections = document.querySelectorAll('.main h2[id]');
+    function onScroll() { let cur = ''; sections.forEach(s => { if (s.getBoundingClientRect().top <= 120) cur = s.getAttribute('id'); }); links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + cur)); }
+    window.addEventListener('scroll', onScroll); onScroll();
+    links.forEach(l => l.addEventListener('click', () => document.querySelector('.sidebar').classList.remove('open')));
+</script>
+
+</body>
+</html>

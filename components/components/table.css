@@ -1,0 +1,78 @@
+/* ========================================
+   表格组件
+   ======================================== */
+
+.table-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  text-align: left;
+}
+
+.table thead {
+  background: var(--color-bg);
+}
+
+.table th {
+  padding: var(--space-3) var(--space-4);
+  font-weight: var(--font-semibold);
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.table td {
+  padding: var(--space-3) var(--space-4);
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tbody tr:hover {
+  background: var(--color-bg);
+}
+
+/* 紧凑型 */
+.table--compact th,
+.table--compact td {
+  padding: var(--space-2) var(--space-3);
+}
+
+/* 带条纹 */
+.table--striped tbody tr:nth-child(even) {
+  background: var(--color-bg);
+}
+
+/* 响应式卡片化（移动端） */
+@media (max-width: 640px) {
+  .table--responsive thead {
+    display: none;
+  }
+  .table--responsive tbody tr {
+    display: block;
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .table--responsive td {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--space-2) 0;
+    border: none;
+  }
+  .table--responsive td::before {
+    content: attr(data-label);
+    font-weight: var(--font-semibold);
+    color: var(--color-text-light);
+    margin-right: var(--space-4);
+  }
+}

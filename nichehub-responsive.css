@@ -1,0 +1,141 @@
+/* =============================================================================
+   NicheHub Responsive & Print
+   Breakpoint overrides and print-specific styles.
+   Loaded on every page.
+   ============================================================================= */
+
+/* --- @media (max-width: 820px) --- */
+@media (max-width: 820px) {
+  header h1 {
+    font-size: 2.1rem}
+  .stats-strip {
+    grid-template-columns: 1fr}
+  .finder-grid {
+    grid-template-columns: 1fr}
+  .family-row {
+    grid-template-columns: 1fr}
+  .two-col {
+    grid-template-columns: 1fr}
+  .region-card-main {
+    grid-template-columns: 1fr}
+  .compare-bar {
+    grid-template-columns: 1fr}
+  .steel-card-main {
+    grid-template-columns: 1fr}
+  .d-row {
+    grid-template-columns: 120px 40px 1fr}
+  .steel-links-row {
+    flex-direction: column;
+    align-items: flex-start}
+  .vs-compare-grid {
+    grid-template-columns: 1fr}
+  .vs-m-row {
+    grid-template-columns: 100px 32px 1fr}
+  .decision-matrix table {
+    min-width: 700px}
+  .process-grid {
+    grid-template-columns: 1fr}
+  .compare-method {
+    grid-template-columns: 1fr}
+  .step-flow {
+    flex-direction: column;
+    align-items: center}
+  .step-arrow {
+    transform: rotate(90deg)}
+  .steel-care-grid {
+    grid-template-columns: 1fr}
+  .dos-donts {
+    grid-template-columns: 1fr}
+  .timeline-item {
+    grid-template-columns: 60px 1fr}
+  .profile-specs {
+    grid-template-columns: 1fr 1fr}
+  .steel-band-table table {
+    min-width: 600px}
+  .print-checklist {
+    border: 1px solid #ccc;
+    box-shadow: none;
+    page-break-inside: avoid}
+  .print-checklist .check-box {
+    border-color: #999}
+  .print-checklist .print-note {
+    display: none}
+}
+
+/* -----------------------------------------------------------------------------
+   niche.css components — RESPONSIVE
+   ----------------------------------------------------------------------------- */
+
+@media (max-width: 540px) { .nc-box ul { grid-template-columns: 1fr} }
+
+@media (max-width: 580px) { .nc-split { grid-template-columns: 1fr} }
+
+@media (max-width: 540px) { .nc-specs { grid-template-columns: 1fr} }
+
+@media (max-width: 560px) { .nc-form-grid { grid-template-columns: 1fr} }
+
+@media (max-width: 640px) {
+  .nc-hero    { padding: 36px 24px}
+  .nc-cta     { padding: 36px 22px}
+  .nc-form-wrap { padding: 24px 18px}
+  .nc-split   { padding: 20px}
+  .nc-steps   { grid-template-columns: 1fr 1fr}
+  .nc-stats   { grid-template-columns: 1fr 1fr}
+}
+
+@media (max-width: 380px) {
+  .nc-steps   { grid-template-columns: 1fr}
+  .nc-stats   { grid-template-columns: 1fr}
+}
+
+@media (max-width: 640px) {
+  .nc-vs { flex-direction: column}
+  .nc-vs-divider { padding: 12px 0}
+}
+
+@media (max-width: 640px) {
+  .nc-matrix-header, .nc-matrix-row {
+    grid-template-columns: 100px repeat(3, 1fr)}
+  .nc-matrix-cell { padding: 10px 10px; font-size: 15px}
+}
+
+@media (max-width: 640px) {
+  .nc-features-compare { grid-template-columns: 1fr}
+  .nc-features-col:first-child { border-right: none; border-bottom: 1px solid var(--nc-border)}
+}
+
+@media (max-width: 640px) {
+  .nc-rating-row { grid-template-columns: 1fr; gap: 8px}
+  .nc-rating-label { font-size: 15px}
+  .nc-rating-bar-group { grid-template-columns: 35px 1fr 40px}
+}
+
+@media (max-width: 640px) {
+  .nc-vbar-chart { flex-wrap: wrap; min-height: auto}
+  .nc-vbar-group { flex: 0 0 45%; margin-bottom: 20px}
+  .nc-vbar-bars { height: 140px}
+}
+
+@media (max-width: 640px) {
+  .nc-heatmap-header, .nc-heatmap-row {
+    grid-template-columns: 70px repeat(4, 1fr)}
+  .nc-heatmap-cell { padding: 10px 8px; font-size: 15px}
+}
+
+@media (max-width: 860px) {
+  .nc-img-sm, .nc-img-md, .nc-img-lg, .nc-img-xl {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9}
+}
+
+@media (max-width: 640px) {
+  .nc-before-after { flex-direction: column}
+  .nc-ba-panel:first-child { border-right: none; border-bottom: 1px solid var(--nc-border)}
+  .nc-ba-arrow { padding: 12px 0}
+}
+
+@media (max-width: 640px) {
+  .nc-pros-cons-grid { grid-template-columns: 1fr}
+  .nc-pros-col { border-right: none; border-bottom: 1px solid var(--nc-border)}
+}

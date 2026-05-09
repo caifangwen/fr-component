@@ -1,0 +1,78 @@
+/* ========================================
+   Pattern: Score Card Comparison
+   Usage: Include base CSS variables, then link this file.
+   Dependencies: None (uses CSS custom properties with fallbacks)
+   ======================================== */
+
+/* Score Card Comparison */
+.score-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+.score-card {
+  border: 1px solid var(--color-border, #e2e8f0);
+}
+.score-card__header {
+  padding: 20px;
+  border-bottom: 1px solid var(--color-border, #e2e8f0);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.score-card__header h3 {
+  font-family: var(--font-head, Georgia, "Times New Roman", serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text-strong, #111827);
+  margin: 0;
+}
+.score-card__total {
+  text-align: right;
+}
+.score-card__score {
+  font-family: var(--font-head, Georgia, "Times New Roman", serif);
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--color-text-strong, #111827);
+  line-height: 1;
+}
+.score-card__max {
+  font-size: 14px;
+  color: var(--color-text-muted, #6b7280);
+}
+.score-card__body {
+  padding: 20px;
+}
+.score-card__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border, #e2e8f0);
+}
+.score-card__item:last-child { border-bottom: none; }
+.score-card__item-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text, #374151);
+  min-width: 70px;
+}
+.score-card__bar {
+  flex: 1;
+  height: 6px;
+  background: var(--color-border, #e2e8f0);
+}
+.score-card__bar-fill {
+  height: 100%;
+  background: var(--color-text-muted, #6b7280);
+  transition: width .6s ease;
+}
+.score-card__item-value {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text-strong, #111827);
+  min-width: 24px;
+  text-align: right;
+}

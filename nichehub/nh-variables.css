@@ -1,0 +1,145 @@
+/* NicheHub — Design Tokens */
+:root {
+  --primary: #1a1a1a;
+  --secondary: #E53E3E;
+  --secondary-hover: #C53030;
+  --secondary-bright: #ff6b6b;
+  --text: #333333;
+  --light-gray: #f5f5f5;
+  --border: #e0e0e0;
+  --accent-bg: #f5f5f5;
+  --family-unified: #2d2d2d;
+  --family-mask: rgba(20,24,28,0.55);
+  --surface: #fff;
+  --surface-faq: #f5f5f5;
+  --surface-chip: #f0f0f0;
+  --surface-placeholder: #eeeeee;
+  --surface-progress: #e0e0e0;
+  --surface-divider: #e0e0e0;
+  --surface-chip-border: #e0e0e0;
+  --ink: #1a1a1a;
+  --muted-900: #333333;
+  --muted-800: #444444;
+  --muted-700: #555555;
+  --muted-500: #666666;
+  --muted-400: #777777;
+  --muted-300: #888888;
+  --muted-200: #999999;
+  --muted-150: #aaaaaa;
+  --muted-100: #bbbbbb;
+  --muted-50: #cccccc;
+  --header-rule: #333333;
+  --finder-field: #2d2d2d;
+  --finder-panel: #1a1a1a;
+  --finder-border: #444444;
+  --finder-border-soft: #3d3d3d;
+  --rose-200: #ef5350;
+  --rose-100: #ffcdd2;
+  --tag-budget-bg: #f5f5f5;
+  --tag-budget-text: #555555;
+  --tag-mid-bg: #eeeeee;
+  --tag-mid-text: #555555;
+  --tag-high-text: #444444;
+  --chip-text: #555555;
+  --cover-grad-a: #f0f0f0;
+  --cover-grad-b: #e0e0e0;
+  --kicker-border: rgba(255,255,255,0.25);
+  --shadow-1: 0 2px 8px rgba(0,0,0,0.04);
+  --shadow-2: 0 4px 12px rgba(0,0,0,0.05);
+  --shadow-3: 0 4px 16px rgba(0,0,0,0.06);
+  --shadow-4: 0 6px 20px rgba(0,0,0,0.06);
+  --shadow-5: 0 8px 24px rgba(0,0,0,0.07);
+  --shadow-6: 0 12px 32px rgba(0,0,0,0.08);
+  --r-8: 4px;
+  --r-10: 4px;
+  --r-12: 6px;
+  --r-14: 6px;
+  --r-16: 6px;
+  --r-20: 8px;
+  --r-30: 8px;
+  --r-pill-50: 4px;
+  --r-pill: 999px;
+  --container-max: 1200px;
+  --container-pad-x: 20px;
+  --content-max: 900px;
+  --content-narrow: 860px;
+  --cta-text-max: 760px;
+  --table-min: 880px;
+  --stat-desc-max: 280px;
+  --gap-xs: 6px;
+  --gap-sm: 8px;
+  --gap-md: 10px;
+  --gap-lg: 14px;
+  --gap-xl: 16px;
+  --gap-2xl: 18px;
+  --gap-3xl: 20px;
+  --gap-4xl: 24px;
+  --pad-card: 18px;
+  --pad-card-sm: 14px;
+  --pad-block: 28px;
+  --pad-finder: 45px;
+  --pad-cta-y: 70px;
+  --dur-fast: 0.2s;
+  --ease-out: ease;
+
+/* Red theme from brand image */
+  --nc-blue:         #E53E3E;
+  --nc-blue-dark:    #C53030;
+  --nc-blue-mid:     #ff6b6b;
+  --nc-blue-light:   #fde8e8;
+  --nc-blue-pale:    #fff5f5;
+
+  --nc-amber:        #d4a017;
+  --nc-amber-light:  #fef8e7;
+
+  --nc-red:          #E53E3E;
+  --nc-red-light:    #fde8e8;
+
+  --nc-green:        #27ae60;
+  --nc-green-light:  #e8f8f0;
+
+  --nc-accent:       #E53E3E;
+  --nc-accent-light: #fde8e8;
+  --nc-accent-border:#e0b0b0;
+
+  --nc-ink:          #1a1a1a;
+  --nc-text:         #333333;
+  --nc-muted:        #666666;
+  --nc-border:       #e0e0e0;
+  --nc-border-strong:#cccccc;
+  --nc-bg:           #ffffff;
+  --nc-white:        #ffffff;
+  --nc-gray-light:   #f5f5f5;
+
+  --nc-font-head:    "Kanit", sans-serif;
+  --nc-font-body:    "Kanit", sans-serif;
+  --nc-font-mono:    'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+
+  --nc-r:            6px;
+  --nc-r-sm:         4px;
+  --nc-r-lg:         8px;
+  --nc-shadow:       0 2px 8px rgba(0,0,0,0.04);
+  --nc-shadow-md:    0 4px 12px rgba(0,0,0,0.05);
+  --nc-shadow-lg:    0 8px 24px rgba(0,0,0,0.07);
+  /* Data Visualization Palette */
+  --nc-data-primary:   var(--nc-blue);
+  --nc-data-secondary: var(--nc-amber);
+  --nc-data-success:   var(--nc-green);
+  --nc-data-danger:    var(--nc-red);
+  --nc-data-neutral:   var(--nc-muted);
+  --nc-data-grid:      var(--nc-border);
+  --nc-data-bg:        var(--nc-gray-light);
+  --nc-data-1: var(--nc-blue);
+  --nc-data-2: var(--nc-amber);
+  --nc-data-3: var(--nc-green);
+  --nc-data-4: #6b4c9a;
+  --nc-data-5: #3498db;
+  --nc-data-6: #f39c12;
+  --nc-data-7: #1abc9c;
+  --nc-data-8: #E53E3E;
+  --nc-seq-1: #fde8e8;
+  --nc-seq-2: #ef9a9a;
+  --nc-seq-3: #ff6b6b;
+  --nc-seq-4: #E53E3E;
+  --nc-seq-5: #C53030;
+  font-size: 20px}

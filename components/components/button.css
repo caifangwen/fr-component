@@ -1,0 +1,99 @@
+/* ========================================
+   按钮组件
+   ======================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  line-height: 1.5;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* 变体：主色 */
+.btn--primary {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+.btn--primary:hover {
+  background: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+}
+
+/* 变体：次要 */
+.btn--secondary {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+.btn--secondary:hover {
+  border-color: var(--color-border-hover);
+  background: var(--color-bg);
+}
+
+/* 变体：幽灵 */
+.btn--ghost {
+  background: transparent;
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.btn--ghost:hover {
+  background: var(--color-primary-light);
+}
+
+/* 变体：文字 */
+.btn--text {
+  background: transparent;
+  color: var(--color-primary);
+  border-color: transparent;
+  padding-left: var(--space-2);
+  padding-right: var(--space-2);
+}
+.btn--text:hover {
+  background: var(--color-primary-light);
+}
+
+/* 变体：危险 */
+.btn--danger {
+  background: var(--color-danger);
+  color: #fff;
+  border-color: var(--color-danger);
+}
+.btn--danger:hover {
+  background: var(--red-700);
+  border-color: var(--red-700);
+}
+
+/* 尺寸 */
+.btn--sm {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-xs);
+}
+
+.btn--lg {
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-base);
+}
+
+/* 全宽 */
+.btn--block {
+  width: 100%;
+}
+
+/* 禁用态 */
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}

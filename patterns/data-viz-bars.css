@@ -1,0 +1,109 @@
+/* ========================================
+   Pattern: Data Viz — Horizontal Bar Charts (§9)
+   Usage: Include base CSS variables, then link this file.
+   Dependencies: None (uses CSS custom properties with fallbacks)
+   ======================================== */
+
+/* Data Viz — Horizontal Bar Charts (§9) */
+.bar-chart {
+  background: none;
+  border: 1px solid var(--color-border, #e2e8f0);
+  border-radius: 0;
+  padding: 20px 24px;
+  margin: 24px 0;
+}
+.bar-chart__title {
+  font-family: var(--font-mono, "Courier New", monospace);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-text-muted, #6b7280);
+  margin-bottom: 16px;
+  display: block;
+}
+.bar-chart__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.bar-chart__row:last-child { margin-bottom: 0; }
+.bar-chart__label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-strong, #111827);
+  min-width: 130px;
+  flex-shrink: 0;
+}
+.bar-chart__track {
+  flex: 1;
+  height: 10px;
+  background: var(--color-border, #e2e8f0);
+  border-radius: 0;
+  overflow: hidden;
+}
+.bar-chart__fill          { height: 100%; border-radius: 0; background: var(--color-text-muted, #6b7280); transition: width .6s ease; }
+.bar-chart__fill--warning    { background: var(--color-warning, #d97706); }
+.bar-chart__fill--danger      { background: var(--color-danger, #dc2626); }
+.bar-chart__fill--muted    { background: var(--color-border-strong, #d1d5db); }
+.bar-chart__value {
+  font-family: var(--font-mono, "Courier New", monospace);
+  font-size: 12px;
+  color: var(--color-text-muted, #6b7280);
+  min-width: 80px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* Data Viz — Horizontal Bar Charts (§39B) */
+.hbar-chart {
+  margin: 28px 0 8px;
+  border: 1px solid var(--color-border, #e2e8f0);
+  padding: 24px;
+}
+.hbar-chart__item {
+  display: grid;
+  grid-template-columns: 100px 1fr 60px;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border, #e2e8f0);
+}
+.hbar-chart__item:last-child { border-bottom: none; }
+.hbar-chart__label {
+  font-size: 13px;
+  color: var(--color-text-strong, #111827);
+  font-weight: 500;
+}
+.hbar-chart__track {
+  height: 20px;
+  background: var(--color-border, #e2e8f0);
+  position: relative;
+}
+.hbar-chart__fill {
+  height: 100%;
+  background: var(--color-accent, #64748b);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 8px;
+  font-size: 11px;
+  color: var(--color-surface, #ffffff);
+  font-weight: 600;
+}
+.hbar-chart__fill--light { background: var(--color-border-strong, #d1d5db); color: var(--color-surface, #ffffff); }
+.hbar-chart__value {
+  font-size: 13px;
+  color: var(--color-text, #374151);
+  text-align: right;
+  font-weight: 600;
+}
+.hbar-chart__caption {
+  display: block;
+  text-align: center;
+  font-family: var(--font-head, Georgia, "Times New Roman", serif);
+  font-size: 12px;
+  font-style: italic;
+  color: var(--color-text-muted, #6b7280);
+  margin: 10px 0 24px;
+}

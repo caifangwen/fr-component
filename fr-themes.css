@@ -1,0 +1,760 @@
+/* ==========================================================================
+   FR Theme System — Multi-theme palette ported from caifangwen.github.io
+   All oklch values converted to hex for maximum browser compatibility
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   §1  Default Light (no data-theme)
+   -------------------------------------------------------------------------- */
+:root {
+--color-primary: #171717;
+  --color-primary-foreground: #fafafa;
+  --color-secondary: #f5f5f5;
+  --color-secondary-foreground: #171717;
+  --color-accent: #f5f5f5;
+  --color-accent-foreground: #171717;
+  --color-background: #ffffff;
+  --color-foreground: #0a0a0a;
+  --color-muted: #f5f5f5;
+  --color-muted-foreground: #737373;
+  --color-border: #e5e5e5;
+  --color-card: #ffffff;
+  --color-card-foreground: #0a0a0a;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #0a0a0a;
+
+
+  --color-note: #3585da;
+  --color-tip: #009e67;
+  --color-important: #7874d9; 
+  --color-warning: #af7800;
+  --color-caution: #cc576a;
+  --primary: var(--color-primary);
+  --primary-foreground: var(--color-primary-foreground);
+  --secondary: var(--color-secondary);
+  --secondary-foreground: var(--color-secondary-foreground);
+  --accent: var(--color-accent);
+  --accent-foreground: var(--color-accent-foreground);
+  --background: var(--color-background);
+  --foreground: var(--color-foreground);
+  --muted: var(--color-muted);
+  --muted-foreground: var(--color-muted-foreground);
+  --border: var(--color-border);
+  --card: var(--color-card);
+  --card-foreground: var(--color-card-foreground);
+  --popover: var(--color-popover);
+  --popover-foreground: var(--color-popover-foreground);
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --input: var(--color-border);
+  --ring: var(--color-primary);
+  --success: var(--color-tip);
+  --warning: var(--color-warning);
+  --danger: var(--color-caution);
+  --info: var(--color-note);
+  --important: var(--color-important);
+  --code-bg: #18181b;
+  --code-text: #f4f4f5;
+  --color-code-bg: var(--code-bg);
+  --color-code-text: var(--code-text);
+  --color-primary-light: var(--color-muted);
+  --color-primary-dark: var(--color-foreground);
+  --primary-5: rgba(24,24,27,0.05);
+  --primary-8: rgba(24,24,27,0.08);
+  --primary-10: rgba(24,24,27,0.10);
+  --primary-12: rgba(24,24,27,0.12);
+  --primary-15: rgba(24,24,27,0.15);
+  --primary-20: rgba(24,24,27,0.20);
+  --primary-30: rgba(24,24,27,0.30);
+  --success-5: rgba(16,185,129,0.05);
+  --success-15: rgba(16,185,129,0.15);
+  --warning-5: rgba(245,158,11,0.05);
+  --warning-15: rgba(245,158,11,0.15);
+  --danger-5: rgba(239,68,68,0.05);
+  --danger-15: rgba(239,68,68,0.15);
+  --shadow: 0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.07);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.08);
+}
+
+/* --------------------------------------------------------------------------
+   §2  Default Dark
+   -------------------------------------------------------------------------- */
+[data-theme="dark"] {
+--color-primary: #e5e5e5;
+  --color-primary-foreground: #171717;
+  --color-secondary: #262626;
+  --color-secondary-foreground: #fafafa;
+  --color-accent: #404040;
+  --color-accent-foreground: #fafafa;
+  --color-background: #0a0a0a;
+  --color-foreground: #fafafa;
+  --color-muted: #262626;
+  --color-muted-foreground: #a1a1a1;
+  --color-border: oklch(1 0 0 / 10%);
+  --color-card: #171717;
+  --color-card-foreground: #fafafa;
+  --color-popover: #262626;
+  --color-popover-foreground: #fafafa;
+
+--color-note: #4998ee;
+  --color-tip: #00b179;
+  --color-important: #8987ee;
+  --color-warning: #c28a00;
+  --color-caution: #e1697b;
+  --primary: var(--color-primary);
+  --primary-foreground: var(--color-primary-foreground);
+  --secondary: var(--color-secondary);
+  --secondary-foreground: var(--color-secondary-foreground);
+  --accent: var(--color-accent);
+  --accent-foreground: var(--color-accent-foreground);
+  --background: var(--color-background);
+  --foreground: var(--color-foreground);
+  --muted: var(--color-muted);
+  --muted-foreground: var(--color-muted-foreground);
+  --border: var(--color-border);
+  --card: var(--color-card);
+  --card-foreground: var(--color-card-foreground);
+  --popover: var(--color-popover);
+  --popover-foreground: var(--color-popover-foreground);
+  --destructive: #f87171;
+  --destructive-foreground: #18181b;
+  --input: var(--color-border);
+  --ring: var(--color-primary);
+  --success: var(--color-tip);
+  --warning: var(--color-warning);
+  --danger: var(--color-caution);
+  --info: var(--color-note);
+  --important: var(--color-important);
+  --code-bg: #09090b;
+  --code-text: #f4f4f5;
+  --color-code-bg: var(--code-bg);
+  --color-code-text: var(--code-text);
+  --color-primary-light: var(--color-muted);
+  --color-primary-dark: var(--color-foreground);
+  --primary-5: rgba(250,250,250,0.05);
+  --primary-8: rgba(250,250,250,0.08);
+  --primary-10: rgba(250,250,250,0.10);
+  --primary-12: rgba(250,250,250,0.12);
+  --primary-15: rgba(250,250,250,0.15);
+  --primary-20: rgba(250,250,250,0.20);
+  --primary-30: rgba(250,250,250,0.30);
+  --success-5: rgba(52,211,153,0.05);
+  --success-15: rgba(52,211,153,0.15);
+  --warning-5: rgba(251,191,36,0.05);
+  --warning-15: rgba(251,191,36,0.15);
+  --danger-5: rgba(248,113,113,0.05);
+  --danger-15: rgba(248,113,113,0.15);
+  --shadow: 0 1px 3px 0 rgba(0,0,0,0.2), 0 1px 2px -1px rgba(0,0,0,0.2);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.3), 0 2px 4px -1px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.4), 0 4px 6px -2px rgba(0,0,0,0.4);
+}
+
+/* --------------------------------------------------------------------------
+   §3  Named Light Themes
+   -------------------------------------------------------------------------- */
+[data-theme="claude"] {
+--color-primary: #cb6441;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #e7e4dd;
+  --color-secondary: #e7e4dd;
+  --color-secondary-foreground: #525044;
+  --color-accent: #e7e4dd;
+  --color-accent-foreground: #29271b;
+  --color-background: #faf8f1;
+  --color-foreground: #3d3826;
+  --color-muted: #ede8d9;
+  --color-muted-foreground: #85837d;
+  --color-border: #d9d8d0;
+  --color-card: #faf8f1;
+  --color-card-foreground: #141414;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #29271b;
+
+--color-note: #0080a1;
+--color-tip: #33854a;
+--color-important: #6568b6;
+--color-warning: #966800;
+--color-caution: #ac505b;
+}
+
+[data-theme="bumblebee"] {
+--color-primary: #fdc700;
+  --color-primary-foreground: #733e0a;
+  --color-secondary: #ff8903;
+  --color-secondary-foreground: #7c2808;
+  --color-accent: #000000;
+  --color-accent-foreground: #ffffff;
+  --color-background: #ffffff;
+  --color-foreground: #161616;
+  --color-muted: #f5f5f5;
+  --color-muted-foreground: #433f3a;
+  --color-border: #e4e4e4;
+  --color-card: #ffffff;
+  --color-card-foreground: #161616;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #161616;
+
+--color-note: #00a2ce;
+--color-tip: #3aa85b;
+--color-important: #7f82e8;
+--color-warning: #be8200;
+--color-caution: #db6371;
+}
+
+[data-theme="emerald"] {
+--color-primary: #67cc8a;
+  --color-primary-foreground: #223d30;
+  --color-secondary: #377cfb;
+  --color-secondary-foreground: #ffffff;
+  --color-accent: #f68067;
+  --color-accent-foreground: #000000;
+  --color-background: #ffffff;
+  --color-foreground: #333c4d;
+  --color-muted: #e8e8e8;
+  --color-muted-foreground: #333c4d;
+  --color-border: #d1d1d1;
+  --color-card: #ffffff;
+  --color-card-foreground: #333c4d;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #333c4d;
+
+--color-note: #0090b1;
+--color-tip: #439458;
+--color-important: #7377c6;
+--color-warning: #a57710;
+--color-caution: #bd5f69;
+}
+
+[data-theme="nord"] {
+--color-primary: #5e81ac;
+  --color-primary-foreground: #03060b;
+  --color-secondary: #81a1c1;
+  --color-secondary-foreground: #06090d;
+  --color-accent: #88c0d0;
+  --color-accent-foreground: #070d10;
+  --color-background: #eceff4;
+  --color-foreground: #2e343f;
+  --color-muted: #e5e9f0;
+  --color-muted-foreground: #4c566a;
+  --color-border: #d8dee9;
+  --color-card: #eceff4;
+  --color-card-foreground: #2e343f;
+  --color-popover: #eceff4;
+  --color-popover-foreground: #2e343f;
+
+--color-note: #317c92;
+--color-tip: #4e7f58;
+--color-important: #686ca0;
+--color-warning: #8a6c37;
+--color-caution: #9b5e62;
+}
+
+[data-theme="sunset"] {
+--color-primary: #ff7e5f;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #ffedea;
+  --color-secondary-foreground: #b35340;
+  --color-accent: #feb47b;
+  --color-accent-foreground: #3d3436;
+  --color-background: #fff9f5;
+  --color-foreground: #3d3436;
+  --color-muted: #fff0eb;
+  --color-muted-foreground: #78716c;
+  --color-border: #ffe0d6;
+  --color-card: #ffffff;
+  --color-card-foreground: #3d3436;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #3d3436;
+
+--color-note: #0091b9;
+--color-tip: #329751;
+--color-important: #7174d1;
+--color-warning: #ab7400;
+--color-caution: #c55865;
+}
+
+[data-theme="abyss"] {
+--color-primary: #91c200;
+  --color-primary-foreground: #011000;
+  --color-secondary: #a88ddf;
+  --color-secondary-foreground: #1c0934;
+  --color-accent: #00a6c0;
+  --color-accent-foreground: #f8f8f8;
+  --color-background: #e3f6f9;
+  --color-foreground: #002a36;
+  --color-muted: #cfebef;
+  --color-muted-foreground: #265e67;
+  --color-border: #b1d6dc;
+  --color-card: #e3f6f9;
+  --color-card-foreground: #002a36;
+  --color-popover: #f1fafc;
+  --color-popover-foreground: #002a36;
+
+--color-note: #00a3d2;
+--color-tip: #2ea957;
+--color-important: #7e80ee;
+--color-warning: #c18100;
+--color-caution: #df5f6f;
+}
+
+[data-theme="dracula"] {
+--color-primary: #e074b1;
+  --color-primary-foreground: #f9f9f3;
+  --color-secondary: #a686d6;
+  --color-secondary-foreground: #f9f9f3;
+  --color-accent: #d9a167;
+  --color-accent-foreground: #1d140a;
+  --color-background: #edeef5;
+  --color-foreground: #2b2d39;
+  --color-muted: #dbdde8;
+  --color-muted-foreground: #60626f;
+  --color-border: #c1c3d1;
+  --color-card: #edeef5;
+  --color-card-foreground: #2b2d39;
+  --color-popover: #f4f5f8;
+  --color-popover-foreground: #2b2d39;
+
+--color-note: #0090b1;
+--color-tip: #439458;
+--color-important: #7377c6;
+--color-warning: #a57710;
+--color-caution: #bd5f69;
+}
+
+[data-theme="amethyst"] {
+--color-primary: #8a79ab;
+  --color-primary-foreground: #f8f7fa;
+  --color-secondary: #dfd9ec;
+  --color-secondary-foreground: #3d3c4f;
+  --color-accent: #e6a5b8;
+  --color-accent-foreground: #4b2e36;
+  --color-background: #f8f7fa;
+  --color-foreground: #3d3c4f;
+  --color-muted: #dcd9e3;
+  --color-muted-foreground: #6b6880;
+  --color-border: #cec9d9;
+  --color-card: #ffffff;
+  --color-card-foreground: #3d3c4f;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #3d3c4f;
+
+  --color-note: #317c92;
+  --color-tip: #4e7f58;
+  --color-important: #686ca0;
+  --color-warning: #8a6c37;
+  --color-caution: #9b5e62;
+}
+
+[data-theme="slate"] {
+--color-primary: #6366f1;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #e5e7eb;
+  --color-secondary-foreground: #374151;
+  --color-accent: #e0e7ff;
+  --color-accent-foreground: #374151;
+  --color-background: #f8fafc;
+  --color-foreground: #1e293b;
+  --color-muted: #f3f4f6;
+  --color-muted-foreground: #6b7280;
+  --color-border: #d1d5db;
+  --color-card: #ffffff;
+  --color-card-foreground: #1e293b;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #1e293b;
+
+  --color-note: #0083b1;
+  --color-tip: #008a39;
+  --color-important: #6262cc;
+  --color-warning: #a16200;
+  --color-caution: #bc3f53;
+}
+
+[data-theme="twitter"] {
+--color-primary: #1e9df1;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #0f1419;
+  --color-secondary-foreground: #ffffff;
+  --color-accent: #e3ecf6;
+  --color-accent-foreground: #1e9df1;
+  --color-background: #ffffff;
+  --color-foreground: #0f1419;
+  --color-muted: #e5e5e6;
+  --color-muted-foreground: #0f1419;
+  --color-border: #e1eaef;
+  --color-card: #f7f8f8;
+  --color-card-foreground: #0f1419;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #0f1419;
+
+  --color-note: #008bb3;
+  --color-tip: #2a904b;
+  --color-important: #6c6ecb;
+  --color-warning: #a56e00;
+  --color-caution: #be525f;
+}
+
+/* --------------------------------------------------------------------------
+   §4  Named Dark Themes
+   -------------------------------------------------------------------------- */
+[data-theme="claude-dark"] {
+--color-primary: #d87757;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #faf8f1;
+  --color-secondary-foreground: #303030;
+  --color-accent: #1a1813;
+  --color-accent-foreground: #f7f5ee;
+  --color-background: #262626;
+  --color-foreground: #c3c1ba;
+  --color-muted: #1b1b1a;
+  --color-muted-foreground: #b7b5a6;
+  --color-border: #3e3e38;
+  --color-card: #262626;
+  --color-card-foreground: #faf8f1;
+  --color-popover: #303030;
+  --color-popover-foreground: #e4e4e4;
+
+--color-note: #00b1da;
+--color-tip: #55b66e;
+--color-important: #8e93f3;
+--color-warning: #cb9316;
+--color-caution: #e87782;
+}
+
+[data-theme="bumblebee-dark"] {
+--color-primary: #c29900;
+  --color-primary-foreground: #eeeeee;
+  --color-secondary: #903500;
+  --color-secondary-foreground: #eeeeee;
+  --color-accent: #0b0b0b;
+  --color-accent-foreground: #eeeeee;
+  --color-background: #060606;
+  --color-foreground: #e6e4e3;
+  --color-muted: #121212;
+  --color-muted-foreground: #938e89;
+  --color-border: #222222;
+  --color-card: #0b0b0b;
+  --color-card-foreground: #e6e4e3;
+  --color-popover: #121212;
+  --color-popover-foreground: #e6e4e3;
+
+--color-note: #00c5fb;
+--color-tip: #40cc6d;
+--color-important: #9a9dff;
+--color-warning: #e89d00;
+--color-caution: #ff7689;
+}
+
+[data-theme="emerald-dark"] {
+--color-primary: #4ca46c;
+  --color-primary-foreground: #eeeeee;
+  --color-secondary: #1b4eac;
+  --color-secondary-foreground: #eeeeee;
+  --color-accent: #ac5441;
+  --color-accent-foreground: #eeeeee;
+  --color-background: #060606;
+  --color-foreground: #fafafb;
+  --color-muted: #121212;
+  --color-muted-foreground: #898f9c;
+  --color-border: #222222;
+  --color-card: #0b0b0b;
+  --color-card-foreground: #fafafb;
+  --color-popover: #121212;
+  --color-popover-foreground: #fafafb;
+
+--color-note: #00c1eb;
+--color-tip: #65c67d;
+--color-important: #9da3ff;
+--color-warning: #dca331;
+--color-caution: #f98691;
+}
+
+[data-theme="nord-dark"] {
+--color-primary: #55749a;
+  --color-primary-foreground: #eeeeee;
+  --color-secondary: #5b748e;
+  --color-secondary-foreground: #eeeeee;
+  --color-accent: #6c97a3;
+  --color-accent-foreground: #eeeeee;
+  --color-background: #0e1218;
+  --color-foreground: #d8dee9;
+  --color-muted: #1d222b;
+  --color-muted-foreground: #949fb5;
+  --color-border: #343b48;
+  --color-card: #161b23;
+  --color-card-foreground: #d8dee9;
+  --color-popover: #1d222b;
+  --color-popover-foreground: #d8dee9;
+
+--color-note: #389db9;
+--color-tip: #60a06e;
+--color-important: #8388cb;
+--color-warning: #af8842;
+--color-caution: #c4757b;
+}
+
+[data-theme="sunset-dark"] {
+--color-primary: #ff7e5f;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #463a41;
+  --color-secondary-foreground: #f2e9e4;
+  --color-accent: #feb47b;
+  --color-accent-foreground: #2a2024;
+  --color-background: #2a2024;
+  --color-foreground: #f2e9e4;
+  --color-muted: #392f35;
+  --color-muted-foreground: #d7c6bc;
+  --color-border: #463a41;
+  --color-card: #392f35;
+  --color-card-foreground: #f2e9e4;
+  --color-popover: #392f35;
+  --color-popover-foreground: #f2e9e4;
+
+--color-note: #00bae9;
+--color-tip: #4ac06c;
+--color-important: #9296ff;
+--color-warning: #d89700;
+--color-caution: #f87584;
+}
+
+[data-theme="abyss-dark"] {
+--color-primary: #bdff00;
+  --color-primary-foreground: #427600;
+  --color-secondary: #cebef4;
+  --color-secondary-foreground: #564775;
+  --color-accent: #505050;
+  --color-accent-foreground: #f8f8f8;
+  --color-background: #001e29;
+  --color-foreground: #ffd6a7;
+  --color-muted: #003843;
+  --color-muted-foreground: #71a9b2;
+  --color-border: #004551;
+  --color-card: #00232e;
+  --color-card-foreground: #ffd6a7;
+  --color-popover: #003843;
+  --color-popover-foreground: #ffd6a7;
+
+--color-note: #00d1ff;
+--color-tip: #31d96d;
+--color-important: #a1a4ff;
+--color-warning: #f9a400;
+--color-caution: #ff778d;
+}
+
+[data-theme="dracula-dark"] {
+--color-primary: #ff79c6;
+  --color-primary-foreground: #16050e;
+  --color-secondary: #bd93f9;
+  --color-secondary-foreground: #0d0815;
+  --color-accent: #ffb86c;
+  --color-accent-foreground: #160d04;
+  --color-background: #282a36;
+  --color-foreground: #f8f8f2;
+  --color-muted: #414558;
+  --color-muted-foreground: #d6d7db;
+  --color-border: #505469;
+  --color-card: #2f3240;
+  --color-card-foreground: #f8f8f2;
+  --color-popover: #414558;
+  --color-popover-foreground: #f8f8f2;
+
+  --color-note: #00b9e5;
+  --color-tip: #53be70;
+  --color-important: #9398ff;
+  --color-warning: #d59800;
+  --color-caution: #f37986;
+}
+
+[data-theme="amethyst-dark"] {
+--color-primary: #a995c9;
+  --color-primary-foreground: #1a1823;
+  --color-secondary: #5a5370;
+  --color-secondary-foreground: #e0ddef;
+  --color-accent: #372e3f;
+  --color-accent-foreground: #f2b8c6;
+  --color-background: #1a1823;
+  --color-foreground: #e0ddef;
+  --color-muted: #242031;
+  --color-muted-foreground: #a09aad;
+  --color-border: #302c40;
+  --color-card: #232030;
+  --color-card-foreground: #e0ddef;
+  --color-popover: #232030;
+  --color-popover-foreground: #e0ddef;
+
+  --color-note: #43a6c3;
+  --color-tip: #69aa77;
+  --color-important: #8c91d5;
+  --color-warning: #b9914b;
+  --color-caution: #ce7e84;
+}
+
+[data-theme="slate-dark"] {
+--color-primary: #818cf8;
+  --color-primary-foreground: #0f172a;
+  --color-secondary: #2d3748;
+  --color-secondary-foreground: #d1d5db;
+  --color-accent: #374151;
+  --color-accent-foreground: #d1d5db;
+  --color-background: #0f172a;
+  --color-foreground: #e2e8f0;
+  --color-muted: #1e293b;
+  --color-muted-foreground: #9ca3af;
+  --color-border: #4b5563;
+  --color-card: #1e293b;
+  --color-card-foreground: #e2e8f0;
+  --color-popover: #1e293b;
+  --color-popover-foreground: #e2e8f0;
+
+  --color-note: #00b6f3;
+  --color-tip: #00bf54;
+  --color-important: #8a8aff;
+  --color-warning: #dd8a00;
+  --color-caution: #ff5c75;
+}
+
+[data-theme="twitter-dark"] {
+--color-primary: #1c9cf0;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #f0f3f4;
+  --color-secondary-foreground: #0f1419;
+  --color-accent: #061622;
+  --color-accent-foreground: #1c9cf0;
+  --color-background: #000000;
+  --color-foreground: #e7e9ea;
+  --color-muted: #181818;
+  --color-muted-foreground: #72767a;
+  --color-border: #242628;
+  --color-card: #17181c;
+  --color-card-foreground: #d9d9d9;
+  --color-popover: #000000;
+  --color-popover-foreground: #e7e9ea;
+
+  --color-note: #00bae9;
+  --color-tip: #4ac06c;
+  --color-important: #9296ff;
+  --color-warning: #d89700;
+  --color-caution: #f87584;
+}
+
+/* --------------------------------------------------------------------------
+   §5  Alias propagation for named light themes
+   -------------------------------------------------------------------------- */
+[data-theme="claude"],
+[data-theme="bumblebee"],
+[data-theme="emerald"],
+[data-theme="nord"],
+[data-theme="sunset"],
+[data-theme="abyss"],
+[data-theme="dracula"],
+[data-theme="amethyst"],
+[data-theme="slate"],
+[data-theme="twitter"] {
+  --primary: var(--color-primary);
+  --primary-foreground: var(--color-primary-foreground);
+  --secondary: var(--color-secondary);
+  --secondary-foreground: var(--color-secondary-foreground);
+  --accent: var(--color-accent);
+  --accent-foreground: var(--color-accent-foreground);
+  --background: var(--color-background);
+  --foreground: var(--color-foreground);
+  --muted: var(--color-muted);
+  --muted-foreground: var(--color-muted-foreground);
+  --border: var(--color-border);
+  --card: var(--color-card);
+  --card-foreground: var(--color-card-foreground);
+  --popover: var(--color-popover);
+  --popover-foreground: var(--color-popover-foreground);
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --input: var(--color-border);
+  --ring: var(--color-primary);
+  --success: var(--color-tip);
+  --warning: var(--color-warning);
+  --danger: var(--color-caution);
+  --info: var(--color-note);
+  --important: var(--color-important);
+  --code-bg: #18181b;
+  --code-text: #f4f4f5;
+  --color-code-bg: var(--code-bg);
+  --color-code-text: var(--code-text);
+  --color-primary-light: var(--color-muted);
+  --color-primary-dark: var(--color-foreground);
+  --primary-5: rgba(24,24,27,0.05);
+  --primary-8: rgba(24,24,27,0.08);
+  --primary-10: rgba(24,24,27,0.10);
+  --primary-12: rgba(24,24,27,0.12);
+  --primary-15: rgba(24,24,27,0.15);
+  --primary-20: rgba(24,24,27,0.20);
+  --primary-30: rgba(24,24,27,0.30);
+  --success-5: rgba(16,185,129,0.05);
+  --success-15: rgba(16,185,129,0.15);
+  --warning-5: rgba(245,158,11,0.05);
+  --warning-15: rgba(245,158,11,0.15);
+  --danger-5: rgba(239,68,68,0.05);
+  --danger-15: rgba(239,68,68,0.15);
+  --shadow: 0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.07);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.08);
+}
+
+/* --------------------------------------------------------------------------
+   §6  Alias propagation for named dark themes
+   -------------------------------------------------------------------------- */
+[data-theme="claude-dark"],
+[data-theme="bumblebee-dark"],
+[data-theme="emerald-dark"],
+[data-theme="nord-dark"],
+[data-theme="sunset-dark"],
+[data-theme="abyss-dark"],
+[data-theme="dracula-dark"],
+[data-theme="amethyst-dark"],
+[data-theme="slate-dark"],
+[data-theme="twitter-dark"] {
+  --primary: var(--color-primary);
+  --primary-foreground: var(--color-primary-foreground);
+  --secondary: var(--color-secondary);
+  --secondary-foreground: var(--color-secondary-foreground);
+  --accent: var(--color-accent);
+  --accent-foreground: var(--color-accent-foreground);
+  --background: var(--color-background);
+  --foreground: var(--color-foreground);
+  --muted: var(--color-muted);
+  --muted-foreground: var(--color-muted-foreground);
+  --border: var(--color-border);
+  --card: var(--color-card);
+  --card-foreground: var(--color-card-foreground);
+  --popover: var(--color-popover);
+  --popover-foreground: var(--color-popover-foreground);
+  --destructive: #f87171;
+  --destructive-foreground: #18181b;
+  --input: var(--color-border);
+  --ring: var(--color-primary);
+  --success: var(--color-tip);
+  --warning: var(--color-warning);
+  --danger: var(--color-caution);
+  --info: var(--color-note);
+  --important: var(--color-important);
+  --code-bg: #09090b;
+  --code-text: #f4f4f5;
+  --color-code-bg: var(--code-bg);
+  --color-code-text: var(--code-text);
+  --color-primary-light: var(--color-muted);
+  --color-primary-dark: var(--color-foreground);
+  --primary-5: rgba(250,250,250,0.05);
+  --primary-8: rgba(250,250,250,0.08);
+  --primary-10: rgba(250,250,250,0.10);
+  --primary-12: rgba(250,250,250,0.12);
+  --primary-15: rgba(250,250,250,0.15);
+  --primary-20: rgba(250,250,250,0.20);
+  --primary-30: rgba(250,250,250,0.30);
+  --success-5: rgba(52,211,153,0.05);
+  --success-15: rgba(52,211,153,0.15);
+  --warning-5: rgba(251,191,36,0.05);
+  --warning-15: rgba(251,191,36,0.15);
+  --danger-5: rgba(248,113,113,0.05);
+  --danger-15: rgba(248,113,113,0.15);
+  --shadow: 0 1px 3px 0 rgba(0,0,0,0.2), 0 1px 2px -1px rgba(0,0,0,0.2);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.3), 0 2px 4px -1px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.4), 0 4px 6px -2px rgba(0,0,0,0.4);
+}

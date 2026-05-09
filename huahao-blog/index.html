@@ -1,0 +1,1760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Huahao Blog — Component Library & Style Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto:ital,wght@0,300;0,400;0,500;1,400&family=Roboto+Slab:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="huahao.css">
+
+<!--
+════════════════════════════════════════════════════════════════════════
+  HUAHAO NONWOVENS — BLOG COMPONENT STYLESHEET
+  Version: 2.0  |  2026
+════════════════════════════════════════════════════════════════════════
+
+  📖 USAGE GUIDE / 使用指南
+  ════════════════════════════
+
+  METHOD 1: Global Installation (Recommended for site-wide use)
+  ─────────────────────────────────────────────────────────────────
+  1. Login to WordPress Admin Dashboard
+  2. Navigate to: Appearance → Customize → Additional CSS
+  3. Copy the entire <style> block below (from line 21 to ~2720)
+  4. Paste it into the Additional CSS textarea
+  5. Click "Publish" to save
+  → Benefit: Styles apply automatically to all posts
+
+  METHOD 2: Per-Post Installation (For selective use)
+  ─────────────────────────────────────────────────────────────────
+  1. Edit your blog post in WordPress Editor
+  2. Add a "Custom HTML" block at the very top of the post
+  3. Copy the entire <style> block below
+  4. Paste it into the Custom HTML block
+  5. Update/Publish the post
+  → Benefit: Styles only load on posts that need them
+
+  HOW TO USE COMPONENTS / 如何使用组件
+  ════════════════════════════════════
+  • In WordPress Block Editor (Gutenberg):
+    - Add a "Custom HTML" block where you want the component
+    - Paste the HTML snippet from the demo section below
+    - Customize the content/text as needed
+  
+  • In Classic Editor:
+    - Switch to "Text" tab (HTML mode)
+    - Paste the HTML snippet at desired location
+    - Switch back to "Visual" tab to continue editing
+
+  IMPORTANT NOTES / 重要说明
+  ═══════════════════════════
+  ✓ All classes use "hh-" prefix to avoid conflicts with WordPress themes
+  ✓ Components are fully responsive and mobile-friendly
+  ✓ Color scheme: Professional grayscale with subtle blue-gray accents
+  ✓ Typography: Georgia/serfor headings, Roboto for body text
+  ✓ To customize colors, edit the CSS variables in the :root section
+  ✓ Components work in WordPress 5.0+ (Gutenberg) and Classic Editor
+
+  COMPONENT CATALOG / 组件目录
+  ═════════════════════════════
+  § 01   Design Tokens (CSS Variables)
+  § 02   Article Wrapper (.hh-post)
+  § 03   Hero Banner (.hh-hero)
+  § 04   Section Headers (.hh-section-header)
+  § 05   Pull Quotes (.hh-quote)
+  § 06   Callout Boxes (.hh-box, .hh-box-info, .hh-box-warn, .hh-box-tip)
+  § 07   Tables (.hh-table-wrap, .hh-table)
+  § 08   Process Steps (.hh-steps)
+  § 09   Flowcharts (.hh-flow)
+  § 10   Bar Charts (.hh-bars)
+  § 11   Stat Cards (.hh-stats)
+  § 12   Card Grids (.hh-cards)
+  § 13   Checklists (.hh-checklist, .hh-checklist-cross, .hh-checklist-warn)
+  § 14   Two-Column Split (.hh-split)
+  § 15   Spec Cards (.hh-specs)
+  § 16   CTA Buttons (.hh-cta)
+  § 17   Image Placeholders (.hh-img-placeholder)
+  § 18   Tabs (.hh-tabs)
+  § 19   Numbered Lists (.hh-numbered-list)
+  § 20   Badges (.hh-badge)
+  § 21   Quote Blocks (.hh-quote-block)
+  § 22   Progress Bars (.hh-progress)
+  § 23   Gallery Grid (.hh-gallery)
+  § 24   Highlight Boxes (.hh-highlight)
+  § 25   Callout Strips (.hh-callout-strip)
+  § 26   Metrics (.hh-metrics)
+  § 27   Alerts (.hh-alert)
+  § 28   Avatars (.hh-avatars)
+  § 29   Timeline (.hh-timeline)
+  § 30   Comparison Matrix (.hh-matrix)
+  § 31   FAQ Accordion (.hh-faq)
+  § 32   Author Box (.hh-author)
+  § 33   Table of Contents (.hh-toc)
+  § 34   Tag Cloud (.hh-tags)
+  § 35   Divider Lines (.hh-divider)
+  § 36   Code Blocks (.hh-code)
+  § 37   Feature List (.hh-features)
+  § 38   Testimonial Cards (.hh-testimonials)
+  § 39   Image Sizes (.hh-img-sm, .hh-img-md, .hh-img-lg, .hh-img-xl, .hh-img-full)
+  § 40   Before/After Comparison (.hh-before-after)
+  § 41   Pros & Cons Table (.hh-pros-cons)
+  § 42   Decision Tree (.hh-decision)
+  § 43   Score Card Comparison (.hh-scorecards)
+  § 44   Quick Reference Table (.hh-ref-table)
+  § 45   Comparison Summary (.hh-summary)
+  § 46   Image Carousel (.hh-carousel)
+
+  TROUBLESHOOTING / 故障排除
+  ════════════════════════════
+  Q: Styles not applying?
+  A: Clear browser cache and WordPress cache. Ensure <style> block is complete.
+  
+  Q: Components look broken on mobile?
+  A: Check that wrapper class .hh-post is applied to parent container.
+  
+  Q: Colors don't match brand?
+  A: Edit CSS variables in :root section at the top of the stylesheet.
+  
+  Q: Fonts not loading?
+  A: Ensure Google Fonts link in <head> is included, or remove it to use system fonts.
+
+  SUPPORT / 技术支持
+  ══════════════════
+  For questions or customizations, refer to:
+  - huahao-usage.txt (detailed usage examples)
+  - markdown-to-huahao-prompt.txt (Markdown conversion guide)
+  - md2huahao.py (automated Markdown to HTML converter)
+
+════════════════════════════════════════════════════════════════════════
+-->
+
+
+  <!-- Huahao Blog Component Styles -->
+  <link rel="stylesheet" href="hh-variables.css">
+  <link rel="stylesheet" href="hh-base.css">
+  <link rel="stylesheet" href="hh-components.css">
+
+  <!-- Demo page presentation styles (remove when copying to WordPress) -->
+  <style>
+  body { background: #f4f4f2; padding: 40px 20px; font-family: 'Roboto', sans-serif; }
+  .demo-wrap { max-width: 900px; margin: 0 auto; }
+  .demo-label {
+    display: inline-block;
+    background: #1a1a1a;
+    color: #fff;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 4px;
+    margin: 36px 0 10px;
+  }
+ 
+  </style>
+</head>
+<body>
+<div class="demo-wrap">
+
+  <h1 style="font-family:'Montserrat',sans-serif;font-size:32px;font-weight:800;color:#1C293B;margin:0 0 6px;">Huahao Blog — Component Library</h1>
+  <p style="color:#6b7280;font-family:'Roboto',sans-serif;font-size:15px;margin:0 0 40px;">Paste the &lt;style&gt; block into WordPress → Appearance → Additional CSS.<br>Then use the HTML snippets below inside any post's Custom HTML block.</p>
+
+<div class="hh-post">
+
+<!-- ─── TYPOGRAPHY DEMO ─── -->
+<div class="demo-label">Typography · 排版演示</div>
+<div class="hh-section-title">Headings &amp; Text Formatting</div>
+
+<div class="hh-post">
+  <h1>Heading Level 1 - 一级标题</h1>
+  <p>This is a paragraph with <strong>bold text</strong>, <em>italic text</em>, and <strong><em>bold italic</em></strong>. 这是包含<strong>粗体</strong>、<em>斜体</em>和<strong><em>粗斜体</em></strong>的段落。</p>
+  
+  <h2>Heading Level 2 - 二级标题</h2>
+  <p>Links are styled with <a href="#">underline on hover</a>. 链接带有下划线效果。</p>
+  
+  <h3>Heading Level 3 - 三级标题</h3>
+  <p>Inline code looks like <code>console.log('Hello')</code> or <code>npm install package</code>.</p>
+  
+  <h4>Heading Level 4 - 四级标题</h4>
+  <p>Lists can be unordered or ordered:</p>
+  
+  <h5>Heading Level 5 - 五级标题（斜体）</h5>
+  <ul>
+    <li>Unordered list item 1</li>
+    <li>Unordered list item 2</li>
+    <li>Unordered list item 3</li>
+  </ul>
+  
+  <h6>Heading Level 6 - 六级标题（大写）</h6>
+  <ol>
+    <li>Ordered list item 1</li>
+    <li>Ordered list item 2</li>
+    <li>Ordered list item 3</li>
+  </ol>
+  
+  <blockquote>
+    This is a blockquote. Use it for citations or highlighted text.
+    这是引用块，用于突出显示重要内容。
+  </blockquote>
+  
+  <hr>
+  
+  <p>Code block example:</p>
+  <pre><code>function greet(name) {
+  return `Hello, ${name}!`;
+}
+
+console.log(greet('World'));</code></pre>
+  
+  <p>Image with caption:</p>
+  <figure>
+    <img src="https://via.placeholder.com/600x300/e2e8f0/4a5568?text=Sample+Image" alt="Sample">
+    <figcaption>Figure 1: This is an image caption describing the photo above.</figcaption>
+  </figure>
+</div>
+
+<!-- ─── § 2 HERO ─── -->
+<div class="demo-label">§ 2 · Hero Banner</div>
+<div class="hh-section-title">class="hh-hero"</div>
+<div class="hh-hero">
+  <span class="hh-hero-eyebrow">Complete Buyer's Guide · 2026</span>
+  <h1>How to Order Custom Bags<br>from a Manufacturer</h1>
+  <p class="hh-hero-sub">Every step from material choice to delivery — with exact timelines, transparent pricing, and the questions you should be asking any supplier.</p>
+  <div class="hh-hero-stats">
+    <div><span class="hh-hero-stat-num">21 yrs</span><span class="hh-hero-stat-label">Factory experience</span></div>
+    <div><span class="hh-hero-stat-num">500M+</span><span class="hh-hero-stat-label">Bags produced</span></div>
+    <div><span class="hh-hero-stat-num">24 hrs</span><span class="hh-hero-stat-label">Quote turnaround</span></div>
+    <div><span class="hh-hero-stat-num">500 pcs</span><span class="hh-hero-stat-label">Minimum order</span></div>
+  </div>
+</div>
+
+<!-- ─── § 3 SECTION HEADER ─── -->
+<div class="demo-label">§ 3 · Section Header</div>
+<div class="hh-section-title">class="hh-section-header"</div>
+<div class="hh-section-header">
+  <div class="hh-section-num">01</div>
+  <div>
+    <span class="hh-section-tag">Material Science</span>
+    <h2 class="hh-section-title">Choose Your Material &amp; Construction</h2>
+  </div>
+</div>
+<p>Material is the single decision that affects everything else: price, durability, print quality, and sustainability credentials. Here's an honest comparison of the most common options.</p>
+
+<!-- ─── § 4 PULL QUOTE ─── -->
+<div class="demo-label">§ 4 · Pull Quote</div>
+<div class="hh-section-title">class="hh-quote"</div>
+<blockquote class="hh-quote">
+  <p>All production colors are matched to Pantone Solid Coated or our in-house calibrated color library. If your approved sample and bulk order have a color difference exceeding ±5 Delta E, we will re-run the affected units at no charge.</p>
+</blockquote>
+
+<!-- ─── § 5 CALLOUT BOXES ─── -->
+<div class="demo-label">§ 5 · Callout Boxes</div>
+<div class="hh-section-title">hh-box / hh-box-info / hh-box-warn / hh-box-tip</div>
+
+<div class="hh-box">
+  <span class="hh-box-title">Key Properties of PP Non-Woven Fabric</span>
+  <ul>
+    <li>Tear-resistant and puncture-tolerant</li>
+    <li>Moisture-resistant — does not absorb water</li>
+    <li>Breathable — air passes through micro-fiber structure</li>
+    <li>Chemically inert — no dye leach under normal conditions</li>
+    <li>Recyclable within PP streams (#5 plastic)</li>
+    <li>Available from 60 gsm to 120 gsm heavy-duty</li>
+  </ul>
+</div>
+
+<div class="hh-box-tip">
+  <p><span class="hh-box-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 01-2 2H10a2 2 0 01-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"></path><path d="M9 21h6"></path></svg></span><strong>Pro tip:</strong> 80-100 gsm covers 90% of retail use cases. Only go heavier if you need hardware or bulk grocery load capacity above 12 kg.</p>
+</div>
+
+<div class="hh-box-info">
+  <p><span class="hh-box-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span>International sample shipping via DHL Express is complimentary for all first-time orders. Physical samples ship within 5-7 business days of digital proof approval.</p>
+</div>
+
+<div class="hh-box-warn">
+  <p><span class="hh-box-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>PP non-woven fabric is <strong>not biodegradable</strong>. Its environmental benefit only holds when the bags are genuinely reused and properly disposed of. Minimum 11 reuses required to offset one plastic bag.</p>
+</div>
+
+<!-- ─── § 6 TABLE ─── -->
+<div class="demo-label">§ 6 · Table</div>
+<div class="hh-section-title">class="hh-table-wrap" + class="hh-table"</div>
+<div class="hh-table-wrap">
+  <table class="hh-table">
+    <thead>
+      <tr>
+        <th>Material</th><th>Best For</th><th>Load</th><th>Eco Option</th><th>MOQ</th><th>Print Method</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Nonwoven (PP)</td>
+        <td>Retail, supermarket, brand gifts</td>
+        <td>5–15 kg</td>
+        <td>rPET available</td>
+        <td><span class="hh-pill">500 pcs</span></td>
+        <td>Screen / heat transfer</td>
+      </tr>
+      <tr>
+        <td>Canvas (cotton)</td>
+        <td>Premium brand, creative, gift</td>
+        <td>10–20 kg</td>
+        <td>Organic cotton</td>
+        <td><span class="hh-pill">300 pcs</span></td>
+        <td>Screen / digital</td>
+      </tr>
+      <tr>
+        <td>Oxford fabric</td>
+        <td>E-commerce, outdoor, utility</td>
+        <td>8–20 kg</td>
+        <td>—</td>
+        <td><span class="hh-pill">500 pcs</span></td>
+        <td>Heat transfer</td>
+      </tr>
+      <tr>
+        <td>PLA biodegradable</td>
+        <td>ESG compliance, food retail</td>
+        <td>3–8 kg</td>
+        <td>OK Compost</td>
+        <td><span class="hh-pill hh-pill-best">1,000 pcs</span></td>
+        <td>Digital print</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ─── § 7 PROCESS STEPS ─── -->
+<div class="demo-label">§ 7 · Process Step Cards</div>
+<div class="hh-section-title">class="hh-steps" + class="hh-step"</div>
+<div class="hh-steps">
+  <div class="hh-step"><div class="hh-step-n">01</div><h4>Choose Material</h4><p>Decide GSM, fabric type, and lamination based on load and budget. Day 1–2.</p></div>
+  <div class="hh-step"><div class="hh-step-n">02</div><h4>Request a Quote</h4><p>Submit your specs. We respond with itemized pricing within 24 hours. Day 2–3.</p></div>
+  <div class="hh-step"><div class="hh-step-n">03</div><h4>Sample Approval</h4><p>Digital proof then physical sample. Approve only when every element is correct. Day 3–12.</p></div>
+  <div class="hh-step"><div class="hh-step-n">04</div><h4>Place Order</h4><p>30% deposit, production slot assigned, factory order number issued. Day 10–12.</p></div>
+  <div class="hh-step"><div class="hh-step-n">05</div><h4>Production &amp; QC</h4><p>3-stage quality control: incoming materials, in-line checks, pre-shipment AQL 2.5. Day 10–28.</p></div>
+  <div class="hh-step"><div class="hh-step-n">06</div><h4>Shipment</h4><p>Choose express air, air freight, or sea freight. Full QC report included. Day 21–35.</p></div>
+</div>
+
+<!-- ─── § 8 FLOWCHART ─── -->
+<div class="demo-label">§ 8 · Vertical Flowchart</div>
+<div class="hh-section-title">class="hh-flow"</div>
+<div class="hh-flow">
+  <div class="hh-flow-step">
+    <div class="hh-flow-dot">1</div>
+    <div class="hh-flow-body">
+      <span class="hh-flow-tag">Day 1–2</span>
+      <strong>Polymer Extrusion</strong>
+      <p>PP pellets are melted and extruded through spinnerets. Filament diameter determines the final fabric's feel and tensile strength.</p>
+    </div>
+  </div>
+  <div class="hh-flow-step">
+    <div class="hh-flow-dot">2</div>
+    <div class="hh-flow-body">
+      <span class="hh-flow-tag">Day 2–3</span>
+      <strong>Web Laying &amp; Thermal Bonding</strong>
+      <p>Filaments are laid randomly onto a moving belt, then passed through heated calendar rollers — no adhesive required.</p>
+    </div>
+  </div>
+  <div class="hh-flow-step">
+    <div class="hh-flow-dot">3</div>
+    <div class="hh-flow-body">
+      <span class="hh-flow-tag">Day 3–5</span>
+      <strong>Printing &amp; Color Application</strong>
+      <p>Branding applied via screen printing, offset, heat transfer, or BOPP lamination for photo-quality full-bleed coverage.</p>
+    </div>
+  </div>
+  <div class="hh-flow-step">
+    <div class="hh-flow-dot">4</div>
+    <div class="hh-flow-body">
+      <span class="hh-flow-tag">Day 5–12</span>
+      <strong>Cutting, Sewing &amp; QC</strong>
+      <p>Die-cut or laser-cut panels sewn with reinforced seams. AQL 2.5 random sampling before shipment.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── § 9 BAR CHART ─── -->
+<div class="demo-label">§ 9 · Comparison Bar Chart</div>
+<div class="hh-section-title">class="hh-bars"</div>
+<div class="hh-bars">
+  <span class="hh-bars-title">CO₂ Break-Even vs. Single-Use Plastic (reuses required)</span>
+  <div class="hh-bar-row">
+    <span class="hh-bar-label">Non-Woven PP</span>
+    <div class="hh-bar-track"><div class="hh-bar-fill" style="width:0.55%"></div></div>
+    <span class="hh-bar-val">~11 reuses</span>
+  </div>
+  <div class="hh-bar-row">
+    <span class="hh-bar-label">Cotton Canvas</span>
+    <div class="hh-bar-track"><div class="hh-bar-fill hh-bar-fill-amber" style="width:65%"></div></div>
+    <span class="hh-bar-val">~130 reuses</span>
+  </div>
+  <div class="hh-bar-row">
+    <span class="hh-bar-label">Organic Cotton</span>
+    <div class="hh-bar-track"><div class="hh-bar-fill hh-bar-fill-red" style="width:100%"></div></div>
+    <span class="hh-bar-val">~20,000 reuses</span>
+  </div>
+  <div class="hh-bar-row">
+    <span class="hh-bar-label">HDPE Plastic</span>
+    <div class="hh-bar-track"><div class="hh-bar-fill hh-bar-fill-muted" style="width:0.015%"></div></div>
+    <span class="hh-bar-val">Baseline (1 use)</span>
+  </div>
+</div>
+
+<!-- ─── § 10 STAT CARDS ─── -->
+<div class="demo-label">§ 10 · Stat / KPI Cards</div>
+<div class="hh-section-title">class="hh-stats" + class="hh-stat"</div>
+<div class="hh-stats">
+  <div class="hh-stat"><span class="hh-stat-num">500M+</span><span class="hh-stat-label">Bags Produced</span></div>
+  <div class="hh-stat"><span class="hh-stat-num">21 yrs</span><span class="hh-stat-label">Experience</span></div>
+  <div class="hh-stat"><span class="hh-stat-num">9</span><span class="hh-stat-label">Production Bases</span></div>
+  <div class="hh-stat"><span class="hh-stat-num">AQL 2.5</span><span class="hh-stat-label">QC Standard</span></div>
+  <div class="hh-stat"><span class="hh-stat-num">24 hrs</span><span class="hh-stat-label">Quote Response</span></div>
+</div>
+
+<!-- ─── § 11 CARD GRID ─── -->
+<div class="demo-label">§ 11 · Use-Case Cards</div>
+<div class="hh-section-title">class="hh-cards" + class="hh-card"</div>
+<div class="hh-cards">
+  <div class="hh-card">
+    <span class="hh-card-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 01-8 0"></path></svg>
+    </span>
+    <h4>Grocery &amp; Supermarket</h4>
+    <p>90-100 gsm, wide gusset for bottles and cartons. Sold at checkout.</p>
+  </div>
+  <div class="hh-card">
+    <span class="hh-card-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path></svg>
+    </span>
+    <h4>Pharmacy &amp; Healthcare</h4>
+    <p>80 gsm D-cut. Clean, professional image with health messaging.</p>
+  </div>
+  <div class="hh-card">
+    <span class="hh-card-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2" ry="2"></rect><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"></path></svg>
+    </span>
+    <h4>Retail &amp; Fashion</h4>
+    <p>BOPP-laminated, full-bleed brand print. Replaces paper carrier bags.</p>
+  </div>
+  <div class="hh-card">
+    <span class="hh-card-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"></path></svg>
+    </span>
+    <h4>Trade Shows</h4>
+    <p>60-80 gsm, 1-2 color screen print, high volume, rapid turnaround.</p>
+  </div>
+  <div class="hh-card">
+    <span class="hh-card-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+    </span>
+    <h4>CSR Campaigns</h4>
+    <p>Paired with recycling messaging and rPET material certification.</p>
+  </div>
+  <div class="hh-card">
+    <span class="hh-card-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"></path></svg>
+    </span>
+    <h4>Hardware &amp; DIY</h4>
+    <p>120 gsm reinforced seams. Carries tools and building materials.</p>
+  </div>
+  <div class="hh-card">
+    <span class="hh-card-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+    </span>
+    <h4>Corporate Gifts</h4>
+    <p>Premium finish with custom branding. Perfect for client appreciation.</p>
+  </div>
+  <div class="hh-card">
+    <span class="hh-card-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+    </span>
+    <h4>Eco Packaging</h4>
+    <p>Sustainable materials with minimal environmental impact.</p>
+  </div>
+</div>
+
+<!-- ─── § 12 CHECKLISTS ─── -->
+<div class="demo-label">§ 12 · Checklist</div>
+<div class="hh-section-title">class="hh-checklist"</div>
+<div class="hh-split">
+  <div class="hh-split-col">
+    <h4>Where Non-Woven Wins</h4>
+    <ul class="hh-checklist">
+      <li>Breaks even vs. plastic after just 11 reuses</li>
+      <li>Lasts 50-100 uses in normal conditions</li>
+      <li>Recyclable in PP (#5) drop-off streams</li>
+      <li>Return-to-manufacturer programs available</li>
+    </ul>
+  </div>
+  <div class="hh-split-col">
+    <h4>Honest Caveats</h4>
+    <ul class="hh-checklist hh-checklist-warn">
+      <li>PP is not biodegradable - degrades over decades if littered</li>
+      <li>Benefit only holds if bag is actually reused</li>
+      <li>Recycling infrastructure varies by region</li>
+      <li>rPET offers a cleaner story for premium brands</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ─── § 13 SPLIT already shown above in § 12 ─── -->
+
+<!-- ─── § 14 SPEC MINI-CARDS ─── -->
+<div class="demo-label">§ 14 · Spec Mini-Cards</div>
+<div class="hh-section-title">class="hh-specs" + class="hh-spec-card"</div>
+<div class="hh-specs">
+  <div class="hh-spec-card">
+    <div class="hh-spec-head">Standard Lead Time</div>
+    <div class="hh-spec-body"><div class="hh-spec-val">10–15 Business Days</div><div class="hh-spec-note">From artwork approval to ex-factory shipment.</div></div>
+  </div>
+  <div class="hh-spec-card">
+    <div class="hh-spec-head">Rush Production</div>
+    <div class="hh-spec-body"><div class="hh-spec-val">7 Days</div><div class="hh-spec-note">Available with surcharge. Confirm capacity early.</div></div>
+  </div>
+  <div class="hh-spec-card">
+    <div class="hh-spec-head">QC Standard</div>
+    <div class="hh-spec-body"><div class="hh-spec-val">AQL 2.5</div><div class="hh-spec-note">Random sampling before every shipment. Full photo report included.</div></div>
+  </div>
+  <div class="hh-spec-card">
+    <div class="hh-spec-head">Free Sample</div>
+    <div class="hh-spec-body"><div class="hh-spec-val">1 Round Included</div><div class="hh-spec-note">DHL Express complimentary for first-time inquiries.</div></div>
+  </div>
+</div>
+
+<!-- ─── § 15 INQUIRY FORM ─── -->
+<div class="demo-label">§ 15 · Inline Quote Form</div>
+<div class="hh-section-title">class="hh-form-wrap"</div>
+<div class="hh-form-wrap">
+  <h3>Get a Free Quote — 24-Hour Response</h3>
+  <p class="hh-form-sub">Tell us your requirements and we'll respond with pricing, lead times, and a sample offer within one business day.</p>
+  <div class="hh-form-grid">
+    <div class="hh-form-field">
+      <label class="hh-form-label">Full Name *</label>
+      <input type="text" placeholder="Jane Smith">
+    </div>
+    <div class="hh-form-field">
+      <label class="hh-form-label">Company *</label>
+      <input type="text" placeholder="Acme Retail Ltd.">
+    </div>
+    <div class="hh-form-field">
+      <label class="hh-form-label">Email Address *</label>
+      <input type="email" placeholder="jane@company.com">
+    </div>
+    <div class="hh-form-field">
+      <label class="hh-form-label">WhatsApp / Phone</label>
+      <input type="tel" placeholder="+1 555 000 0000">
+    </div>
+    <div class="hh-form-field">
+      <label class="hh-form-label">Product Type *</label>
+      <select>
+        <option value="">— Select —</option>
+        <option>Nonwoven Shopping Bag</option>
+        <option>Canvas Tote Bag</option>
+        <option>Drawstring Bag</option>
+        <option>Insulated Cooler Bag</option>
+        <option>Paper Bag</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="hh-form-field">
+      <label class="hh-form-label">Estimated Quantity *</label>
+      <input type="text" placeholder="e.g. 5,000 pcs">
+    </div>
+    <div class="hh-form-field">
+      <label class="hh-form-label">Target Delivery Date</label>
+      <input type="date">
+    </div>
+    <div class="hh-form-field">
+      <label class="hh-form-label">Delivery Country *</label>
+      <input type="text" placeholder="United States">
+    </div>
+    <div class="hh-form-field hh-full">
+      <label class="hh-form-label">Tell us about your project</label>
+      <textarea placeholder="Material preference, GSM, print details, sustainability requirements…"></textarea>
+    </div>
+  </div>
+  <button class="hh-btn-submit">Get My Quote in 24 Hours →</button>
+  <span class="hh-form-privacy">Your information is never shared. No spam, ever.</span>
+</div>
+
+<!-- ─── § 16 FAQ ─── -->
+<div class="demo-label">§ 16 · FAQ Accordion</div>
+<div class="hh-section-title">class="hh-faq" + details.hh-faq-item</div>
+<div class="hh-faq">
+  <details class="hh-faq-item">
+    <summary class="hh-faq-q">Can you accept orders below your standard MOQ?</summary>
+    <div class="hh-faq-a"><p>Yes, in most cases. Small-batch production is available for select product lines, sometimes as low as 100 pcs. Minimum order surcharges may apply. Send us your quantity and we'll advise on the most cost-effective route.</p></div>
+  </details>
+  <details class="hh-faq-item">
+    <summary class="hh-faq-q">How do you handle color accuracy across large runs?</summary>
+    <div class="hh-faq-a"><p>We use Pantone Solid Coated as the production standard — not screen color. Our calibrated inkroom is tested daily. Bulk order color tolerance is ±5 Delta E vs. the signed physical sample.</p></div>
+  </details>
+  <details class="hh-faq-item">
+    <summary class="hh-faq-q">What happens if my delivery is delayed?</summary>
+    <div class="hh-faq-a"><p>We issue a written delay notice a minimum of 10 days before the original delivery date, with two alternative solutions (partial shipment, expedited shipping upgrade). Our contracts include a delivery guarantee clause.</p></div>
+  </details>
+  <details class="hh-faq-item">
+    <summary class="hh-faq-q">What certifications do your factories hold?</summary>
+    <div class="hh-faq-a"><p>BSCI, ISO 14001, ISO 9001, OEKO-TEX (select materials). Certificates are available on request for all 9 production bases.</p></div>
+  </details>
+</div>
+
+<!-- ─── § 17 TIMELINE ─── -->
+<div class="demo-label">§ 17 · Horizontal Timeline</div>
+<div class="hh-section-title">class="hh-timeline"</div>
+<div class="hh-timeline">
+  <div class="hh-timeline-item"><div class="hh-timeline-dot"></div><div class="hh-timeline-label">Day 1–2</div><div class="hh-timeline-title">Material<br>Selection</div></div>
+  <div class="hh-timeline-item"><div class="hh-timeline-dot"></div><div class="hh-timeline-label">Day 2–3</div><div class="hh-timeline-title">Request<br>Quote</div></div>
+  <div class="hh-timeline-item"><div class="hh-timeline-dot"></div><div class="hh-timeline-label">Day 3–5</div><div class="hh-timeline-title">Digital<br>Proof</div></div>
+  <div class="hh-timeline-item"><div class="hh-timeline-dot"></div><div class="hh-timeline-label">Day 7–12</div><div class="hh-timeline-title">Physical<br>Sample</div></div>
+  <div class="hh-timeline-item"><div class="hh-timeline-dot"></div><div class="hh-timeline-label">Day 10–12</div><div class="hh-timeline-title">Place<br>Order</div></div>
+  <div class="hh-timeline-item"><div class="hh-timeline-dot"></div><div class="hh-timeline-label">Day 10–28</div><div class="hh-timeline-title">Production<br>&amp; QC</div></div>
+  <div class="hh-timeline-item"><div class="hh-timeline-dot"></div><div class="hh-timeline-label">Day 21–35</div><div class="hh-timeline-title">Shipment<br>Delivery</div></div>
+</div>
+
+<!-- ─── § 18 CTA ─── -->
+<div class="demo-label">§ 18 · CTA Banner</div>
+<div class="hh-section-title">class="hh-cta"</div>
+<div class="hh-cta">
+  <span class="hh-cta-tag">Ready to Start Production?</span>
+  <h2>Get a Free Quote Within 24 Hours</h2>
+  <p>Send us your specifications and receive itemized pricing, lead times, and a complimentary sample offer - no obligation.</p>
+  <div class="hh-cta-btns">
+    <a href="#" class="hh-btn-primary">Request a Quote</a>
+    <a href="#" class="hh-btn-outline">Contact Sales</a>
+  </div>
+</div>
+
+<!-- ─── § 19 VERDICT ─── -->
+<div class="demo-label">§ 19 · Verdict Table</div>
+<div class="hh-section-title">class="hh-verdict"</div>
+<div class="hh-verdict">
+  <span class="hh-verdict-title">Quick Summary</span>
+  <div class="hh-verdict-row">
+    <span class="hh-verdict-key">Best For</span>
+    <span class="hh-verdict-val">Retail brands, supermarkets, and promotional events requiring durable, reusable bags with quality printing.</span>
+  </div>
+  <div class="hh-verdict-row">
+    <span class="hh-verdict-key">Avoid If</span>
+    <span class="hh-verdict-val">You need biodegradable materials or expect single-use behavior without reuse messaging.</span>
+  </div>
+  <div class="hh-verdict-row">
+    <span class="hh-verdict-key">Sweet Spot</span>
+    <span class="hh-verdict-val">80–100 gsm non-woven PP with screen printing for orders between 1,000–10,000 units.</span>
+  </div>
+  <div class="hh-verdict-row">
+    <span class="hh-verdict-key">Lead Time</span>
+    <span class="hh-verdict-val">10–15 business days from sample approval, plus shipping time to your destination.</span>
+  </div>
+</div>
+
+<!-- ─── § 20 TABS / TAB PANEL ─── -->
+<div class="demo-label">§ 20 · Tab Panels</div>
+<div class="hh-section-title">class="hh-tabs"</div>
+<div class="hh-tabs">
+  <div class="hh-tab-list">
+    <button class="hh-tab-btn hh-active">Material Options</button>
+    <button class="hh-tab-btn">Print Methods</button>
+    <button class="hh-tab-btn">Finishing</button>
+    <button class="hh-tab-btn">Packaging</button>
+  </div>
+  <div class="hh-tab-panel">
+    <h4>Available Materials</h4>
+    <p>We offer a range of non-woven fabric options from 60 gsm to 120 gsm, including standard PP, rPET recycled material, and BOPP laminated finishes. Each material has different characteristics suited to specific use cases.</p>
+    <ul class="hh-checklist">
+      <li><strong>60-80 gsm:</strong> Lightweight, ideal for trade shows and events</li>
+      <li><strong>90-100 gsm:</strong> Standard weight for retail and supermarket use</li>
+      <li><strong>110-120 gsm:</strong> Heavy-duty for hardware and bulk items</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ─── § 21 NUMBERED LIST ─── -->
+<div class="demo-label">§ 21 · Numbered Step List</div>
+<div class="hh-section-title">class="hh-numbered-list"</div>
+<ol class="hh-numbered-list">
+  <li>
+    <span class="hh-numbered-step">01</span>
+    <div class="hh-numbered-content">
+      <h4>Submit Your Requirements</h4>
+      <p>Fill out our inquiry form or send an email with your specifications: material, GSM, size, quantity, and any sustainability requirements.</p>
+    </div>
+  </li>
+  <li>
+    <span class="hh-numbered-step">02</span>
+    <div class="hh-numbered-content">
+      <h4>Receive Itemized Quote</h4>
+      <p>Within 24 hours, you'll receive detailed pricing broken down by unit cost, setup fees, and shipping estimates to your destination.</p>
+    </div>
+  </li>
+  <li>
+    <span class="hh-numbered-step">03</span>
+    <div class="hh-numbered-content">
+      <h4>Approve Digital Proof</h4>
+      <p>Our design team creates a digital mockup within 2-3 business days. Request unlimited revisions until the artwork is perfect.</p>
+    </div>
+  </li>
+  <li>
+    <span class="hh-numbered-step">04</span>
+    <div class="hh-numbered-content">
+      <h4>Physical Sample (Optional)</h4>
+      <p>For an additional 5-7 days, receive a physical sample shipped via DHL Express. One free sample round is included for first-time clients.</p>
+    </div>
+  </li>
+</ol>
+
+<!-- ─── § 22 BADGE / TAG COLLECTION ─── -->
+<div class="demo-label">§ 22 · Badges & Tags</div>
+<div class="hh-section-title">class="hh-badge"</div>
+<p style="margin-bottom: 16px;">
+  <span class="hh-badge">New Arrival</span>
+  <span class="hh-badge hh-badge-blue">Popular</span>
+  <span class="hh-badge hh-badge-green">In Stock</span>
+  <span class="hh-badge hh-badge-amber">Pre-Order</span>
+  <span class="hh-badge hh-badge-red">Limited</span>
+  <span class="hh-badge hh-badge-outline">Eco-Friendly</span>
+  <span class="hh-badge hh-badge-outline">Recyclable</span>
+  <span class="hh-badge hh-badge-outline">rPET</span>
+</p>
+
+<!-- ─── § 23 QUOTE BLOCK ─── -->
+<div class="demo-label">§ 23 · Quote Block</div>
+<div class="hh-section-title">class="hh-quote-block"</div>
+<div class="hh-quote-block">
+  <blockquote>
+    "We switched to Huahao's non-woven bags for our entire retail chain. The quality consistency across 50,000 units was remarkable, and the color matching to our brand guidelines was spot-on."
+  </blockquote>
+  <div class="hh-quote-author">
+    <div class="hh-quote-avatar">JD</div>
+    <div>
+      <strong>Jane Doe</strong>
+      <span>Head of Sustainability, Global Retail Corp</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── § 24 PROGRESS INDICATOR ─── -->
+<div class="demo-label">§ 24 · Progress Steps</div>
+<div class="hh-section-title">class="hh-progress"</div>
+<div class="hh-progress">
+  <div class="hh-progress-step hh-completed">
+    <div class="hh-progress-dot">✓</div>
+    <span class="hh-progress-label">Inquiry</span>
+  </div>
+  <div class="hh-progress-step hh-completed">
+    <div class="hh-progress-dot">✓</div>
+    <span class="hh-progress-label">Quote</span>
+  </div>
+  <div class="hh-progress-step hh-active">
+    <div class="hh-progress-dot">3</div>
+    <span class="hh-progress-label">Sample</span>
+  </div>
+  <div class="hh-progress-step">
+    <div class="hh-progress-dot">4</div>
+    <span class="hh-progress-label">Production</span>
+  </div>
+  <div class="hh-progress-step">
+    <div class="hh-progress-dot">5</div>
+    <span class="hh-progress-label">Delivery</span>
+  </div>
+</div>
+
+<!-- ─── § 25 IMAGE GALLERY ─── -->
+<div class="demo-label">§ 25 · Image Gallery</div>
+<div class="hh-section-title">class="hh-gallery"</div>
+<div class="hh-gallery">
+  <div class="hh-gallery-item">
+    <img src="https://via.placeholder.com/400x300/e2e8f0/4a5568?text=Product+1" alt="Product 1">
+    <span class="hh-gallery-caption">Standard Tote Bag</span>
+  </div>
+  <div class="hh-gallery-item">
+    <img src="https://via.placeholder.com/400x300/e2e8f0/4a5568?text=Product+2" alt="Product 2">
+    <span class="hh-gallery-caption">Laminated Shopping Bag</span>
+  </div>
+  <div class="hh-gallery-item">
+    <img src="https://via.placeholder.com/400x300/e2e8f0/4a5568?text=Product+3" alt="Product 3">
+    <span class="hh-gallery-caption">Drawstring Pouch</span>
+  </div>
+  <div class="hh-gallery-item">
+    <img src="https://via.placeholder.com/400x300/e2e8f0/4a5568?text=Product+4" alt="Product 4">
+    <span class="hh-gallery-caption">Insulated Cooler Bag</span>
+  </div>
+</div>
+
+<!-- ─── § 26 HIGHLIGHT BOX ─── -->
+<div class="demo-label">§ 26 · Highlight Box</div>
+<div class="hh-section-title">class="hh-highlight"</div>
+<div class="hh-highlight">
+  <div class="hh-highlight-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+  </div>
+  <div class="hh-highlight-content">
+    <h4>Did You Know?</h4>
+    <p>Our non-woven bags have been used by over 2,000 brands worldwide, preventing an estimated 500 million single-use plastic bags from entering landfills and oceans annually.</p>
+  </div>
+</div>
+
+<!-- ─── § 27 COMPARISON TABLE ─── -->
+<div class="demo-label">§ 27 · Comparison Table</div>
+<div class="hh-section-title">class="hh-comparison"</div>
+<div class="hh-comparison">
+  <table class="hh-table">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>Standard PP</th>
+        <th>rPET Recycled</th>
+        <th>BOPP Laminated</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Eco Rating</td>
+        <td>★★★☆☆</td>
+        <td><span class="hh-pill hh-pill-best">★★★★★</span></td>
+        <td>★★★☆☆</td>
+      </tr>
+      <tr>
+        <td>Durability</td>
+        <td>Good</td>
+        <td>Good</td>
+        <td><span class="hh-pill hh-pill-best">Excellent</span></td>
+      </tr>
+      <tr>
+        <td>Print Quality</td>
+        <td>Standard</td>
+        <td>Standard</td>
+        <td>Premium</td>
+      </tr>
+      <tr>
+        <td>Price Range</td>
+        <td>$0.15-0.35</td>
+        <td>$0.20-0.45</td>
+        <td>$0.25-0.55</td>
+      </tr>
+      <tr>
+        <td>Min. Order</td>
+        <td>500 pcs</td>
+        <td>1,000 pcs</td>
+        <td>1,000 pcs</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ─── § 28 CALLOUT STRIP ─── -->
+<div class="demo-label">§ 28 · Callout Strip</div>
+<div class="hh-section-title">class="hh-callout-strip"</div>
+<div class="hh-callout-strip">
+  <span class="hh-callout-strip-icon">→</span>
+  <span class="hh-callout-strip-text"><strong>Pro Tip:</strong> Order samples of 3-4 GSM weights side-by-side to feel the difference before committing to a production run.</span>
+</div>
+
+<!-- ─── § 29 METRIC ROW ─── -->
+<div class="demo-label">§ 29 · Metric Row</div>
+<div class="hh-section-title">class="hh-metrics"</div>
+<div class="hh-metrics">
+  <div class="hh-metric">
+    <span class="hh-metric-value">99.2%</span>
+    <span class="hh-metric-label">On-Time Delivery</span>
+  </div>
+  <div class="hh-metric">
+    <span class="hh-metric-value">4.8/5</span>
+    <span class="hh-metric-label">Customer Rating</span>
+  </div>
+  <div class="hh-metric">
+    <span class="hh-metric-value">2,000+</span>
+    <span class="hh-metric-label">Brands Served</span>
+  </div>
+  <div class="hh-metric">
+    <span class="hh-metric-value">500M+</span>
+    <span class="hh-metric-label">Bags Produced</span>
+  </div>
+</div>
+
+<!-- ─── § 30 INLINE ALERT ─── -->
+<div class="demo-label">§ 30 · Inline Alerts</div>
+<div class="hh-section-title">class="hh-alert"</div>
+<div class="hh-alert hh-alert-info">
+  <span class="hh-alert-icon">ℹ</span>
+  <span><strong>Information:</strong> International shipping rates updated for Q2 2026. Contact us for the latest estimates.</span>
+</div>
+<div class="hh-alert hh-alert-success">
+  <span class="hh-alert-icon">✓</span>
+  <span><strong>Success:</strong> Your inquiry has been received. We'll respond within 24 hours.</span>
+</div>
+<div class="hh-alert hh-alert-warning">
+  <span class="hh-alert-icon">⚠</span>
+  <span><strong>Warning:</strong> Production capacity is limited for Q2. Book early to secure your slot.</span>
+</div>
+
+<!-- ─── § 31 AVATAR GROUP ─── -->
+<div class="demo-label">§ 31 · Team / Testimonial Avatars</div>
+<div class="hh-section-title">class="hh-avatars"</div>
+<div class="hh-avatars">
+  <div class="hh-avatar">JD</div>
+  <div class="hh-avatar">MK</div>
+  <div class="hh-avatar">SL</div>
+  <div class="hh-avatar">TW</div>
+  <div class="hh-avatar hh-avatar-more">+12</div>
+</div>
+<p style="margin-top: 8px; font-size: 13px; color: var(--hh-muted);">Trusted by procurement teams at leading brands</p>
+
+<!-- ─── § 32 DIVIDER WITH TEXT ─── -->
+<div class="demo-label">§ 32 · Divider with Text</div>
+<div class="hh-section-title">class="hh-divider"</div>
+<div class="hh-divider"><span>or continue reading</span></div>
+
+<!-- ─── § 33 CODE EXAMPLE ─── -->
+<div class="demo-label">§ 33 · Code Example</div>
+<div class="hh-section-title">class="hh-code"</div>
+<div class="hh-code">
+  <code>&lt;div class="hh-hero"&gt;
+  &lt;h1&gt;Your Title&lt;/h1&gt;
+  &lt;p&gt;Description text...&lt;/p&gt;
+&lt;/div&gt;</code>
+</div>
+
+<!-- ─── § 34 PRICING CARD ─── -->
+<div class="demo-label">§ 34 · Pricing Card</div>
+<div class="hh-section-title">class="hh-pricing"</div>
+<div class="hh-pricing">
+  <div class="hh-pricing-header">
+    <h3>Standard Package</h3>
+    <div class="hh-pricing-price">
+      <span class="hh-pricing-currency">$</span>
+      <span class="hh-pricing-amount">0.25</span>
+      <span class="hh-pricing-period">/unit</span>
+    </div>
+    <p class="hh-pricing-desc">Based on 5,000 units, 80 gsm PP</p>
+  </div>
+  <ul class="hh-pricing-features">
+    <li>Custom size & print</li>
+    <li>Free digital proof</li>
+    <li>1 round of samples</li>
+    <li>AQL 2.5 QC</li>
+    <li>Standard packaging</li>
+  </ul>
+  <a href="#" class="hh-btn-submit" style="display: block; text-align: center;">Get Quote</a>
+</div>
+
+<!-- ─── § 35 FOOTER CTA ─── -->
+<div class="demo-label">§ 35 · Footer CTA</div>
+<div class="hh-section-title">class="hh-footer-cta"</div>
+<div class="hh-footer-cta">
+  <h3>Ready to Start Your Project?</h3>
+  <p>Join 2,000+ brands who trust Huahao for quality non-woven bags.</p>
+  <a href="#" class="hh-btn-primary">Request a Free Quote</a>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     NEW COMPARISON COMPONENTS
+     ════════════════════════════════════════════════════════════════ -->
+
+<!-- ─── § 36 VS COMPARISON CARDS ─── -->
+<div class="demo-label">§ 36 · VS Comparison Cards</div>
+<div class="hh-section-title">class="hh-vs"</div>
+<div class="hh-vs">
+  <div class="hh-vs-card">
+    <div class="hh-vs-header">
+      <span class="hh-vs-label">Option A</span>
+      <h3>Non-Woven PP</h3>
+    </div>
+    <div class="hh-vs-body">
+      <ul class="hh-vs-list">
+        <li>Break-even: 11 reuses</li>
+        <li>Lifespan: 50-100 uses</li>
+        <li>Price: $0.15-0.35/unit</li>
+        <li>Recyclable in PP streams</li>
+        <li>Best for: Retail, events</li>
+      </ul>
+    </div>
+  </div>
+  <div class="hh-vs-divider">
+    <span class="hh-vs-badge">VS</span>
+  </div>
+  <div class="hh-vs-card">
+    <div class="hh-vs-header">
+      <span class="hh-vs-label">Option B</span>
+      <h3>Cotton Canvas</h3>
+    </div>
+    <div class="hh-vs-body">
+      <ul class="hh-vs-list">
+        <li>Break-even: 130 reuses</li>
+        <li>Lifespan: 500+ uses</li>
+        <li>Price: $0.50-1.20/unit</li>
+        <li>Biodegradable & compostable</li>
+        <li>Best for: Premium brands</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ─── § 37 COMPARISON MATRIX ─── -->
+<div class="demo-label">§ 37 · Comparison Matrix</div>
+<div class="hh-section-title">class="hh-matrix"</div>
+<div class="hh-matrix">
+  <div class="hh-matrix-header">
+    <div class="hh-matrix-cell hh-matrix-corner"></div>
+    <div class="hh-matrix-cell hh-matrix-head">Non-Woven PP</div>
+    <div class="hh-matrix-cell hh-matrix-head">Cotton Canvas</div>
+    <div class="hh-matrix-cell hh-matrix-head">rPET Recycled</div>
+  </div>
+  <div class="hh-matrix-row">
+    <div class="hh-matrix-cell hh-matrix-label">Eco Score</div>
+    <div class="hh-matrix-cell">★★★☆☆</div>
+    <div class="hh-matrix-cell">★★★★☆</div>
+    <div class="hh-matrix-cell hh-matrix-best">★★★★★</div>
+  </div>
+  <div class="hh-matrix-row">
+    <div class="hh-matrix-cell hh-matrix-label">Durability</div>
+    <div class="hh-matrix-cell">Good</div>
+    <div class="hh-matrix-cell hh-matrix-best">Excellent</div>
+    <div class="hh-matrix-cell">Good</div>
+  </div>
+  <div class="hh-matrix-row">
+    <div class="hh-matrix-cell hh-matrix-label">Price</div>
+    <div class="hh-matrix-cell hh-matrix-best">Low</div>
+    <div class="hh-matrix-cell">High</div>
+    <div class="hh-matrix-cell">Medium</div>
+  </div>
+  <div class="hh-matrix-row">
+    <div class="hh-matrix-cell hh-matrix-label">Print Quality</div>
+    <div class="hh-matrix-cell">Standard</div>
+    <div class="hh-matrix-cell">Premium</div>
+    <div class="hh-matrix-cell">Standard</div>
+  </div>
+  <div class="hh-matrix-row">
+    <div class="hh-matrix-cell hh-matrix-label">Min. Order</div>
+    <div class="hh-matrix-cell hh-matrix-best">500 pcs</div>
+    <div class="hh-matrix-cell">300 pcs</div>
+    <div class="hh-matrix-cell">1,000 pcs</div>
+  </div>
+</div>
+
+<!-- ─── § 38 SIDE-BY-SIDE FEATURES ─── -->
+<div class="demo-label">§ 38 · Side-by-Side Features</div>
+<div class="hh-section-title">class="hh-features-compare"</div>
+<div class="hh-features-compare">
+  <div class="hh-features-col">
+    <h4>Standard Package</h4>
+    <ul class="hh-features-list">
+      <li class="hh-feature-yes">Custom size options</li>
+      <li class="hh-feature-yes">1-color screen print</li>
+      <li class="hh-feature-yes">Standard packaging</li>
+      <li class="hh-feature-no">Digital proof</li>
+      <li class="hh-feature-no">Physical sample</li>
+      <li class="hh-feature-no">Expedited production</li>
+    </ul>
+  </div>
+  <div class="hh-features-col">
+    <h4>Premium Package</h4>
+    <ul class="hh-features-list">
+      <li class="hh-feature-yes">Custom size options</li>
+      <li class="hh-feature-yes">Full-color heat transfer</li>
+      <li class="hh-feature-yes">Premium packaging</li>
+      <li class="hh-feature-yes">Digital proof included</li>
+      <li class="hh-feature-yes">1 round physical sample</li>
+      <li class="hh-feature-yes">Expedited production</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ─── § 39 RADAR COMPARISON ─── -->
+<div class="demo-label">§ 39 · Rating Comparison Bars</div>
+<div class="hh-section-title">class="hh-ratings"</div>
+<div class="hh-ratings">
+  <div class="hh-rating-row">
+    <span class="hh-rating-label">Eco-Friendliness</span>
+    <div class="hh-rating-bars">
+      <div class="hh-rating-bar-group">
+        <span class="hh-rating-bar-name">PP</span>
+        <div class="hh-rating-track"><div class="hh-rating-fill" style="width: 60%"></div></div>
+        <span class="hh-rating-value">60%</span>
+      </div>
+      <div class="hh-rating-bar-group">
+        <span class="hh-rating-bar-name">rPET</span>
+        <div class="hh-rating-track"><div class="hh-rating-fill hh-rating-best" style="width: 95%"></div></div>
+        <span class="hh-rating-value">95%</span>
+      </div>
+    </div>
+  </div>
+  <div class="hh-rating-row">
+    <span class="hh-rating-label">Durability</span>
+    <div class="hh-rating-bars">
+      <div class="hh-rating-bar-group">
+        <span class="hh-rating-bar-name">PP</span>
+        <div class="hh-rating-track"><div class="hh-rating-fill" style="width: 70%"></div></div>
+        <span class="hh-rating-value">70%</span>
+      </div>
+      <div class="hh-rating-bar-group">
+        <span class="hh-rating-bar-name">Canvas</span>
+        <div class="hh-rating-track"><div class="hh-rating-fill hh-rating-best" style="width: 95%"></div></div>
+        <span class="hh-rating-value">95%</span>
+      </div>
+    </div>
+  </div>
+  <div class="hh-rating-row">
+    <span class="hh-rating-label">Price Value</span>
+    <div class="hh-rating-bars">
+      <div class="hh-rating-bar-group">
+        <span class="hh-rating-bar-name">PP</span>
+        <div class="hh-rating-track"><div class="hh-rating-fill hh-rating-best" style="width: 90%"></div></div>
+        <span class="hh-rating-value">90%</span>
+      </div>
+      <div class="hh-rating-bar-group">
+        <span class="hh-rating-bar-name">Canvas</span>
+        <div class="hh-rating-track"><div class="hh-rating-fill" style="width: 50%"></div></div>
+        <span class="hh-rating-value">50%</span>
+      </div>
+    </div>
+  </div>
+  <div class="hh-rating-row">
+    <span class="hh-rating-label">Print Quality</span>
+    <div class="hh-rating-bars">
+      <div class="hh-rating-bar-group">
+        <span class="hh-rating-bar-name">PP</span>
+        <div class="hh-rating-track"><div class="hh-rating-fill" style="width: 65%"></div></div>
+        <span class="hh-rating-value">65%</span>
+      </div>
+      <div class="hh-rating-bar-group">
+        <span class="hh-rating-bar-name">BOPP</span>
+        <div class="hh-rating-track"><div class="hh-rating-fill hh-rating-best" style="width: 95%"></div></div>
+        <span class="hh-rating-value">95%</span>
+      </div>
+    </div>
+  </div>
+</div>
+<span class="hh-ratings-caption">Figure 1: Material comparison across key performance dimensions</span>
+
+<!-- ─── § 39B HORIZONTAL BAR CHART ─── -->
+<div class="demo-label">§ 39B · Horizontal Bar Chart</div>
+<div class="hh-section-title">class="hh-hbar-chart"</div>
+<div class="hh-hbar-chart">
+  <div class="hh-hbar-item">
+    <span class="hh-hbar-label">Retail</span>
+    <div class="hh-hbar-track"><div class="hh-hbar-fill" style="width: 42%">42%</div></div>
+    <span class="hh-hbar-value">42%</span>
+  </div>
+  <div class="hh-hbar-item">
+    <span class="hh-hbar-label">Promotional</span>
+    <div class="hh-hbar-track"><div class="hh-hbar-fill" style="width: 28%">28%</div></div>
+    <span class="hh-hbar-value">28%</span>
+  </div>
+  <div class="hh-hbar-item">
+    <span class="hh-hbar-label">Food &amp; Beverage</span>
+    <div class="hh-hbar-track"><div class="hh-hbar-fill hh-hbar-fill-light" style="width: 18%">18%</div></div>
+    <span class="hh-hbar-value">18%</span>
+  </div>
+  <div class="hh-hbar-item">
+    <span class="hh-hbar-label">Industrial</span>
+    <div class="hh-hbar-track"><div class="hh-hbar-fill hh-hbar-fill-light" style="width: 12%">12%</div></div>
+    <span class="hh-hbar-value">12%</span>
+  </div>
+</div>
+<span class="hh-hbar-chart-caption">Figure 2: Non woven bag market share by application sector (2026)</span>
+
+<!-- ─── § 39C DONUT / PIE INDICATOR ─── -->
+<div class="demo-label">§ 39C · Donut / Pie Indicators</div>
+<div class="hh-section-title">class="hh-donut-list"</div>
+<div class="hh-donut-list">
+  <div class="hh-donut-row">
+    <div class="hh-donut" style="background: conic-gradient(var(--hh-ink) 0deg 252deg, var(--hh-border) 252deg 360deg);">70%</div>
+    <div class="hh-donut-info">
+      <div class="hh-donut-label">Virgin PP</div>
+      <div class="hh-donut-desc">Standard polypropylene pellets for general use</div>
+    </div>
+    <div class="hh-donut-value">70%</div>
+  </div>
+  <div class="hh-donut-row">
+    <div class="hh-donut" style="background: conic-gradient(var(--hh-ink) 0deg 72deg, var(--hh-border) 72deg 360deg);">20%</div>
+    <div class="hh-donut-info">
+      <div class="hh-donut-label">Recycled PP</div>
+      <div class="hh-donut-desc">Post-industrial recycled content</div>
+    </div>
+    <div class="hh-donut-value">20%</div>
+  </div>
+  <div class="hh-donut-row">
+    <div class="hh-donut" style="background: conic-gradient(var(--hh-ink) 0deg 36deg, var(--hh-border) 36deg 360deg);">10%</div>
+    <div class="hh-donut-info">
+      <div class="hh-donut-label">rPET Blend</div>
+      <div class="hh-donut-desc">Recycled PET mixed formulation</div>
+    </div>
+    <div class="hh-donut-value">10%</div>
+  </div>
+</div>
+<span class="hh-donut-list-caption">Figure 3: Material composition breakdown in non woven bag production</span>
+
+<!-- ─── § 39D DATA CARD GRID ─── -->
+<div class="demo-label">§ 39D · Data Card Grid (KPIs)</div>
+<div class="hh-section-title">class="hh-data-cards"</div>
+<div class="hh-data-cards">
+  <div class="hh-data-card">
+    <div class="hh-data-card-value">$4.8B</div>
+    <div class="hh-data-card-label">Market Size</div>
+    <div class="hh-data-card-change hh-data-card-up">↑ 8.5% YoY</div>
+  </div>
+  <div class="hh-data-card">
+    <div class="hh-data-card-value">2,000+</div>
+    <div class="hh-data-card-label">Brands Served</div>
+    <div class="hh-data-card-change hh-data-card-up">↑ 15% YoY</div>
+  </div>
+  <div class="hh-data-card">
+    <div class="hh-data-card-value">500M+</div>
+    <div class="hh-data-card-label">Bags Produced</div>
+    <div class="hh-data-card-change hh-data-card-up">↑ 22% YoY</div>
+  </div>
+  <div class="hh-data-card">
+    <div class="hh-data-card-value">99.2%</div>
+    <div class="hh-data-card-label">On-Time Delivery</div>
+    <div class="hh-data-card-change hh-data-card-up">↑ 0.3%</div>
+  </div>
+</div>
+<span class="hh-data-cards-caption">Figure 4: Key market performance indicators for 2026</span>
+
+<!-- ─── § 39E VERTICAL BAR CHART ─── -->
+<div class="demo-label">§ 39E · Vertical Bar Chart</div>
+<div class="hh-section-title">class="hh-vbar-chart"</div>
+<div class="hh-vbar-chart">
+  <div class="hh-vbar-group">
+    <div class="hh-vbar-bars">
+      <div class="hh-vbar" style="height: 45%" title="PP: $0.30"></div>
+      <div class="hh-vbar hh-vbar-light" style="height: 75%" title="rPET: $0.50"></div>
+      <div class="hh-vbar hh-vbar-light" style="height: 100%" title="Cotton: $3.50"></div>
+    </div>
+    <span class="hh-vbar-label">Cost/Unit</span>
+  </div>
+  <div class="hh-vbar-group">
+    <div class="hh-vbar-bars">
+      <div class="hh-vbar" style="height: 60%" title="PP: 60"></div>
+      <div class="hh-vbar hh-vbar-light" style="height: 80%" title="rPET: 80"></div>
+      <div class="hh-vbar hh-vbar-light" style="height: 40%" title="Cotton: 40"></div>
+    </div>
+    <span class="hh-vbar-label">Eco Score</span>
+  </div>
+  <div class="hh-vbar-group">
+    <div class="hh-vbar-bars">
+      <div class="hh-vbar" style="height: 70%" title="PP: 70"></div>
+      <div class="hh-vbar hh-vbar-light" style="height: 75%" title="rPET: 75"></div>
+      <div class="hh-vbar hh-vbar-light" style="height: 95%" title="Cotton: 95"></div>
+    </div>
+    <span class="hh-vbar-label">Durability</span>
+  </div>
+  <div class="hh-vbar-group">
+    <div class="hh-vbar-bars">
+      <div class="hh-vbar" style="height: 65%" title="PP: 65"></div>
+      <div class="hh-vbar hh-vbar-light" style="height: 70%" title="rPET: 70"></div>
+      <div class="hh-vbar hh-vbar-light" style="height: 90%" title="Cotton: 90"></div>
+    </div>
+    <span class="hh-vbar-label">Print Quality</span>
+  </div>
+</div>
+<div style="display: flex; gap: 20px; justify-content: center; margin-top: 12px; font-size: 12px; color: var(--hh-muted);">
+  <span><span style="display: inline-block; width: 12px; height: 12px; background: var(--hh-ink); margin-right: 4px; vertical-align: -2px;"></span> PP Non-Woven</span>
+  <span><span style="display: inline-block; width: 12px; height: 12px; background: var(--hh-border-strong); margin-right: 4px; vertical-align: -2px;"></span> Other Materials</span>
+</div>
+<span class="hh-vbar-chart-caption">Figure 5: Material comparison across key dimensions (normalized scores)</span>
+
+<!-- ─── § 39F HEAT MAP TABLE ─── -->
+<div class="demo-label">§ 39F · Heat Map Table</div>
+<div class="hh-section-title">class="hh-heatmap"</div>
+<div class="hh-heatmap">
+  <div class="hh-heatmap-header">
+    <div class="hh-heatmap-cell"></div>
+    <div class="hh-heatmap-cell hh-heatmap-head">Budget</div>
+    <div class="hh-heatmap-cell hh-heatmap-head">Eco</div>
+    <div class="hh-heatmap-cell hh-heatmap-head">Durability</div>
+    <div class="hh-heatmap-cell hh-heatmap-head">Print</div>
+  </div>
+  <div class="hh-heatmap-row">
+    <div class="hh-heatmap-cell hh-heatmap-label">PP</div>
+    <div class="hh-heatmap-cell hh-heatmap-high">95</div>
+    <div class="hh-heatmap-cell hh-heatmap-mid">60</div>
+    <div class="hh-heatmap-cell hh-heatmap-mid">70</div>
+    <div class="hh-heatmap-cell hh-heatmap-mid">65</div>
+  </div>
+  <div class="hh-heatmap-row">
+    <div class="hh-heatmap-cell hh-heatmap-label">rPET</div>
+    <div class="hh-heatmap-cell hh-heatmap-mid">70</div>
+    <div class="hh-heatmap-cell hh-heatmap-high">95</div>
+    <div class="hh-heatmap-cell hh-heatmap-mid">75</div>
+    <div class="hh-heatmap-cell hh-heatmap-mid">70</div>
+  </div>
+  <div class="hh-heatmap-row">
+    <div class="hh-heatmap-cell hh-heatmap-label">Canvas</div>
+    <div class="hh-heatmap-cell hh-heatmap-low">45</div>
+    <div class="hh-heatmap-cell hh-heatmap-high">85</div>
+    <div class="hh-heatmap-cell hh-heatmap-high">95</div>
+    <div class="hh-heatmap-cell hh-heatmap-high">90</div>
+  </div>
+</div>
+<span class="hh-heatmap-caption">Figure 6: Heat map showing relative strengths (higher = better)</span>
+
+<!-- ─── § 39G IMAGE PLACEHOLDER ─── -->
+<div class="demo-label">§ 39G · Image Placeholder</div>
+<div class="hh-section-title">class="hh-img-placeholder" + size class</div>
+<p style="margin-bottom: 16px; font-size: 14px; color: var(--hh-muted);">Available sizes: sm (400×225), md (600×338), lg (800×450), xl (1200×675), full (responsive 16:9)</p>
+
+<div class="hh-img-placeholder hh-img-sm">
+  <span>Small Image 400×225</span>
+</div>
+<div class="hh-img-caption">Figure 1: Small image placeholder (400×225px) - suitable for thumbnails and detail shots</div>
+
+<div class="hh-img-placeholder hh-img-md">
+  <span>Medium Image 600×338</span>
+</div>
+<div class="hh-img-caption">Figure 2: Medium image placeholder (600×338px) - ideal for inline illustrations and product photos</div>
+
+<div class="hh-img-placeholder hh-img-lg">
+  <span>Large Image 800×450</span>
+</div>
+<div class="hh-img-caption">Figure 3: Large image placeholder (800×450px) - recommended for hero images and main content visuals</div>
+
+<div class="hh-img-placeholder hh-img-xl">
+  <span>XL Image 1200×675</span>
+</div>
+<div class="hh-img-caption">Figure 4: XL image placeholder (1200×675px) - best for full-width banners and wide shots</div>
+
+<div class="hh-img-placeholder hh-img-full">
+  <span>Full Width Responsive (16:9)</span>
+</div>
+<div class="hh-img-caption">Figure 5: Full-width responsive image placeholder - adapts to container width with 16:9 aspect ratio</div>
+
+<!-- ─── § 40 BEFORE / AFTER SLIDER ─── -->
+<div class="demo-label">§ 40 · Before / After Comparison</div>
+<div class="hh-section-title">class="hh-before-after"</div>
+<div class="hh-before-after">
+  <div class="hh-ba-panel">
+    <span class="hh-ba-label hh-ba-before">Before</span>
+    <div class="hh-ba-content">
+      <p>Traditional plastic bags: single-use, non-recyclable, environmental pollution.</p>
+      <ul class="hh-checklist hh-checklist-cross">
+        <li>Single-use only</li>
+        <li>500+ years to decompose</li>
+        <li>Harms marine life</li>
+        <li>Microplastic pollution</li>
+      </ul>
+    </div>
+  </div>
+  <div class="hh-ba-arrow">→</div>
+  <div class="hh-ba-panel">
+    <span class="hh-ba-label hh-ba-after">After</span>
+    <div class="hh-ba-content">
+      <p>Huahao non-woven bags: reusable, recyclable, sustainable alternative.</p>
+      <ul class="hh-checklist">
+        <li>50-100 reuses per bag</li>
+        <li>Recyclable in PP streams</li>
+        <li>Reduces plastic waste</li>
+        <li>Brand-positive image</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ─── § 41 PROS AND CONS TABLE ─── -->
+<div class="demo-label">§ 41 · Pros & Cons Table</div>
+<div class="hh-section-title">class="hh-pros-cons"</div>
+<div class="hh-pros-cons">
+  <div class="hh-pros-cons-header">
+    <h3>Non-Woven PP Bags</h3>
+    <span class="hh-pros-cons-subtitle">Comprehensive Analysis</span>
+  </div>
+  <div class="hh-pros-cons-grid">
+    <div class="hh-pros-col">
+      <h4 class="hh-pros-title">Advantages</h4>
+      <ul class="hh-pros-list">
+        <li>Cost-effective for large orders</li>
+        <li>Lightweight, easy to transport</li>
+        <li>Good print quality for branding</li>
+        <li>Moisture resistant</li>
+        <li>Available in many colors</li>
+        <li>Recyclable material</li>
+      </ul>
+    </div>
+    <div class="hh-cons-col">
+      <h4 class="hh-cons-title">Limitations</h4>
+      <ul class="hh-cons-list">
+        <li>Not biodegradable</li>
+        <li>Lower durability than canvas</li>
+        <li>Requires reuse to offset impact</li>
+        <li>Limited weight capacity vs. canvas</li>
+        <li>Texture less premium than cotton</li>
+        <li>Recycling infrastructure varies</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ─── § 42 DECISION TREE ─── -->
+<div class="demo-label">§ 42 · Decision Flow</div>
+<div class="hh-section-title">class="hh-decision"</div>
+<div class="hh-decision">
+  <div class="hh-decision-question">
+    <h4>What is your primary concern?</h4>
+  </div>
+  <div class="hh-decision-options">
+    <div class="hh-decision-path">
+      <span class="hh-decision-answer">Budget</span>
+      <div class="hh-decision-result">
+        <strong>→ Choose Non-Woven PP</strong>
+        <p>Most cost-effective option at $0.15-0.35/unit for 5,000+ orders.</p>
+      </div>
+    </div>
+    <div class="hh-decision-path">
+      <span class="hh-decision-answer">Sustainability</span>
+      <div class="hh-decision-result">
+        <strong>→ Choose rPET Recycled</strong>
+        <p>Made from post-consumer plastic bottles. Best eco credentials.</p>
+      </div>
+    </div>
+    <div class="hh-decision-path">
+      <span class="hh-decision-answer">Premium Feel</span>
+      <div class="hh-decision-result">
+        <strong>→ Choose Cotton Canvas</strong>
+        <p>Soft, durable, natural material. Best for luxury branding.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── § 43 SCORE CARD COMPARISON ─── -->
+<div class="demo-label">§ 43 · Score Card Comparison</div>
+<div class="hh-section-title">class="hh-scorecards"</div>
+<div class="hh-scorecards">
+  <div class="hh-scorecard">
+    <div class="hh-scorecard-header">
+      <h3>Standard PP</h3>
+      <div class="hh-scorecard-total">
+        <span class="hh-scorecard-score">72</span>
+        <span class="hh-scorecard-max">/100</span>
+      </div>
+    </div>
+    <div class="hh-scorecard-body">
+      <div class="hh-score-item">
+        <span class="hh-score-label">Eco</span>
+        <div class="hh-score-bar"><div class="hh-score-fill" style="width: 60%"></div></div>
+        <span class="hh-score-value">60</span>
+      </div>
+      <div class="hh-score-item">
+        <span class="hh-score-label">Durability</span>
+        <div class="hh-score-bar"><div class="hh-score-fill" style="width: 70%"></div></div>
+        <span class="hh-score-value">70</span>
+      </div>
+      <div class="hh-score-item">
+        <span class="hh-score-label">Price</span>
+        <div class="hh-score-bar"><div class="hh-score-fill" style="width: 95%"></div></div>
+        <span class="hh-score-value">95</span>
+      </div>
+      <div class="hh-score-item">
+        <span class="hh-score-label">Print</span>
+        <div class="hh-score-bar"><div class="hh-score-fill" style="width: 65%"></div></div>
+        <span class="hh-score-value">65</span>
+      </div>
+    </div>
+  </div>
+  <div class="hh-scorecard">
+    <div class="hh-scorecard-header">
+      <h3>rPET Recycled</h3>
+      <div class="hh-scorecard-total">
+        <span class="hh-scorecard-score">88</span>
+        <span class="hh-scorecard-max">/100</span>
+      </div>
+    </div>
+    <div class="hh-scorecard-body">
+      <div class="hh-score-item">
+        <span class="hh-score-label">Eco</span>
+        <div class="hh-score-bar"><div class="hh-score-fill" style="width: 95%"></div></div>
+        <span class="hh-score-value">95</span>
+      </div>
+      <div class="hh-score-item">
+        <span class="hh-score-label">Durability</span>
+        <div class="hh-score-bar"><div class="hh-score-fill" style="width: 75%"></div></div>
+        <span class="hh-score-value">75</span>
+      </div>
+      <div class="hh-score-item">
+        <span class="hh-score-label">Price</span>
+        <div class="hh-score-bar"><div class="hh-score-fill" style="width: 70%"></div></div>
+        <span class="hh-score-value">70</span>
+      </div>
+      <div class="hh-score-item">
+        <span class="hh-score-label">Print</span>
+        <div class="hh-score-bar"><div class="hh-score-fill" style="width: 70%"></div></div>
+        <span class="hh-score-value">70</span>
+      </div>
+    </div>
+  </div>
+  <div class="hh-scorecard">
+    <div class="hh-scorecard-header">
+      <h3>Cotton Canvas</h3>
+      <div class="hh-scorecard-total">
+        <span class="hh-scorecard-score">82</span>
+        <span class="hh-scorecard-max">/100</span>
+      </div>
+    </div>
+    <div class="hh-scorecard-body">
+      <div class="hh-score-item">
+        <span class="hh-score-label">Eco</span>
+        <div class="hh-score-bar"><div class="hh-score-fill" style="width: 85%"></div></div>
+        <span class="hh-score-value">85</span>
+      </div>
+      <div class="hh-score-item">
+        <span class="hh-score-label">Durability</span>
+        <div class="hh-score-bar"><div class="hh-score-fill" style="width: 95%"></div></div>
+        <span class="hh-score-value">95</span>
+      </div>
+      <div class="hh-score-item">
+        <span class="hh-score-label">Price</span>
+        <div class="hh-score-bar"><div class="hh-score-fill" style="width: 45%"></div></div>
+        <span class="hh-score-value">45</span>
+      </div>
+      <div class="hh-score-item">
+        <span class="hh-score-label">Print</span>
+        <div class="hh-score-bar"><div class="hh-score-fill" style="width: 90%"></div></div>
+        <span class="hh-score-value">90</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── § 44 QUICK REFERENCE TABLE ─── -->
+<div class="demo-label">§ 44 · Quick Reference Table</div>
+<div class="hh-section-title">class="hh-ref-table"</div>
+<div class="hh-ref-table">
+  <table class="hh-table">
+    <thead>
+      <tr>
+        <th>Criteria</th>
+        <th>PP Non-Woven</th>
+        <th>rPET</th>
+        <th>Cotton</th>
+        <th>Winner</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Best for Budget</td>
+        <td><span class="hh-pill hh-pill-best">✓</span></td>
+        <td>—</td>
+        <td>—</td>
+        <td>PP</td>
+      </tr>
+      <tr>
+        <td>Best for Eco</td>
+        <td>—</td>
+        <td><span class="hh-pill hh-pill-best">✓</span></td>
+        <td>✓</td>
+        <td>rPET</td>
+      </tr>
+      <tr>
+        <td>Best Durability</td>
+        <td>—</td>
+        <td>—</td>
+        <td><span class="hh-pill hh-pill-best">✓</span></td>
+        <td>Cotton</td>
+      </tr>
+      <tr>
+        <td>Best Print Quality</td>
+        <td>—</td>
+        <td>—</td>
+        <td><span class="hh-pill hh-pill-best">✓</span></td>
+        <td>Cotton</td>
+      </tr>
+      <tr>
+        <td>Lowest MOQ</td>
+        <td>500</td>
+        <td>1,000</td>
+        <td><span class="hh-pill hh-pill-best">300</span></td>
+        <td>Cotton</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ─── § 45 COMPARISON SUMMARY ─── -->
+<div class="demo-label">§ 45 · Comparison Summary</div>
+<div class="hh-section-title">class="hh-summary"</div>
+<div class="hh-summary">
+  <div class="hh-summary-item">
+    <span class="hh-summary-icon">✓</span>
+    <span class="hh-summary-text"><strong>Choose PP Non-Woven if:</strong> Budget is your main concern and you need 1,000+ units for retail or events.</span>
+  </div>
+  <div class="hh-summary-item">
+    <span class="hh-summary-icon">✓</span>
+    <span class="hh-summary-text"><strong>Choose rPET if:</strong> Sustainability is your brand priority and you want recycled material certification.</span>
+  </div>
+  <div class="hh-summary-item">
+    <span class="hh-summary-icon">✓</span>
+    <span class="hh-summary-text"><strong>Choose Cotton Canvas if:</strong> Premium feel and durability matter most, and budget allows for higher unit costs.</span>
+  </div>
+</div>
+
+<!-- ─── § 46 IMAGE CAROUSEL / SLIDER ─── -->
+<div class="demo-label">§ 46 · Image Carousel / Slider</div>
+<div class="hh-section-title">class="hh-carousel"</div>
+<p style="margin-bottom: 16px; font-size: 14px; color: var(--hh-muted);">A responsive image carousel with navigation arrows, dot indicators, and smooth transitions. Supports touch swipe on mobile devices.</p>
+
+<div class="hh-carousel" id="demoCarousel">
+  <div class="hh-carousel-slides" id="carouselSlides">
+    <!-- Slide 1 -->
+    <div class="hh-carousel-slide">
+      <div class="hh-img-placeholder hh-img-lg" style="margin: 0; border-radius: 0;">
+        <span>Product Showcase - Non-Woven Bags</span>
+      </div>
+      <div class="hh-carousel-caption">Figure 1: Premium non-woven bag collection - available in 50+ colors and custom sizes</div>
+    </div>
+    <!-- Slide 2 -->
+    <div class="hh-carousel-slide">
+      <div class="hh-img-placeholder hh-img-lg" style="margin: 0; border-radius: 0;">
+        <span>Manufacturing Process</span>
+      </div>
+      <div class="hh-carousel-caption">Figure 2: State-of-the-art manufacturing facility with 10+ production lines</div>
+    </div>
+    <!-- Slide 3 -->
+    <div class="hh-carousel-slide">
+      <div class="hh-img-placeholder hh-img-lg" style="margin: 0; border-radius: 0;">
+        <span>Custom Printing Options</span>
+      </div>
+      <div class="hh-carousel-caption">Figure 3: High-quality screen printing and heat transfer options for brand logos</div>
+    </div>
+    <!-- Slide 4 -->
+    <div class="hh-carousel-slide">
+      <div class="hh-img-placeholder hh-img-lg" style="margin: 0; border-radius: 0;">
+        <span>Sustainability Certification</span>
+      </div>
+      <div class="hh-carousel-caption">Figure 4: ISO 9001 certified with recyclable material certification</div>
+    </div>
+    <!-- Slide 5 -->
+    <div class="hh-carousel-slide">
+      <div class="hh-img-placeholder hh-img-lg" style="margin: 0; border-radius: 0;">
+        <span>Global Shipping</span>
+      </div>
+      <div class="hh-carousel-caption">Figure 5: Worldwide delivery to 80+ countries with express shipping options</div>
+    </div>
+  </div>
+  
+  <!-- Navigation arrows -->
+  <button class="hh-carousel-btn hh-carousel-prev" id="prevBtn" aria-label="Previous slide">‹</button>
+  <button class="hh-carousel-btn hh-carousel-next" id="nextBtn" aria-label="Next slide">›</button>
+  
+  <!-- Dot indicators -->
+  <div class="hh-carousel-dots" id="carouselDots">
+    <button class="hh-carousel-dot active" data-index="0" aria-label="Go to slide 1"></button>
+    <button class="hh-carousel-dot" data-index="1" aria-label="Go to slide 2"></button>
+    <button class="hh-carousel-dot" data-index="2" aria-label="Go to slide 3"></button>
+    <button class="hh-carousel-dot" data-index="3" aria-label="Go to slide 4"></button>
+    <button class="hh-carousel-dot" data-index="4" aria-label="Go to slide 5"></button>
+  </div>
+</div>
+
+<script>
+(function() {
+  // Carousel functionality
+  const carousel = document.getElementById('demoCarousel');
+  if (!carousel) return;
+  
+  const slides = document.getElementById('carouselSlides');
+  const dots = document.querySelectorAll('#carouselDots .hh-carousel-dot');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  
+  let currentIndex = 0;
+  const totalSlides = dots.length;
+  
+  function goToSlide(index) {
+    if (index < 0) index = totalSlides - 1;
+    if (index >= totalSlides) index = 0;
+    
+    currentIndex = index;
+    slides.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+    
+    // Update dots
+    dots.forEach(function(dot, i) {
+      dot.classList.toggle('active', i === currentIndex);
+    });
+  }
+  
+  // Button events
+  if (prevBtn) {
+    prevBtn.addEventListener('click', function() {
+      goToSlide(currentIndex - 1);
+    });
+  }
+  
+  if (nextBtn) {
+    nextBtn.addEventListener('click', function() {
+      goToSlide(currentIndex + 1);
+    });
+  }
+  
+  // Dot click events
+  dots.forEach(function(dot) {
+    dot.addEventListener('click', function() {
+      goToSlide(parseInt(this.dataset.index));
+    });
+  });
+  
+  // Auto-play (optional, pauses on hover)
+  let autoplayInterval;
+  
+  function startAutoplay() {
+    autoplayInterval = setInterval(function() {
+      goToSlide(currentIndex + 1);
+    }, 5000);
+  }
+  
+  function stopAutoplay() {
+    if (autoplayInterval) {
+      clearInterval(autoplayInterval);
+    }
+  }
+  
+  // Start autoplay
+  startAutoplay();
+  
+  // Pause on hover
+  carousel.addEventListener('mouseenter', stopAutoplay);
+  carousel.addEventListener('mouseleave', startAutoplay);
+  
+  // Touch/swipe support
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  slides.addEventListener('touchstart', function(e) {
+    touchStartX = e.changedTouches[0].screenX;
+    stopAutoplay();
+  }, { passive: true });
+  
+  slides.addEventListener('touchend', function(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+    startAutoplay();
+  }, { passive: true });
+  
+  function handleSwipe() {
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        goToSlide(currentIndex + 1); // Swipe left - next
+      } else {
+        goToSlide(currentIndex - 1); // Swipe right - prev
+      }
+    }
+  }
+  
+  // Keyboard navigation
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowLeft') {
+      goToSlide(currentIndex - 1);
+    } else if (e.key === 'ArrowRight') {
+      goToSlide(currentIndex + 1);
+    }
+  });
+})();
+</script>
+
+</div> <!-- /.hh-post -->
+
+<div class="hh-divider"><span>End of Component Library</span></div>
+
+</div> <!-- /.demo-wrap -->
+</body>
+</html>

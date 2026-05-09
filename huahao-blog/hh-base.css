@@ -1,0 +1,106 @@
+/* ========================================
+   Huahao Blog — Article Base Styles
+   ======================================== */
+/* ════════════════════════════════════════════════════════════════
+   § 1  ARTICLE WRAPPER
+   Wrap your entire post HTML in <div class="hh-post"> … </div>
+   ════════════════════════════════════════════════════════════════ */
+.hh-post {
+  font-family: var(--hh-font-body);
+  color: var(--hh-text);
+  line-height: 1.8;
+  max-width: 860px;
+}
+.hh-post p   { font-size: 16px; margin-bottom: 1.1em; color: var(--hh-text); }
+.hh-post a   { color: var(--hh-blue); text-decoration: underline; }
+.hh-post a:hover { color: var(--hh-blue-dark); }
+.hh-post strong { color: var(--hh-ink); font-weight: 600; }
+.hh-post em { font-style: italic; color: var(--hh-text); }
+.hh-post hr {
+  border: none;
+  border-top: 1px solid var(--hh-border);
+  margin: 40px 0;
+}
+
+/* Headings */
+.hh-post h1, .hh-post h2, .hh-post h3, .hh-post h4, .hh-post h5, .hh-post h6 {
+  font-family: var(--hh-font-head);
+  color: var(--hh-ink);
+  font-weight: 600;
+  line-height: 1.3;
+  margin-top: 32px;
+  margin-bottom: 16px;
+}
+.hh-post h1 { font-size: 32px; border-bottom: 2px solid var(--hh-blue-light); padding-bottom: 10px; }
+.hh-post h2 { font-size: 26px; }
+.hh-post h3 { font-size: 22px; }
+.hh-post h4 { font-size: 18px; }
+.hh-post h5 { font-size: 16px; font-style: italic; }
+.hh-post h6 { font-size: 14px; color: var(--hh-muted); text-transform: uppercase; letter-spacing: 1px; }
+
+/* Lists */
+.hh-post ul, .hh-post ol { margin: 16px 0; padding-left: 24px; }
+.hh-post li { margin-bottom: 8px; color: var(--hh-text); }
+.hh-post li::marker { color: var(--hh-blue); }
+
+/* Inline elements */
+.hh-post code {
+  background: var(--hh-blue-pale);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: var(--hh-font-mono);
+  font-size: 14px;
+  color: var(--hh-blue-dark);
+}
+.hh-post pre {
+  background: #1a202c;
+  color: #f7fafc;
+  padding: 16px 20px;
+  border-radius: var(--hh-r);
+  overflow-x: auto;
+  font-family: var(--hh-font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 20px 0;
+}
+.hh-post pre code {
+  background: none;
+  padding: 0;
+  color: inherit;
+}
+.hh-post blockquote {
+  border-left: 4px solid var(--hh-blue);
+  padding-left: 20px;
+  margin: 24px 0;
+  color: var(--hh-muted);
+  font-style: italic;
+}
+.hh-post img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--hh-r);
+  margin: 20px 0 8px;
+}
+.hh-post figcaption, .hh-img-caption {
+  text-align: center;
+  font-size: 13px;
+  color: var(--hh-muted);
+  margin-top: 8px;
+  font-style: italic;
+}
+.hh-post table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+.hh-post th, .hh-post td {
+  border: 1px solid var(--hh-border);
+  padding: 12px 16px;
+  text-align: left;
+}
+.hh-post th {
+  background: var(--hh-blue-pale);
+  color: var(--hh-blue-dark);
+  font-weight: 600;
+}
+

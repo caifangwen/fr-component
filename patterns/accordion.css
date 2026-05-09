@@ -1,0 +1,48 @@
+/* ========================================
+   Pattern: Accordion / FAQ — Pure CSS (details/summary)
+   Usage: Include base CSS variables, then link this file.
+   Dependencies: None (uses CSS custom properties with fallbacks)
+   ======================================== */
+
+/* Accordion / FAQ — Pure CSS (details/summary) */
+.accordion { margin: 24px 0; }
+.accordion__item {
+  border: 1px solid var(--color-border, #e2e8f0);
+  border-radius: 0;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.accordion__question {
+  padding: 16px 20px;
+  font-family: var(--font-head, Georgia, "Times New Roman", serif);
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--color-text-strong, #111827);
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: none;
+}
+.accordion__question::-webkit-details-marker { display: none; }
+.accordion__question::after {
+  content: '+';
+  font-size: 20px;
+  color: var(--color-text-muted, #6b7280);
+  line-height: 1;
+  font-weight: 400;
+  flex-shrink: 0;
+  margin-left: 12px;
+  transition: transform .2s;
+}
+details[open] .accordion__question {
+  font-weight: 700;
+}
+details[open] .accordion__question::after { content: '−'; }
+.accordion__answer {
+  padding: 16px 20px;
+  background: none;
+  border-top: 1px solid var(--color-border, #e2e8f0);
+}
+.accordion__answer p { font-size: 14px; color: var(--color-text, #374151); margin: 0; line-height: 1.7; }

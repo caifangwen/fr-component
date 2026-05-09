@@ -1,0 +1,75 @@
+/* ========================================
+   Pattern: Heat Map Table
+   Usage: Include base CSS variables, then link this file.
+   Dependencies: None (uses CSS custom properties with fallbacks)
+   ======================================== */
+
+/* Heat Map Table */
+.heatmap {
+  margin: 28px 0 8px;
+  border: 1px solid var(--color-border, #e2e8f0);
+}
+.heatmap__header {
+  display: grid;
+  grid-template-columns: 80px repeat(4, 1fr);
+  background: var(--color-text-strong, #111827);
+}
+.heatmap__row {
+  display: grid;
+  grid-template-columns: 80px repeat(4, 1fr);
+}
+.heatmap__cell {
+  padding: 14px 12px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  border-right: 1px solid var(--color-border, #e2e8f0);
+  border-bottom: 1px solid var(--color-border, #e2e8f0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.heatmap__cell:last-child { border-right: none; }
+.heatmap__header .heatmap__cell { border-bottom: none; }
+.heatmap__head {
+  font-family: var(--font-head, Georgia, "Times New Roman", serif);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-surface, #ffffff);
+  background: var(--color-text-strong, #111827);
+}
+.heatmap__label {
+  font-family: var(--font-head, Georgia, "Times New Roman", serif);
+  font-weight: 600;
+  color: var(--color-text-muted, #6b7280);
+  background: #e5e7eb;
+  justify-content: flex-start;
+  padding-left: 16px;
+}
+.heatmap__high {
+  background: var(--color-accent, #64748b);
+  color: var(--color-surface, #ffffff);
+}
+.heatmap__mid {
+  background: var(--color-accent-light, #e2e8f0);
+  color: var(--color-text, #374151);
+}
+.heatmap__low {
+  background: var(--color-bg, #f8fafc);
+  color: var(--color-text-muted, #6b7280);
+}
+.heatmap__caption {
+  display: block;
+  text-align: center;
+  font-family: var(--font-head, Georgia, "Times New Roman", serif);
+  font-size: 12px;
+  font-style: italic;
+  color: var(--color-text-muted, #6b7280);
+  margin: 10px 0 24px;
+}
+@media (max-width: 640px) {
+  .heatmap__header, .heatmap__row {
+    grid-template-columns: 70px repeat(4, 1fr);
+  }
+  .heatmap__cell { padding: 10px 8px; font-size: 12px; }
+}

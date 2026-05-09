@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FR Component — Design System & Component Library</title>
+<meta name="description" content="A modular design system and component library for SEO-focused web projects. Includes CSS components, UI patterns, blog systems, and style guides.">
+<style>    :root {
+        --background: #ffffff;
+        --foreground: #09090b;
+        --card: #ffffff;
+        --card-foreground: #09090b;
+        --popover: #ffffff;
+        --popover-foreground: #09090b;
+        --primary: #18181b;
+        --primary-foreground: #fafafa;
+        --secondary: #f4f4f5;
+        --secondary-foreground: #18181b;
+        --muted: #f4f4f5;
+        --muted-foreground: #a1a1aa;
+        --accent: #f4f4f5;
+        --accent-foreground: #18181b;
+        --destructive: #ef4444;
+        --destructive-foreground: #ffffff;
+        --border: #e4e4e7;
+        --input: #e4e4e7;
+        --ring: #18181b;
+        --radius: 0.75rem;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --code-bg: #18181b;
+        --code-text: #f4f4f5;
+        --sidebar-width: 260px;
+        --primary-5: rgba(24,24,27,0.05);
+        --primary-8: rgba(24,24,27,0.08);
+        --primary-10: rgba(24,24,27,0.10);
+        --primary-12: rgba(24,24,27,0.12);
+        --primary-15: rgba(24,24,27,0.15);
+        --primary-20: rgba(24,24,27,0.20);
+        --primary-30: rgba(24,24,27,0.30);
+        --success-5: rgba(16,185,129,0.05);
+        --success-15: rgba(16,185,129,0.15);
+        --warning-5: rgba(245,158,11,0.05);
+        --warning-15: rgba(245,158,11,0.15);
+        --danger-5: rgba(239,68,68,0.05);
+        --danger-15: rgba(239,68,68,0.15);
+        --shadow: 0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.07);
+        --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.08);
+    }    [data-theme="dark"] {
+        --background: #09090b;
+        --foreground: #fafafa;
+        --card: #18181b;
+        --card-foreground: #fafafa;
+        --popover: #27272a;
+        --popover-foreground: #fafafa;
+        --primary: #fafafa;
+        --primary-foreground: #18181b;
+        --secondary: #27272a;
+        --secondary-foreground: #fafafa;
+        --muted: #27272a;
+        --muted-foreground: #d4d4d8;
+        --accent: #27272a;
+        --accent-foreground: #fafafa;
+        --destructive: #ef4444;
+        --destructive-foreground: #ffffff;
+        --border: rgba(255,255,255,0.10);
+        --input: rgba(255,255,255,0.10);
+        --ring: #fafafa;
+        --success: #34d399;
+        --warning: #fbbf24;
+        --danger: #f87171;
+        --code-bg: #09090b;
+        --code-text: #f4f4f5;
+        --primary-5: rgba(250,250,250,0.05);
+        --primary-8: rgba(250,250,250,0.08);
+        --primary-10: rgba(250,250,250,0.10);
+        --primary-12: rgba(250,250,250,0.12);
+        --primary-15: rgba(250,250,250,0.15);
+        --primary-20: rgba(250,250,250,0.20);
+        --primary-30: rgba(250,250,250,0.30);
+        --success-5: rgba(52,211,153,0.05);
+        --success-15: rgba(52,211,153,0.15);
+        --warning-5: rgba(251,191,36,0.05);
+        --warning-15: rgba(251,191,36,0.15);
+        --danger-5: rgba(248,113,113,0.05);
+        --danger-15: rgba(248,113,113,0.15);
+        --shadow: 0 1px 3px 0 rgba(0,0,0,0.2);
+        --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.3);
+        --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.4);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        background: var(--background);
+        color: var(--foreground);
+        line-height: 1.7;
+    }
+    .wiki-layout { display: flex; min-height: 100vh; }
+    .sidebar {
+        width: var(--sidebar-width);
+        background: var(--card);
+        border-right: 1px solid var(--border);
+        padding: 28px 20px;
+        box-shadow: 4px 0 24px rgba(0,0,0,0.03);
+        position: fixed;
+        height: 100vh;
+        overflow-y: auto;
+        top: 0; left: 0; z-index: 100;
+    }
+    .sidebar h1 { font-size: 1.15rem; color: var(--primary); margin-bottom: 6px; }
+    .sidebar .version { font-size: 0.75rem; color: var(--muted-foreground); margin-bottom: 24px; display: block; }
+    .sidebar nav ul { list-style: none; margin: 0; }
+    .sidebar nav li { margin: 4px 0; }
+    .sidebar nav a { display: block; color: var(--foreground); text-decoration: none; font-size: 0.88rem; padding: 6px 10px; border-radius: 6px; transition: background .15s, color .15s; }
+    .sidebar nav a:hover { background: var(--primary-8); color: var(--primary); }
+    .sidebar nav a.active { background: var(--primary-12); color: var(--primary); font-weight: 600; }
+    .sidebar .nav-group { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--border); }
+    .sidebar .nav-group-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); margin-bottom: 8px; padding-left: 10px; }
+    .theme-toggle {
+        margin-top: 24px; padding: 10px 12px; background: var(--background); border: 1px solid var(--border);
+        border-radius: 8px; cursor: pointer; font-size: 0.85rem; color: var(--foreground); width: 100%;
+        display: flex; align-items: center; justify-content: center; gap: 6px; transition: all .3s cubic-bezier(.4,0,.2,1);
+    }
+    .theme-toggle:hover { border-color: var(--primary); color: var(--primary); }
+    .main { margin-left: var(--sidebar-width); flex: 1; max-width: 900px; padding: 48px 40px; background: var(--card); min-height: 100vh; border-left: 1px solid var(--border); }
+    .main h2 { font-size: 1.6rem; color: var(--primary); margin: 48px 0 20px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
+    .main h2:first-child { margin-top: 0; }
+    .main h3 { font-size: 1.2rem; color: var(--foreground); margin: 32px 0 14px; }
+    .main h4 { font-size: 1rem; color: var(--muted-foreground); margin: 22px 0 10px; font-weight: 600; }
+    .main p { margin-bottom: 14px; }
+    .main ul, .main ol { margin: 12px 0 12px 22px; }
+    .main li { margin: 6px 0; }
+    code { background: var(--primary-8); color: var(--primary); padding: 2px 6px; border-radius: 4px; font-family: "SF Mono", Monaco, "Cascadia Code", Consolas, monospace; font-size: 0.9em; }
+    pre { background: var(--code-bg); color: var(--code-text); padding: 18px 22px; border-radius: var(--radius); overflow-x: auto; margin: 16px 0; font-size: 0.88rem; line-height: 1.6; }
+    pre code { background: transparent; color: inherit; padding: 0; font-size: inherit; }
+    .callout { background: var(--primary-5); border: 1px solid var(--primary-15); border-left: 4px solid var(--primary); padding: 16px 20px; border-radius: var(--radius); margin: 18px 0; }
+    .callout.success { background: var(--success-5); border-color: var(--success-15); border-left-color: var(--success); }
+    .callout.warning { background: var(--warning-5); border-color: var(--warning-15); border-left-color: var(--warning); }
+    .callout.danger { background: var(--danger-5); border-color: var(--danger-15); border-left-color: var(--danger); }
+    .callout-title { font-weight: 600; margin-bottom: 6px; display: block; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.92rem; }
+    th, td { border: 1px solid var(--border); padding: 10px 14px; text-align: left; }
+    th { background: var(--background); font-weight: 600; }
+    .tag { display: inline-flex; align-items: center; gap: 4px; background: var(--primary-10); color: var(--primary); font-size: 0.75rem; padding: 3px 10px; border-radius: 6px; margin-right: 4px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.03em; font-weight: 500; border: 1px solid var(--primary-20); }
+    .tag.outline { background: transparent; color: var(--primary); border: 1px solid var(--primary-30); }
+
+    /* Index-specific content styles */
+    .hero { margin-bottom: 48px; }
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 16px;
+        border-radius: 999px;
+        background: var(--primary-8);
+        border: 1px solid var(--primary-20);
+        color: var(--primary);
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: .02em;
+        margin-bottom: 20px;
+    }
+    .hero h1 {
+        font-size: clamp(32px, 5vw, 52px);
+        font-weight: 800;
+        line-height: 1.1;
+        letter-spacing: -.03em;
+        margin-bottom: 16px;
+        color: var(--foreground);
+    }
+    .hero p {
+        max-width: 640px;
+        font-size: 18px;
+        color: var(--muted-foreground);
+        font-weight: 400;
+    }
+    .stats {
+        display: flex;
+        gap: 40px;
+        margin-top: 32px;
+        flex-wrap: wrap;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+        display: block;
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--primary);
+        line-height: 1;
+    }
+    .stat-label {
+        font-size: 12px;
+        color: var(--muted-foreground);
+        margin-top: 6px;
+        text-transform: uppercase;
+        letter-spacing: .06em;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 20px;
+        margin-top: 24px;
+    }
+    .card {
+        display: flex;
+        flex-direction: column;
+        padding: 24px;
+        border-radius: var(--radius);
+        background: var(--card);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        transition: all .3s cubic-bezier(.4,0,.2,1);
+        text-decoration: none;
+        color: inherit;
+    }
+    .card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--primary);
+    }
+    .card-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: var(--radius);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        margin-bottom: 14px;
+        background: var(--primary-8);
+        color: var(--primary);
+    }
+    .card h3 {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+    .card p {
+        font-size: 14px;
+        color: var(--muted-foreground);
+        line-height: 1.6;
+        flex: 1;
+        margin-bottom: 0;
+    }
+    .card-meta {
+        display: flex;
+        gap: 10px;
+        margin-top: 16px;
+        font-size: 12px;
+        color: var(--muted-foreground);
+        font-weight: 500;
+    }
+    .card-meta span {
+        padding: 3px 8px;
+        border-radius: 6px;
+        background: var(--background);
+    }
+    .file-list {
+        display: grid;
+        gap: 10px;
+        margin-top: 24px;
+    }
+    .file-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 20px;
+        border-radius: var(--radius);
+        background: var(--card);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        text-decoration: none;
+        color: inherit;
+        transition: all .3s cubic-bezier(.4,0,.2,1);
+    }
+    .file-item:hover {
+        border-color: var(--primary);
+        background: var(--secondary);
+        box-shadow: var(--shadow-md);
+        transform: translateY(-1px);
+    }
+    .file-item-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .file-item-icon { font-size: 18px; }
+    .file-item-name { font-size: 14px; font-weight: 500; }
+    .file-item-ext {
+        font-size: 12px;
+        color: var(--muted-foreground);
+        padding: 2px 8px;
+        border-radius: 4px;
+        background: var(--background);
+    }
+    footer {
+        margin-top: 60px;
+        padding-top: 40px;
+        border-top: 1px solid var(--border);
+        color: var(--muted-foreground);
+        font-size: 13px;
+        text-align: center;
+    }
+
+    @media (max-width: 900px) {
+        .sidebar { transform: translateX(-100%); transition: transform .3s; box-shadow: 2px 0 12px rgba(0,0,0,0.1); }
+        .sidebar.open { transform: translateX(0); }
+        .main { margin-left: 0; padding: 24px 20px; max-width: 100%; }
+        .menu-toggle { display: block; position: fixed; top: 14px; left: 14px; z-index: 200; background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; font-size: 1rem; cursor: pointer; }
+        .grid { grid-template-columns: 1fr; }
+        .stats { gap: 24px; }
+    }
+    @media (min-width: 901px) { .menu-toggle { display: none; } }
+    .theme-select {
+        margin-top: 24px;
+        padding: 10px 12px;
+        background: var(--background);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-size: 0.85rem;
+        color: var(--foreground);
+        width: 100%;
+        cursor: pointer;
+        transition: all .3s cubic-bezier(.4,0,.2,1);
+    }
+    .theme-select:hover { border-color: var(--primary); }
+    .theme-select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-10); }
+</style>
+<link rel="stylesheet" href="fr-themes.css">
+</head>
+<body>
+
+<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<div class="wiki-layout">
+    <aside class="sidebar">
+        <h1>FR Component Library</h1>
+        <span class="version">Design System v1.0</span>
+        <select class="theme-select" id="theme-select" onchange="changeTheme(this.value)">
+            <option value="">Light (Default)</option>
+            <option value="dark">Dark</option>
+            <option value="claude">Claude</option>
+            <option value="claude-dark">Claude Dark</option>
+            <option value="bumblebee">Bumblebee</option>
+            <option value="bumblebee-dark">Bumblebee Dark</option>
+            <option value="emerald">Emerald</option>
+            <option value="emerald-dark">Emerald Dark</option>
+            <option value="nord">Nord</option>
+            <option value="nord-dark">Nord Dark</option>
+            <option value="sunset">Sunset</option>
+            <option value="sunset-dark">Sunset Dark</option>
+            <option value="abyss">Abyss</option>
+            <option value="abyss-dark">Abyss Dark</option>
+            <option value="dracula">Dracula</option>
+            <option value="dracula-dark">Dracula Dark</option>
+            <option value="amethyst">Amethyst</option>
+            <option value="amethyst-dark">Amethyst Dark</option>
+            <option value="slate">Slate</option>
+            <option value="slate-dark">Slate Dark</option>
+            <option value="twitter">Twitter</option>
+            <option value="twitter-dark">Twitter Dark</option>
+        </select>
+        <nav>
+            <div class="nav-group">
+                <div class="nav-group-title">Navigation</div>
+                <ul>
+                    <li><a href="#overview" class="active">Overview</a></li>
+                    <li><a href="#systems">Design Systems</a></li>
+                    <li><a href="#stylesheets">Style Sheets</a></li>
+                    <li><a href="#guides">Documentation</a></li>
+                </ul>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-title">Wiki 导航</div>
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="wiki/theme-wiki.html">主题定制 Wiki</a></li>
+                    <li><a href="wiki/wiki-html-guide.html">HTML 编写指南</a></li>
+                    <li><a href="wiki/wiki-tailwind.html">Tailwind 结合使用</a></li>
+                    <li><a href="wiki/wiki-usage-guide.html">组件库使用指南</a></li>
+                    <li><a href="wiki/wiki-build-guide.html">Wiki 构建指南</a></li>
+                </ul>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-title">External</div>
+                <ul>
+                    <li><a href="hub.html">Hub Template</a></li>
+                    <li><a href="web-dev-guide.html">Web Dev Guide</a></li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="main">
+        <!-- Hero -->
+        <div class="hero" id="overview">
+            <div class="hero-badge">
+                <span>◈</span>
+                <span>Design System v1.0</span>
+            </div>
+            <h1>FR Component Library</h1>
+            <p>A modular design system and component library built for SEO-focused web projects. Clean markup, reusable patterns, and production-ready styles.</p>
+            <div class="stats">
+                <div class="stat"><span class="stat-num">4</span><span class="stat-label">Systems</span></div>
+                <div class="stat"><span class="stat-num">12+</span><span class="stat-label">Patterns</span></div>
+                <div class="stat"><span class="stat-num">30+</span><span class="stat-label">Components</span></div>
+                <div class="stat"><span class="stat-num">6</span><span class="stat-label">Guides</span></div>
+            </div>
+        </div>
+
+        <!-- Systems -->
+        <h2 id="systems">Design Systems</h2>
+        <h3>Ready-to-use style systems</h3>
+        <div class="grid">
+            <a href="components/components.html" class="card">
+                <div class="card-icon">⚙</div>
+                <h3>CSS Component Library</h3>
+                <p>Base resets, typography, variables, layout grids, and UI components including buttons, cards, forms, modals, tables, and navigation.</p>
+                <div class="card-meta"><span>CSS</span><span>HTML</span><span>JS</span></div>
+            </a>
+            <a href="huahao-blog/index.html" class="card">
+                <div class="card-icon">✎</div>
+                <h3>Huahao Blog System</h3>
+                <p>Complete WordPress-ready blog stylesheet with typography scales, component demos, and editorial layout patterns for content marketing.</p>
+                <div class="card-meta"><span>WordPress</span><span>CSS</span></div>
+            </a>
+            <a href="nichehub/index.html" class="card">
+                <div class="card-icon">◈</div>
+                <h3>NicheHub System</h3>
+                <p>Knowledge hub framework with responsive layouts, data visualization, content components, and theme variables for pillar pages.</p>
+                <div class="card-meta"><span>CSS</span><span>Responsive</span></div>
+            </a>
+            <a href="patterns/" class="card">
+                <div class="card-icon">◇</div>
+                <h3>UI Patterns</h3>
+                <p>Specialized interaction patterns: accordions, comparison matrices, decision trees, heatmaps, score cards, steppers, timelines, and more.</p>
+                <div class="card-meta"><span>CSS</span><span>12 files</span></div>
+            </a>
+        </div>
+
+        <!-- Style Sheets -->
+        <h2 id="stylesheets">Style Sheets</h2>
+        <h3>Standalone CSS files</h3>
+        <div class="file-list">
+            <a href="huahao.css" class="file-item">
+                <div class="file-item-left"><span class="file-item-icon">🎨</span><span class="file-item-name">huahao.css</span></div>
+                <span class="file-item-ext">Blog Bundle</span>
+            </a>
+            <a href="nichehub-core.css" class="file-item">
+                <div class="file-item-left"><span class="file-item-icon">🎨</span><span class="file-item-name">nichehub-core.css</span></div>
+                <span class="file-item-ext">Core</span>
+            </a>
+            <a href="nichehub-ui.css" class="file-item">
+                <div class="file-item-left"><span class="file-item-icon">🎨</span><span class="file-item-name">nichehub-ui.css</span></div>
+                <span class="file-item-ext">UI</span>
+            </a>
+            <a href="nichehub-content.css" class="file-item">
+                <div class="file-item-left"><span class="file-item-icon">🎨</span><span class="file-item-name">nichehub-content.css</span></div>
+                <span class="file-item-ext">Content</span>
+            </a>
+            <a href="nichehub-dataviz.css" class="file-item">
+                <div class="file-item-left"><span class="file-item-icon">🎨</span><span class="file-item-name">nichehub-dataviz.css</span></div>
+                <span class="file-item-ext">Data Viz</span>
+            </a>
+            <a href="nichehub-responsive.css" class="file-item">
+                <div class="file-item-left"><span class="file-item-icon">🎨</span><span class="file-item-name">nichehub-responsive.css</span></div>
+                <span class="file-item-ext">Responsive</span>
+            </a>
+        </div>
+
+        <!-- Guides -->
+        <h2 id="guides">Documentation</h2>
+        <h3>Guides & references</h3>
+        <div class="grid">
+            <a href="hub.html" class="card">
+                <div class="card-icon">📖</div>
+                <h3>Hub Template</h3>
+                <p>Complete hub-page HTML template with navigation, hero sections, content cards, and footer patterns.</p>
+                <div class="card-meta"><span>HTML</span></div>
+            </a>
+            <a href="wiki/theme-wiki.html" class="card">
+                <div class="card-icon">📖</div>
+                <h3>Theme Wiki</h3>
+                <p>Theme customization reference covering color systems, spacing scales, and component overrides.</p>
+                <div class="card-meta"><span>HTML</span></div>
+            </a>
+            <a href="web-dev-guide.html" class="card">
+                <div class="card-icon">📖</div>
+                <h3>Web Dev Guide</h3>
+                <p>Development workflow guide: file structure, build steps, deployment checklist, and performance notes.</p>
+                <div class="card-meta"><span>HTML</span></div>
+            </a>
+            <a href="wiki/wiki-html-guide.html" class="card">
+                <div class="card-icon">📖</div>
+                <h3>HTML Wiki Guide</h3>
+                <p>Semantic HTML patterns, accessibility guidelines, and SEO-friendly markup conventions.</p>
+                <div class="card-meta"><span>HTML</span></div>
+            </a>
+            <a href="wiki/wiki-tailwind.html" class="card">
+                <div class="card-icon">📖</div>
+                <h3>Tailwind Wiki</h3>
+                <p>Tailwind CSS integration notes, utility mapping, and custom configuration for the design system.</p>
+                <div class="card-meta"><span>HTML</span></div>
+            </a>
+            <a href="wiki/wiki-usage-guide.html" class="card">
+                <div class="card-icon">📖</div>
+                <h3>Usage Guide</h3>
+                <p>Step-by-step instructions for installing and using components in WordPress, static sites, and custom builds.</p>
+                <div class="card-meta"><span>HTML</span></div>
+            </a>
+            <a href="wiki/wiki-build-guide.html" class="card">
+                <div class="card-icon">📖</div>
+                <h3>Wiki Build Guide</h3>
+                <p>Documentation of the Wiki HTML skeleton structure and step-by-step instructions for manually building new Wiki pages.</p>
+                <div class="card-meta"><span>HTML</span></div>
+            </a>
+        </div>
+
+        <footer>
+            <p>FR Component Library — Built for SEO-focused web projects.</p>
+        </footer>
+    </main>
+</div>
+
+<script>
+    const html = document.documentElement;
+    const themeSelect = document.getElementById('theme-select');
+    function applyTheme(theme) {
+        if (theme && theme !== 'light') { html.setAttribute('data-theme', theme); }
+        else { html.removeAttribute('data-theme'); }
+        if (themeSelect) themeSelect.value = theme || '';
+    }
+    function changeTheme(theme) { applyTheme(theme); localStorage.setItem('theme', theme); }
+    const saved = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(saved || (prefersDark ? 'dark' : ''));
+    const links = document.querySelectorAll('.sidebar nav a');
+    const sections = document.querySelectorAll('.main h2[id]');
+    function onScroll() { let cur = ''; sections.forEach(s => { if (s.getBoundingClientRect().top <= 120) cur = s.getAttribute('id'); }); links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + cur)); }
+    window.addEventListener('scroll', onScroll); onScroll();
+    links.forEach(l => l.addEventListener('click', () => document.querySelector('.sidebar').classList.remove('open')));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML 标签完全参考手册 — 106种标签详解</title>
+    <meta name="description" content="系统介绍106种HTML标签的用途、属性与用法示例，涵盖文档结构、文本、媒体、表单、表格、交互等全部类别。">
+    <style>    :root {
+        --background: #ffffff;
+        --foreground: #09090b;
+        --card: #ffffff;
+        --card-foreground: #09090b;
+        --popover: #ffffff;
+        --popover-foreground: #09090b;
+        --primary: #18181b;
+        --primary-foreground: #fafafa;
+        --secondary: #f4f4f5;
+        --secondary-foreground: #18181b;
+        --muted: #f4f4f5;
+        --muted-foreground: #a1a1aa;
+        --accent: #f4f4f5;
+        --accent-foreground: #18181b;
+        --destructive: #ef4444;
+        --destructive-foreground: #ffffff;
+        --border: #e4e4e7;
+        --input: #e4e4e7;
+        --ring: #18181b;
+        --radius: 0.75rem;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --code-bg: #18181b;
+        --code-text: #f4f4f5;
+        --sidebar-width: 260px;
+        --primary-5: rgba(24,24,27,0.05);
+        --primary-8: rgba(24,24,27,0.08);
+        --primary-10: rgba(24,24,27,0.10);
+        --primary-12: rgba(24,24,27,0.12);
+        --primary-15: rgba(24,24,27,0.15);
+        --primary-20: rgba(24,24,27,0.20);
+        --primary-30: rgba(24,24,27,0.30);
+        --success-5: rgba(16,185,129,0.05);
+        --success-15: rgba(16,185,129,0.15);
+        --warning-5: rgba(245,158,11,0.05);
+        --warning-15: rgba(245,158,11,0.15);
+        --danger-5: rgba(239,68,68,0.05);
+        --danger-15: rgba(239,68,68,0.15);
+        --shadow: 0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.07);
+        --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.08);
+    }    [data-theme="dark"] {
+        --background: #09090b;
+        --foreground: #fafafa;
+        --card: #18181b;
+        --card-foreground: #fafafa;
+        --popover: #27272a;
+        --popover-foreground: #fafafa;
+        --primary: #fafafa;
+        --primary-foreground: #18181b;
+        --secondary: #27272a;
+        --secondary-foreground: #fafafa;
+        --muted: #27272a;
+        --muted-foreground: #d4d4d8;
+        --accent: #27272a;
+        --accent-foreground: #fafafa;
+        --destructive: #ef4444;
+        --destructive-foreground: #ffffff;
+        --border: rgba(255,255,255,0.10);
+        --input: rgba(255,255,255,0.10);
+        --ring: #fafafa;
+        --success: #34d399;
+        --warning: #fbbf24;
+        --danger: #f87171;
+        --code-bg: #09090b;
+        --code-text: #f4f4f5;
+        --primary-5: rgba(250,250,250,0.05);
+        --primary-8: rgba(250,250,250,0.08);
+        --primary-10: rgba(250,250,250,0.10);
+        --primary-12: rgba(250,250,250,0.12);
+        --primary-15: rgba(250,250,250,0.15);
+        --primary-20: rgba(250,250,250,0.20);
+        --primary-30: rgba(250,250,250,0.30);
+        --success-5: rgba(52,211,153,0.05);
+        --success-15: rgba(52,211,153,0.15);
+        --warning-5: rgba(251,191,36,0.05);
+        --warning-15: rgba(251,191,36,0.15);
+        --danger-5: rgba(248,113,113,0.05);
+        --danger-15: rgba(248,113,113,0.15);
+        --shadow: 0 1px 3px 0 rgba(0,0,0,0.2);
+        --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.3);
+        --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.4);
+    }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--background);
+            color: var(--foreground);
+            line-height: 1.7;
+        }
+        .wiki-layout { display: flex; min-height: 100vh; }
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--card);
+            border-right: 1px solid var(--border);
+            padding: 28px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            top: 0; left: 0; z-index: 100;
+        }
+        .sidebar h1 { font-size: 1.15rem; color: var(--primary); margin-bottom: 6px; }
+        .sidebar .version { font-size: 0.75rem; color: var(--muted-foreground); margin-bottom: 24px; display: block; }
+        .sidebar nav ul { list-style: none; margin: 0; }
+        .sidebar nav li { margin: 4px 0; }
+        .sidebar nav a { display: block; color: var(--foreground); text-decoration: none; font-size: 0.88rem; padding: 6px 10px; border-radius: 6px; transition: background .15s, color .15s; }
+        .sidebar nav a:hover { background: var(--primary-8); color: var(--primary); }
+        .sidebar nav a.active { background: var(--primary-12); color: var(--primary); font-weight: 600; }
+        .sidebar .nav-group { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--border); }
+        .sidebar .nav-group-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); margin-bottom: 8px; padding-left: 10px; }
+        .theme-toggle {
+            margin-top: 24px; padding: 10px 12px; background: var(--background); border: 1px solid var(--border);
+            border-radius: 8px; cursor: pointer; font-size: 0.85rem; color: var(--foreground); width: 100%;
+            display: flex; align-items: center; justify-content: center; gap: 6px; transition: all .3s cubic-bezier(.4,0,.2,1);
+        }
+        .theme-toggle:hover { border-color: var(--primary); color: var(--primary); }
+        .main { margin-left: var(--sidebar-width); margin-right: var(--sidebar-width); flex: 1; max-width: 800px; padding: 48px 40px; background: var(--card); min-height: 100vh; border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+        .main h2 { font-size: 1.6rem; color: var(--primary); margin: 48px 0 20px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
+        .main h2:first-child { margin-top: 0; }
+        .main h3 { font-size: 1.2rem; color: var(--foreground); margin: 32px 0 14px; }
+        .main h4 { font-size: 1rem; color: var(--muted-foreground); margin: 22px 0 10px; font-weight: 600; }
+        .main p { margin-bottom: 14px; }
+        .main ul, .main ol { margin: 12px 0 12px 22px; }
+        .main li { margin: 6px 0; }
+        code { background: var(--primary-8); color: var(--primary); padding: 2px 6px; border-radius: 4px; font-family: "SF Mono", Monaco, "Cascadia Code", Consolas, monospace; font-size: 0.9em; }
+        pre { background: var(--code-bg); color: var(--code-text); padding: 18px 22px; border-radius: var(--radius); overflow-x: auto; margin: 16px 0; font-size: 0.88rem; line-height: 1.6; }
+        pre code { background: transparent; color: inherit; padding: 0; font-size: inherit; }
+        .callout { background: var(--primary-5); border: 1px solid var(--primary-15); border-left: 4px solid var(--primary); padding: 16px 20px; border-radius: var(--radius); margin: 18px 0; }
+        .callout.success { background: var(--success-5); border-color: var(--success-15); border-left-color: var(--success); }
+        .callout.warning { background: var(--warning-5); border-color: var(--warning-15); border-left-color: var(--warning); }
+        .callout.danger { background: var(--danger-5); border-color: var(--danger-15); border-left-color: var(--danger); }
+        .callout-title { font-weight: 600; margin-bottom: 6px; display: block; }
+        table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.92rem; }
+        th, td { border: 1px solid var(--border); padding: 10px 14px; text-align: left; }
+        th { background: var(--background); font-weight: 600; }
+        .tag { display: inline-flex; align-items: center; gap: 4px; background: var(--primary-10); color: var(--primary); font-size: 0.75rem; padding: 3px 10px; border-radius: 6px; margin-right: 4px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.03em; font-weight: 500; border: 1px solid var(--primary-20); }
+        .tag.outline { background: transparent; color: var(--primary); border: 1px solid var(--primary-30); }
+        .tag.block { background: #dbeafe; color: #1e40af; border-color: #93c5fd; }
+        .tag.inline { background: #dcfce7; color: #166534; border-color: #86efac; }
+        .tag.void { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
+        .tag.meta { background: #f3e8ff; color: #6b21a8; border-color: #d8b4fe; }
+        .toc-sidebar {
+            width: var(--sidebar-width);
+            background: var(--card);
+            border-left: 1px solid var(--border);
+            padding: 28px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            top: 0; right: 0; z-index: 100;
+        }
+        .toc-sidebar h2 { font-size: 0.85rem; color: var(--primary); margin-bottom: 16px; padding-left: 10px; font-weight: 600; }
+        .toc-sidebar nav ul { list-style: none; margin: 0; }
+        .toc-sidebar nav li { margin: 4px 0; }
+        .toc-sidebar nav a { display: block; color: var(--foreground); text-decoration: none; font-size: 0.85rem; padding: 5px 10px; border-radius: 6px; transition: background .15s, color .15s; }
+        .toc-sidebar nav a:hover { background: var(--primary-8); color: var(--primary); }
+        .toc-sidebar nav a.active { background: var(--primary-12); color: var(--primary); font-weight: 600; }
+        .toc-sidebar .nav-group { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+        .toc-sidebar .nav-group:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+        .toc-sidebar .nav-group-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); margin-bottom: 8px; padding-left: 10px; }
+        .tag-index { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; margin: 16px 0; }
+        .tag-index a { display: block; padding: 6px 10px; background: var(--background); border: 1px solid var(--border); border-radius: 6px; font-family: "SF Mono", Monaco, Consolas, monospace; font-size: 0.85rem; color: var(--foreground); text-decoration: none; transition: all .15s; }
+        .tag-index a:hover { background: var(--primary-8); border-color: var(--primary-20); color: var(--primary); }
+        .tag-detail { margin: 28px 0; padding: 20px; background: var(--background); border: 1px solid var(--border); border-radius: var(--radius); }
+        .tag-detail h4 { margin-top: 0; font-family: "SF Mono", Monaco, Consolas, monospace; font-size: 1.05rem; }
+        .tag-detail .tag-bar { margin-bottom: 10px; }
+        .tag-detail p { margin-bottom: 10px; color: var(--muted-foreground); font-size: 0.95rem; }
+        .tag-detail pre { margin: 10px 0 0; }
+        @media (max-width: 1200px) { .toc-sidebar { display: none; } .main { margin-right: 0; border-right: none; } }
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); transition: transform .3s; box-shadow: 2px 0 12px rgba(0,0,0,0.1); }
+            .sidebar.open { transform: translateX(0); }
+            .main { margin-left: 0; padding: 24px 20px; max-width: 100%; }
+            .menu-toggle { display: block; position: fixed; top: 14px; left: 14px; z-index: 200; background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; font-size: 1rem; cursor: pointer; }
+        }
+        @media (min-width: 901px) { .menu-toggle { display: none; } }
+    </style>
+<link rel="stylesheet" href="../fr-themes.css">
+</head>
+<body>
+<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+<div class="wiki-layout">
+    <aside class="sidebar">
+        <h1>HTML 标签手册</h1>
+        <span class="version">106 种标签完全参考</span>
+        <select class="theme-select" id="theme-select" onchange="changeTheme(this.value)" style="margin-bottom:18px;width:100%;padding:8px 10px;border-radius:6px;border:1px solid var(--border);background:var(--background);color:var(--foreground);font-size:0.85rem;">
+            <option value="">Light (Default)</option>
+            <option value="dark">Dark</option>
+            <option value="claude">Claude</option>
+            <option value="claude-dark">Claude Dark</option>
+            <option value="bumblebee">Bumblebee</option>
+            <option value="bumblebee-dark">Bumblebee Dark</option>
+            <option value="emerald">Emerald</option>
+            <option value="emerald-dark">Emerald Dark</option>
+            <option value="nord">Nord</option>
+            <option value="nord-dark">Nord Dark</option>
+            <option value="sunset">Sunset</option>
+            <option value="sunset-dark">Sunset Dark</option>
+            <option value="abyss">Abyss</option>
+            <option value="abyss-dark">Abyss Dark</option>
+            <option value="dracula">Dracula</option>
+            <option value="dracula-dark">Dracula Dark</option>
+            <option value="amethyst">Amethyst</option>
+            <option value="amethyst-dark">Amethyst Dark</option>
+            <option value="slate">Slate</option>
+            <option value="slate-dark">Slate Dark</option>
+            <option value="twitter">Twitter</option>
+            <option value="twitter-dark">Twitter Dark</option>
+        </select>
+        <nav>
+            <div class="nav-group">
+                <div class="nav-group-title">Wiki 导航</div>
+                <ul>
+                    <li><a href="../index.html">首页</a></li>
+                    <li><a href="theme-wiki.html">主题定制 Wiki</a></li>
+                    <li><a href="wiki-html-guide.html">HTML 编写指南</a></li>
+                    <li><a href="wiki-tailwind.html">Tailwind 结合使用</a></li>
+                    <li><a href="wiki-usage-guide.html">组件库使用指南</a></li>
+                    <li><a href="wiki-build-guide.html">Wiki 构建指南</a></li>
+                    <li><a href="wiki-html-tags.html" class="active">HTML 标签手册</a></li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+    <aside class="toc-sidebar">
+        <h2>目录</h2>
+        <nav>
+            <div class="nav-group">
+                <div class="nav-group-title">概览</div>
+                <ul>
+                    <li><a href="#overview" class="active">总览与使用建议</a></li>
+                </ul>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-title">标签分类</div>
+                <ul>
+                    <li><a href="#cat-root">文档根与元数据</a></li>
+                    <li><a href="#cat-script">脚本与模板</a></li>
+                    <li><a href="#cat-section">区块与标题</a></li>
+                    <li><a href="#cat-text">文本内容</a></li>
+                    <li><a href="#cat-inline">内联文本语义</a></li>
+                    <li><a href="#cat-media">图片与多媒体</a></li>
+                    <li><a href="#cat-embed">嵌入内容</a></li>
+                    <li><a href="#cat-table">表格</a></li>
+                    <li><a href="#cat-form">表单</a></li>
+                    <li><a href="#cat-interactive">交互元素</a></li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+    <main class="main">
+
+        <h2 id="overview">总览与使用建议</h2>
+        <p>HTML 目前 Living Standard 中定义了上百个标签，本文档精选 <strong>106 个最常用、最核心</strong>的标签进行系统梳理。掌握这些标签足以覆盖 99% 的日常开发场景。</p>
+
+        <div class="callout success">
+            <span class="callout-title">选标签的黄金法则</span>
+            <ul>
+                <li><strong>语义优先</strong>：有专门标签时绝不用 div/span 代替（如用 <code>&lt;article&gt;</code> 而非 <code>&lt;div class="article"&gt;</code>）</li>
+                <li><strong>可访问性</strong>：img 必写 alt，form 控件必关联 label，按钮必用 <code>&lt;button&gt;</code> 而非 div</li>
+                <li><strong>SEO 友好</strong>：h1-h6 构成文档大纲，time 标注日期，address 放联系信息</li>
+                <li><strong>渐进增强</strong>：details/summary、dialog 等原生交互标签能减少大量 JS</li>
+            </ul>
+        </div>
+
+        <h3>标签类型速查</h3>
+        <table>
+            <tr><th>类型标识</th><th>含义</th><th>特征</th></tr>
+            <tr><td><span class="tag block">块级</span></td><td>Block</td><td>独占一行，可设置宽高，如 div、p、section</td></tr>
+            <tr><td><span class="tag inline">内联</span></td><td>Inline</td><td>不独占一行，跟随文本流，如 span、a、strong</td></tr>
+            <tr><td><span class="tag void">空标签</span></td><td>Void</td><td>无闭合标签，如 img、br、input、meta</td></tr>
+            <tr><td><span class="tag meta">元数据</span></td><td>Meta</td><td>不可见或脚本相关，如 head、script、template</td></tr>
+        </table>
+
+        <h2 id="cat-root">1. 文档根与元数据 <span class="tag">8 个</span></h2>
+
+        <div class="tag-detail">
+            <h4 id="tag-html">&lt;html&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>lang</code>, <code>xmlns</code></div>
+            <p>HTML 文档的根元素，所有其他元素都是其后代。通过 <code>lang</code> 属性声明页面语言，对屏幕阅读器和 SEO 都至关重要。</p>
+            <pre><code>&lt;html lang="zh-CN"&gt;
+  ...
+&lt;/html&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-head">&lt;head&gt; <span class="tag meta">元数据</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>无全局唯一属性</div>
+            <p>包含文档的元数据集合，如标题、字符集声明、样式表链接、脚本等。内容不会直接渲染在页面中。</p>
+            <pre><code>&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;页面标题&lt;/title&gt;
+&lt;/head&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-body">&lt;body&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局事件属性（如 onload）</div>
+            <p>文档的主体，包含所有可见内容，如文本、图片、视频、游戏等。</p>
+            <pre><code>&lt;body&gt;
+  &lt;h1&gt;Hello World&lt;/h1&gt;
+&lt;/body&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-title">&lt;title&gt; <span class="tag meta">元数据</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>无</div>
+            <p>定义文档标题，显示在浏览器标签页和收藏夹中，对 SEO 极为重要。</p>
+            <pre><code>&lt;title&gt;页面标题&lt;/title&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-meta">&lt;meta&gt; <span class="tag void">空标签</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>charset</code>, <code>name</code>, <code>content</code>, <code>http-equiv</code></div>
+            <p>表示那些不能被 title、base、link、style、script 表达的元数据，如字符集、视口、描述。</p>
+            <pre><code>&lt;meta charset="UTF-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-link">&lt;link&gt; <span class="tag void">空标签</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>href</code>, <code>rel</code>, <code>type</code>, <code>media</code>, <code>crossorigin</code></div>
+            <p>链接外部资源，最常用的是引入 CSS 样式表，也可用于设置网站图标（favicon）。</p>
+            <pre><code>&lt;link rel="stylesheet" href="style.css"&gt;
+&lt;link rel="icon" href="favicon.ico"&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-base">&lt;base&gt; <span class="tag meta">元数据</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>href</code>, <code>target</code></div>
+            <p>设置文档中所有相对 URL 的基准地址，以及链接的默认打开目标。</p>
+            <pre><code>&lt;base href="https://example.com/" target="_blank"&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-style">&lt;style&gt; <span class="tag meta">元数据</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>media</code>, <code>type</code></div>
+            <p>包含文档的内联 CSS 样式信息，可放在 head 或 body 中（推荐 head）。</p>
+            <pre><code>&lt;style&gt;
+  body { background: #fff; }
+&lt;/style&gt;</code></pre>
+        </div>
+
+        <h2 id="cat-script">2. 脚本与模板 <span class="tag">3 个</span></h2>
+
+        <div class="tag-detail">
+            <h4 id="tag-script">&lt;script&gt; <span class="tag meta">元数据</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>src</code>, <code>type</code>, <code>async</code>, <code>defer</code>, <code>crossorigin</code>, <code>integrity</code></div>
+            <p>嵌入或引用可执行脚本（通常是 JavaScript）。可放在 head 或 body 末尾以优化加载。</p>
+            <pre><code>&lt;script src="app.js" defer&gt;&lt;/script&gt;
+&lt;script&gt;console.log('hi');&lt;/script&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-noscript">&lt;noscript&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>当浏览器禁用脚本或浏览器不支持脚本时显示的内容。常用于提示用户启用 JavaScript。</p>
+            <pre><code>&lt;noscript&gt;
+  &lt;p&gt;请启用 JavaScript 以获得最佳体验。&lt;/p&gt;
+&lt;/noscript&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-template">&lt;template&gt; <span class="tag meta">模板</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>保存 HTML 模板片段，页面加载时不会渲染，可通过 JavaScript 克隆后插入文档。常用于 Web 组件。</p>
+            <pre><code>&lt;template id="card-tpl"&gt;
+  &lt;div class="card"&gt;&lt;/div&gt;
+&lt;/template&gt;</code></pre>
+        </div>
+
+        <h2 id="cat-section">3. 区块与标题 <span class="tag">15 个</span></h2>
+
+        <div class="tag-detail">
+            <h4 id="tag-h1">&lt;h1&gt; – &lt;h6&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>六级标题，h1 最高，h6 最低。构成文档大纲，对 SEO 和可访问性至关重要。一个页面建议只用一个 h1。</p>
+            <pre><code>&lt;h1&gt;一级标题&lt;/h1&gt;
+&lt;h2&gt;二级标题&lt;/h2&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-header">&lt;header&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>表示页面或区块的头部，通常包含导航、logo、搜索框等。一个页面可有多个 header。</p>
+            <pre><code>&lt;header&gt;
+  &lt;nav&gt;...&lt;/nav&gt;
+&lt;/header&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-nav">&lt;nav&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>定义导航链接区域，放置主要导航链接。并非所有链接都必须放在 nav 中。</p>
+            <pre><code>&lt;nav&gt;
+  &lt;a href="/"&gt;首页&lt;/a&gt;
+  &lt;a href="/about"&gt;关于&lt;/a&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-main">&lt;main&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>文档的主要内容区域，每个页面只能有一个 main，且不能是 article、aside、footer、header、nav 的后代。</p>
+            <pre><code>&lt;main&gt;
+  &lt;article&gt;...&lt;/article&gt;
+&lt;/main&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-article">&lt;article&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>表示文档中独立的、可独立分发或复用的内容，如博客文章、新闻、论坛帖子。</p>
+            <pre><code>&lt;article&gt;
+  &lt;h2&gt;文章标题&lt;/h2&gt;
+  &lt;p&gt;文章内容...&lt;/p&gt;
+&lt;/article&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-section">&lt;section&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>表示文档中的通用独立区块，通常带有标题。比 div 更具语义，但比 article 独立性弱。</p>
+            <pre><code>&lt;section&gt;
+  &lt;h2&gt;章节标题&lt;/h2&gt;
+  &lt;p&gt;内容...&lt;/p&gt;
+&lt;/section&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-aside">&lt;aside&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>表示与周围内容间接相关的部分，如侧边栏、广告、引用块、相关链接列表。</p>
+            <pre><code>&lt;aside&gt;
+  &lt;h3&gt;相关文章&lt;/h3&gt;
+  &lt;ul&gt;...&lt;/ul&gt;
+&lt;/aside&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-footer">&lt;footer&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>表示页面或区块的底部，通常包含版权信息、作者信息、相关文档链接。</p>
+            <pre><code>&lt;footer&gt;
+  &lt;p&gt;© 2026 公司名&lt;/p&gt;
+&lt;/footer&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-div">&lt;div&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>通用容器，无语义，仅用于布局和样式。当没有其他语义标签适用时使用。</p>
+            <pre><code>&lt;div class="wrapper"&gt;
+  &lt;div class="item"&gt;...&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-address">&lt;address&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>提供某人、某组织的联系信息。通常包含在 footer 或 article 中。不能用于任意地址文本。</p>
+            <pre><code>&lt;address&gt;
+  &lt;a href="mailto:hi@example.com"&gt;hi@example.com&lt;/a&gt;
+&lt;/address&gt;</code></pre>
+        </div>
+
+        <h2 id="cat-text">4. 文本内容 <span class="tag">12 个</span></h2>
+
+        <div class="tag-detail">
+            <h4 id="tag-p">&lt;p&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>表示一个文本段落。浏览器会在相邻 p 元素之间自动添加垂直间距。</p>
+            <pre><code>&lt;p&gt;这是一个段落。&lt;/p&gt;
+&lt;p&gt;这是另一个段落。&lt;/p&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-hr">&lt;hr&gt; <span class="tag void">空标签</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>水平分割线，表示段落级元素之间的主题转换（thematic break）。</p>
+            <pre><code>&lt;p&gt;第一部分&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;第二部分&lt;/p&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-pre">&lt;pre&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>预格式化文本，保留空格和换行符。常用于显示代码块或 ASCII 艺术。</p>
+            <pre><code>&lt;pre&gt;
+  第一行
+  第二行
+&lt;/pre&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-blockquote">&lt;blockquote&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>cite</code></div>
+            <p>块级引用，表示引用的内容。可通过 cite 属性给出来源 URL。</p>
+            <pre><code>&lt;blockquote cite="https://example.com"&gt;
+  &lt;p&gt;引用的内容...&lt;/p&gt;
+&lt;/blockquote&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-ol">&lt;ol&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>reversed</code>, <code>start</code>, <code>type</code></div>
+            <p>有序列表，列表项通常带有数字或字母序号。</p>
+            <pre><code>&lt;ol start="3"&gt;
+  &lt;li&gt;第三项&lt;/li&gt;
+  &lt;li&gt;第四项&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-ul">&lt;ul&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>无序列表，列表项通常带有项目符号（圆点、方块等）。</p>
+            <pre><code>&lt;ul&gt;
+  &lt;li&gt;苹果&lt;/li&gt;
+  &lt;li&gt;香蕉&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-li">&lt;li&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>value</code>（仅用于 ol 子项）</div>
+            <p>列表项，必须嵌套在 ol、ul 或 menu 中。可以包含其他块级元素。</p>
+            <pre><code>&lt;li&gt;列表项内容&lt;/li&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-dl">&lt;dl&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>描述列表（definition list），用于展示键值对、术语与解释等成对信息。</p>
+            <pre><code>&lt;dl&gt;
+  &lt;dt&gt;术语&lt;/dt&gt;
+  &lt;dd&gt;术语的解释&lt;/dd&gt;
+&lt;/dl&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-dt">&lt;dt&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>描述列表中的术语（description term），与 dd 配合使用。</p>
+            <pre><code>&lt;dt&gt;HTML&lt;/dt&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-dd">&lt;dd&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>描述列表中的定义或解释（description definition），与 dt 配合使用。</p>
+            <pre><code>&lt;dd&gt;超文本标记语言&lt;/dd&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-figure">&lt;figure&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>自包含的内容块，如图表、插图、代码片段等，通常与 figcaption 一起使用。</p>
+            <pre><code>&lt;figure&gt;
+  &lt;img src="chart.png" alt="图表"&gt;
+  &lt;figcaption&gt;图1：销售趋势&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-figcaption">&lt;figcaption&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>figure 元素的标题或说明文字，必须作为 figure 的第一个或最后一个子元素。</p>
+            <pre><code>&lt;figcaption&gt;图1：销售趋势&lt;/figcaption&gt;</code></pre>
+        </div>
+
+
+        <h2 id="cat-inline">5. 内联文本语义 <span class="tag">28 个</span></h2>
+
+        <div class="tag-detail">
+            <h4 id="tag-a">&lt;a&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>href</code>, <code>target</code>, <code>rel</code>, <code>download</code>, <code>hreflang</code></div>
+            <p>锚点元素，创建指向其他页面、文件、邮箱地址或同一页面内部位置的超链接。</p>
+            <pre><code>&lt;a href="https://example.com" target="_blank"&gt;访问网站&lt;/a&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-em">&lt;em&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>表示强调，通常渲染为斜体。改变句子的语义重音。</p>
+            <pre><code>&lt;p&gt;你&lt;em&gt;必须&lt;/em&gt;完成这个任务。&lt;/p&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-strong">&lt;strong&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>表示强烈的重要性、严重性或紧迫性，通常渲染为粗体。</p>
+            <pre><code>&lt;p&gt;&lt;strong&gt;警告：&lt;/strong&gt;请勿触摸。&lt;/p&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-small">&lt;small&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>表示边注、免责声明、版权声明等小号文本，语义上表示次要内容。</p>
+            <pre><code>&lt;p&gt;&lt;small&gt;© 2026 版权所有&lt;/small&gt;&lt;/p&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-s">&lt;s&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>表示不再准确或不再相关的内容，如原价划线。不要与 del 混淆。</p>
+            <pre><code>&lt;p&gt;原价 &lt;s&gt;¥199&lt;/s&gt;，现价 ¥99&lt;/p&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-cite">&lt;cite&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>标记作品的标题（书籍、歌曲、电影、论文等），通常渲染为斜体。</p>
+            <pre><code>&lt;p&gt;推荐阅读 &lt;cite&gt;HTML 权威指南&lt;/cite&gt;&lt;/p&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-q">&lt;q&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>cite</code></div>
+            <p>短行内引用，浏览器通常会自动添加引号。可通过 cite 属性给出来源。</p>
+            <pre><code>&lt;p&gt;他说 &lt;q&gt;时间就是金钱&lt;/q&gt;&lt;/p&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-dfn">&lt;dfn&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>title</code>（定义术语）</div>
+            <p>表示正在定义的术语，其父级段落、section 应包含该术语的定义。</p>
+            <pre><code>&lt;p&gt;&lt;dfn&gt;HTML&lt;/dfn&gt; 是超文本标记语言。&lt;/p&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-abbr">&lt;abbr&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>title</code></div>
+            <p>表示缩写或首字母缩略词。title 属性提供完整展开形式。</p>
+            <pre><code>&lt;abbr title="HyperText Markup Language"&gt;HTML&lt;/abbr&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-ruby">&lt;ruby&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>用于展示东亚文字的注音（ruby 注释），如汉字旁标注拼音或假名。</p>
+            <pre><code>&lt;ruby&gt;汉 &lt;rt&gt;han&lt;/rt&gt;&lt;/ruby&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-rt">&lt;rt&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>ruby 注音文本，放置在 ruby 元素内，提供主文本的发音注释。</p>
+            <pre><code>&lt;rt&gt;ふりがな&lt;/rt&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-rp">&lt;rp&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>在浏览器不支持 ruby 时显示括号或其他后备内容，包裹 rt 元素。</p>
+            <pre><code>&lt;ruby&gt;漢 &lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;かん&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;&lt;/ruby&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-data">&lt;data&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>value</code></div>
+            <p>将内容与机器可读的翻译关联，通过 value 属性提供对应的值。</p>
+            <pre><code>&lt;data value="398"&gt;新品&lt;/data&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-time">&lt;time&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>datetime</code></div>
+            <p>表示特定的时间段或日期，datetime 属性提供机器可读格式，利于 SEO。</p>
+            <pre><code>&lt;time datetime="2026-05-08"&gt;2026年5月8日&lt;/time&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-code">&lt;code&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>表示计算机代码片段，等宽字体显示。适合行内代码引用。</p>
+            <pre><code>&lt;p&gt;使用 &lt;code&gt;console.log()&lt;/code&gt; 输出。&lt;/p&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-var">&lt;var&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>表示数学表达式或编程上下文中的变量名，通常斜体显示。</p>
+            <pre><code>&lt;p&gt;面积 = &lt;var&gt;r&lt;/var&gt;² × π&lt;/p&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-samp">&lt;samp&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>表示计算机程序输出样本，等宽字体显示。</p>
+            <pre><code>&lt;p&gt;系统提示：&lt;samp&gt;操作成功&lt;/samp&gt;&lt;/p&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-kbd">&lt;kbd&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>表示键盘输入或用户需要按下的按键，常用于快捷键说明。</p>
+            <pre><code>&lt;p&gt;按 &lt;kbd&gt;Ctrl&lt;/kbd&gt; + &lt;kbd&gt;S&lt;/kbd&gt; 保存&lt;/p&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-sub">&lt;sub&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>下标文本，用于化学式、数学下标等场景。</p>
+            <pre><code>&lt;p&gt;H&lt;sub&gt;2&lt;/sub&gt;O 是水。&lt;/p&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-sup">&lt;sup&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>上标文本，用于数学指数、脚注标记等场景。</p>
+            <pre><code>&lt;p&gt;E = mc&lt;sup&gt;2&lt;/sup&gt;&lt;/p&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-i">&lt;i&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>表示与周围文本不同的语气或质量，如外文短语、技术术语、想法。默认斜体。</p>
+            <pre><code>&lt;p&gt;&lt;i&gt;caveat emptor&lt;/i&gt;（买者自负）&lt;/p&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-b">&lt;b&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>引起注意但不增加重要性，如摘要关键词、评论中的产品名。默认粗体。</p>
+            <pre><code>&lt;p&gt;&lt;b&gt;注意&lt;/b&gt;：这是关键步骤。&lt;/p&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-u">&lt;u&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>表示非文本注释，如中文专有名词需要标注、拼写检查错误。默认下划线。</p>
+            <pre><code>&lt;p&gt;&lt;u&gt;北京&lt;/u&gt;是中国的首都。&lt;/p&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-mark">&lt;mark&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>标记文本中因上下文相关而高亮的部分，如搜索结果高亮。默认黄底。</p>
+            <pre><code>&lt;p&gt;搜索结果：&lt;mark&gt;关键词&lt;/mark&gt;&lt;/p&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-bdo">&lt;bdo&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>dir</code>（必填）</div>
+            <p>双向覆盖（Bidirectional Override），强制覆盖当前文本的双向算法方向。</p>
+            <pre><code>&lt;bdo dir="rtl"&gt;这段文字从右向左显示&lt;/bdo&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-span">&lt;span&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>通用行内容器，无语义。用于对行内元素进行样式控制或脚本操作。</p>
+            <pre><code>&lt;p&gt;价格是 &lt;span class="price"&gt;¥99&lt;/span&gt;&lt;/p&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-br">&lt;br&gt; <span class="tag void">空标签</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>换行符，在文本中插入一个简单的换行。不要在段落间使用 br 代替 p。</p>
+            <pre><code>&lt;p&gt;第一行&lt;br&gt;第二行&lt;/p&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-wbr">&lt;wbr&gt; <span class="tag void">空标签</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>可选换行机会，指示浏览器在必要时可以在此处换行，常用于长 URL 或单词。</p>
+            <pre><code>&lt;p&gt;https://example.com/&lt;wbr&gt;very-long-path&lt;/p&gt;</code></pre>
+        </div>
+
+        <h2 id="cat-media">6. 图片与多媒体 <span class="tag">9 个</span></h2>
+
+        <div class="tag-detail">
+            <h4 id="tag-img">&lt;img&gt; <span class="tag void">空标签</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>src</code>, <code>alt</code>, <code>width</code>, <code>height</code>, <code>loading</code>, <code>srcset</code>, <code>sizes</code></div>
+            <p>将图像嵌入文档。必须包含 alt 属性以支持可访问性和 SEO。</p>
+            <pre><code>&lt;img src="photo.jpg" alt="风景照" width="600" loading="lazy"&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-audio">&lt;audio&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>src</code>, <code>controls</code>, <code>autoplay</code>, <code>loop</code>, <code>muted</code>, <code>preload</code></div>
+            <p>在文档中嵌入音频内容，支持多种音频格式。可包含 source 子元素。</p>
+            <pre><code>&lt;audio controls&gt;
+  &lt;source src="music.mp3" type="audio/mpeg"&gt;
+&lt;/audio&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-video">&lt;video&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>src</code>, <code>controls</code>, <code>autoplay</code>, <code>loop</code>, <code>muted</code>, <code>width</code>, <code>height</code>, <code>poster</code></div>
+            <p>在文档中嵌入视频内容。可包含 source、track 等子元素。</p>
+            <pre><code>&lt;video controls width="640" poster="thumb.jpg"&gt;
+  &lt;source src="movie.mp4" type="video/mp4"&gt;
+&lt;/video&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-source">&lt;source&gt; <span class="tag void">空标签</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>src</code>, <code>type</code>, <code>media</code>, <code>sizes</code>, <code>srcset</code></div>
+            <p>为 video、audio、picture 指定多种媒体资源，浏览器会选择最合适的格式。</p>
+            <pre><code>&lt;source src="movie.webm" type="video/webm"&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-track">&lt;track&gt; <span class="tag void">空标签</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>kind</code>, <code>src</code>, <code>srclang</code>, <code>label</code>, <code>default</code></div>
+            <p>为 video、audio 指定外部文本轨道，如字幕、标题、章节等。</p>
+            <pre><code>&lt;track kind="subtitles" src="subs.vtt" srclang="zh" label="中文字幕"&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-canvas">&lt;canvas&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>width</code>, <code>height</code></div>
+            <p>通过脚本（通常是 JavaScript）绘制图形的画布，可用于游戏、图表、图像处理。</p>
+            <pre><code>&lt;canvas id="myCanvas" width="400" height="300"&gt;&lt;/canvas&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-svg">&lt;svg&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>xmlns</code>, <code>viewBox</code>, <code>width</code>, <code>height</code>, <code>fill</code>, <code>stroke</code></div>
+            <p>定义可缩放矢量图形（SVG），可直接嵌入 HTML，不会失真，适合图标和插图。</p>
+            <pre><code>&lt;svg width="100" height="100"&gt;
+  &lt;circle cx="50" cy="50" r="40" fill="red" /&gt;
+&lt;/svg&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-map">&lt;map&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>name</code></div>
+            <p>与 img 配合定义图像映射（可点击区域），包含多个 area 子元素。</p>
+            <pre><code>&lt;map name="shapes"&gt;
+  &lt;area shape="rect" coords="34,44,270,350" href="rect.htm"&gt;
+&lt;/map&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-area">&lt;area&gt; <span class="tag void">空标签</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>shape</code>, <code>coords</code>, <code>href</code>, <code>alt</code>, <code>target</code>, <code>download</code></div>
+            <p>在图像映射中定义可点击的热区区域，必须嵌套在 map 元素内。</p>
+            <pre><code>&lt;area shape="circle" coords="75,75,75" href="circle.htm" alt="圆形"&gt;</code></pre>
+        </div>
+
+
+        <h2 id="cat-embed">7. 嵌入内容 <span class="tag">5 个</span></h2>
+
+        <div class="tag-detail">
+            <h4 id="tag-iframe">&lt;iframe&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>src</code>, <code>width</code>, <code>height</code>, <code>name</code>, <code>sandbox</code>, <code>allow</code>, <code>loading</code></div>
+            <p>内联框架，在当前页面中嵌入另一个 HTML 页面。常用于嵌入地图、广告、第三方组件。</p>
+            <pre><code>&lt;iframe src="map.html" width="600" height="400"&gt;&lt;/iframe&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-embed">&lt;embed&gt; <span class="tag void">空标签</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>src</code>, <code>type</code>, <code>width</code>, <code>height</code></div>
+            <p>嵌入外部内容，如 Flash（已淘汰）、PDF 阅读器。推荐使用 iframe 或 object 替代。</p>
+            <pre><code>&lt;embed src="file.pdf" type="application/pdf" width="600" height="400"&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-object">&lt;object&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>data</code>, <code>type</code>, <code>width</code>, <code>height</code>, <code>name</code>, <code>form</code></div>
+            <p>通用外部资源嵌入容器，可嵌入图片、视频、PDF、Flash 等。支持包含 param 配置参数。</p>
+            <pre><code>&lt;object data="movie.swf" type="application/x-shockwave-flash"&gt;
+  &lt;param name="quality" value="high"&gt;
+&lt;/object&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-param">&lt;param&gt; <span class="tag void">空标签</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>name</code>, <code>value</code></div>
+            <p>为 object 元素定义参数，如初始化配置、播放设置等。</p>
+            <pre><code>&lt;param name="autoplay" value="true"&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-picture">&lt;picture&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>响应式图片容器，包含多个 source 和一个 img，根据媒体查询选择最佳图片。</p>
+            <pre><code>&lt;picture&gt;
+  &lt;source srcset="img.webp" type="image/webp"&gt;
+  &lt;img src="img.jpg" alt="描述"&gt;
+&lt;/picture&gt;</code></pre>
+        </div>
+
+        <h2 id="cat-table">8. 表格 <span class="tag">10 个</span></h2>
+
+        <div class="tag-detail">
+            <h4 id="tag-table">&lt;table&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>表格容器，包含行和单元格的二维数据表。不应被滥用于页面布局。</p>
+            <pre><code>&lt;table&gt;
+  &lt;tr&gt;&lt;th&gt;名称&lt;/th&gt;&lt;th&gt;价格&lt;/th&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;苹果&lt;/td&gt;&lt;td&gt;5&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-caption">&lt;caption&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>表格标题，必须作为 table 的第一个子元素。描述表格的整体内容。</p>
+            <pre><code>&lt;caption&gt;2026年销售数据&lt;/caption&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-colgroup">&lt;colgroup&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>span</code></div>
+            <p>定义表格中的一组列，用于统一设置样式。包含一个或多个 col 元素。</p>
+            <pre><code>&lt;colgroup&gt;
+  &lt;col style="background:#f0f0f0"&gt;
+  &lt;col span="2"&gt;
+&lt;/colgroup&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-col">&lt;col&gt; <span class="tag void">空标签</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>span</code></div>
+            <p>定义表格中一列或多列的属性，必须嵌套在 colgroup 中。</p>
+            <pre><code>&lt;col span="2" style="width:150px"&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-tbody">&lt;tbody&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>表格主体，包含数据行。一个 table 可包含多个 tbody 以对数据进行逻辑分组。</p>
+            <pre><code>&lt;tbody&gt;
+  &lt;tr&gt;&lt;td&gt;数据1&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-thead">&lt;thead&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>表格头部，通常包含列标题行（th）。打印时可在每页重复显示。</p>
+            <pre><code>&lt;thead&gt;
+  &lt;tr&gt;&lt;th&gt;月份&lt;/th&gt;&lt;th&gt;收入&lt;/th&gt;&lt;/tr&gt;
+&lt;/thead&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-tfoot">&lt;tfoot&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>表格页脚，通常包含汇总行（如总计、平均值）。必须出现在 tbody 之前（DOM 顺序）。</p>
+            <pre><code>&lt;tfoot&gt;
+  &lt;tr&gt;&lt;td&gt;总计&lt;/td&gt;&lt;td&gt;1000&lt;/td&gt;&lt;/tr&gt;
+&lt;/tfoot&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-tr">&lt;tr&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>表格行（table row），包含 td 或 th 单元格。</p>
+            <pre><code>&lt;tr&gt;
+  &lt;td&gt;单元格1&lt;/td&gt;
+  &lt;td&gt;单元格2&lt;/td&gt;
+&lt;/tr&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-td">&lt;td&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>colspan</code>, <code>rowspan</code>, <code>headers</code></div>
+            <p>表格数据单元格（table data），包含具体数据内容。</p>
+            <pre><code>&lt;td colspan="2"&gt;合并两列&lt;/td&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-th">&lt;th&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>colspan</code>, <code>rowspan</code>, <code>headers</code>, <code>scope</code>, <code>abbr</code></div>
+            <p>表头单元格（table header），通常加粗居中显示，表示列或行的标题。</p>
+            <pre><code>&lt;th scope="col"&gt;产品名称&lt;/th&gt;</code></pre>
+        </div>
+
+        <h2 id="cat-form">9. 表单 <span class="tag">14 个</span></h2>
+
+        <div class="tag-detail">
+            <h4 id="tag-form">&lt;form&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>action</code>, <code>method</code>, <code>enctype</code>, <code>name</code>, <code>target</code>, <code>novalidate</code></div>
+            <p>表单容器，包含交互式控件，用于向服务器提交用户数据。</p>
+            <pre><code>&lt;form action="/submit" method="POST"&gt;
+  ...
+&lt;/form&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-label">&lt;label&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>for</code>（关联控件 id）, <code>form</code></div>
+            <p>为表单控件定义说明标签。点击 label 可聚焦关联的控件，极大提升可访问性。</p>
+            <pre><code>&lt;label for="email"&gt;邮箱：&lt;/label&gt;
+&lt;input id="email" type="email"&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-input">&lt;input&gt; <span class="tag void">空标签</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>type</code>, <code>name</code>, <code>value</code>, <code>placeholder</code>, <code>required</code>, <code>disabled</code>, <code>readonly</code></div>
+            <p>通用的表单输入控件，根据 type 属性呈现为文本框、密码框、复选框、单选按钮、日期选择器等。</p>
+            <pre><code>&lt;input type="text" name="user" placeholder="用户名" required&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-button">&lt;button&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>type</code>, <code>name</code>, <code>value</code>, <code>disabled</code>, <code>form</code></div>
+            <p>可点击的按钮，比 input type="button" 更灵活，可包含 HTML 内容（图标、样式文本等）。</p>
+            <pre><code>&lt;button type="submit"&gt;提交订单&lt;/button&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-select">&lt;select&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>name</code>, <code>size</code>, <code>multiple</code>, <code>required</code>, <code>disabled</code></div>
+            <p>选项菜单（下拉列表），包含 option 和 optgroup 子元素。支持多选（multiple）。</p>
+            <pre><code>&lt;select name="city"&gt;
+  &lt;option value="bj"&gt;北京&lt;/option&gt;
+  &lt;option value="sh"&gt;上海&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-datalist">&lt;datalist&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>id</code>（被 input list 属性引用）</div>
+            <p>为 input 提供预定义选项列表，用户可输入或从建议中选择，兼具灵活性和便利性。</p>
+            <pre><code>&lt;input list="browsers"&gt;
+&lt;datalist id="browsers"&gt;
+  &lt;option value="Chrome"&gt;
+  &lt;option value="Firefox"&gt;
+&lt;/datalist&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-optgroup">&lt;optgroup&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>label</code>, <code>disabled</code></div>
+            <p>在 select 中对 option 进行分组，通过 label 属性显示分组名称，不可选择。</p>
+            <pre><code>&lt;optgroup label="水果"&gt;
+  &lt;option&gt;苹果&lt;/option&gt;
+  &lt;option&gt;香蕉&lt;/option&gt;
+&lt;/optgroup&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-option">&lt;option&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>value</code>, <code>selected</code>, <code>disabled</code>, <code>label</code></div>
+            <p>select、optgroup 或 datalist 中的选项。可设置 value 和默认选中（selected）。</p>
+            <pre><code>&lt;option value="1" selected&gt;选项一&lt;/option&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-textarea">&lt;textarea&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>name</code>, <code>rows</code>, <code>cols</code>, <code>maxlength</code>, <code>placeholder</code>, <code>readonly</code></div>
+            <p>多行纯文本编辑控件，适合评论、留言等长文本输入。</p>
+            <pre><code>&lt;textarea name="msg" rows="4" cols="50"&gt;默认内容&lt;/textarea&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-output">&lt;output&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>for</code>, <code>form</code>, <code>name</code></div>
+            <p>表示计算或用户操作的结果，常用于实时显示表单计算值。通过 for 关联输入源。</p>
+            <pre><code>&lt;output for="a b" name="sum"&gt;0&lt;/output&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-progress">&lt;progress&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>value</code>, <code>max</code></div>
+            <p>显示任务完成进度条。通过 value 和 max 表示当前进度。</p>
+            <pre><code>&lt;progress value="70" max="100"&gt;70%&lt;/progress&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-meter">&lt;meter&gt; <span class="tag inline">内联</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>value</code>, <code>min</code>, <code>max</code>, <code>low</code>, <code>high</code>, <code>optimum</code></div>
+            <p>表示已知范围内的标量值或分数值，如磁盘使用率、评分。不同于 progress，它表示静态测量值。</p>
+            <pre><code>&lt;meter value="0.6"&gt;60%&lt;/meter&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-fieldset">&lt;fieldset&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>disabled</code>, <code>form</code>, <code>name</code></div>
+            <p>将表单中的相关控件分组，通常与 legend 配合使用。可整体禁用（disabled）。</p>
+            <pre><code>&lt;fieldset&gt;
+  &lt;legend&gt;个人信息&lt;/legend&gt;
+  ...
+&lt;/fieldset&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-legend">&lt;legend&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>为 fieldset 定义标题说明，必须作为 fieldset 的第一个子元素。</p>
+            <pre><code>&lt;legend&gt;配送地址&lt;/legend&gt;</code></pre>
+        </div>
+
+        <h2 id="cat-interactive">10. 交互元素 <span class="tag">2 个</span></h2>
+
+        <div class="tag-detail">
+            <h4 id="tag-details">&lt;details&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong><code>open</code>（默认展开）</div>
+            <p>创建一个可展开/折叠的详情小部件，用户点击可查看或隐藏附加信息。无需 JavaScript。</p>
+            <pre><code>&lt;details&gt;
+  &lt;summary&gt;更多信息&lt;/summary&gt;
+  &lt;p&gt;这里是隐藏的详细内容。&lt;/p&gt;
+&lt;/details&gt;</code></pre>
+        </div>
+
+        <div class="tag-detail">
+            <h4 id="tag-summary">&lt;summary&gt; <span class="tag block">块级</span></h4>
+            <div class="tag-bar"><strong>属性：</strong>全局属性</div>
+            <p>details 元素的摘要标题，始终可见。点击可切换 details 的展开状态。</p>
+            <pre><code>&lt;summary&gt;点击展开&lt;/summary&gt;</code></pre>
+        </div>
+
+        <div class="callout success">
+            <span class="callout-title">🎉 完整覆盖 106 种 HTML 标签</span>
+            <p>本文档按 W3C HTML Living Standard 梳理，涵盖文档结构、文本语义、媒体嵌入、表格、表单与交互控件。实际开发中应优先选择具有语义的标签，以提升可访问性（a11y）和搜索引擎优化（SEO）。</p>
+        </div>
+
+    </main>
+</div>
+
+<script>
+    const html = document.documentElement;
+    const themeSelect = document.getElementById('theme-select');
+    function applyTheme(theme) {
+        if (theme && theme !== 'light') { html.setAttribute('data-theme', theme); }
+        else { html.removeAttribute('data-theme'); }
+        if (themeSelect) themeSelect.value = theme || '';
+    }
+    function changeTheme(theme) { applyTheme(theme); localStorage.setItem('theme', theme); }
+    const saved = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(saved || (prefersDark ? 'dark' : ''));
+    const links = document.querySelectorAll('.toc-sidebar nav a');
+    const sections = document.querySelectorAll('.main h2[id]');
+    function onScroll() { let cur = ''; sections.forEach(s => { if (s.getBoundingClientRect().top <= 120) cur = s.getAttribute('id'); }); links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + cur)); }
+    window.addEventListener('scroll', onScroll); onScroll();
+    links.forEach(l => l.addEventListener('click', () => document.querySelector('.sidebar').classList.remove('open')));
+</script>
+
+</body>
+</html>

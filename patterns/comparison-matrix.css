@@ -1,0 +1,67 @@
+/* ========================================
+   Pattern: Comparison Matrix (grid-based)
+   Usage: Include base CSS variables, then link this file.
+   Dependencies: None (uses CSS custom properties with fallbacks)
+   ======================================== */
+
+/* Comparison Matrix (grid-based) */
+.matrix {
+  margin: 28px 0 8px;
+  border: 1px solid var(--color-border, #e2e8f0);
+}
+.matrix__header {
+  display: grid;
+  grid-template-columns: 120px repeat(3, 1fr);
+  border-bottom: none;
+  background: var(--color-text-strong, #111827);
+}
+.matrix__row {
+  display: grid;
+  grid-template-columns: 120px repeat(3, 1fr);
+  border-bottom: 1px solid var(--color-border, #e2e8f0);
+}
+.matrix__row:last-child { border-bottom: none; }
+.matrix__cell {
+  padding: 12px 14px;
+  font-size: 13px;
+  color: var(--color-text, #374151);
+  border-right: 1px solid var(--color-border, #e2e8f0);
+  display: flex;
+  align-items: center;
+}
+.matrix__cell:last-child { border-right: none; }
+.matrix__corner { background: var(--color-text-strong, #111827); border: none; }
+.matrix__head {
+  font-family: var(--font-head, Georgia, "Times New Roman", serif);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: var(--color-surface, #ffffff);
+  justify-content: center;
+  background: var(--color-text-strong, #111827);
+  border: none;
+}
+.matrix__label {
+  font-weight: 600;
+  color: var(--color-text-muted, #6b7280);
+  background: #e5e7eb;
+}
+.matrix__best {
+  font-weight: 700;
+  color: var(--color-text-strong, #111827);
+}
+.matrix__caption {
+  display: block;
+  text-align: center;
+  font-family: var(--font-head, Georgia, "Times New Roman", serif);
+  font-size: 12px;
+  font-style: italic;
+  color: var(--color-text-muted, #6b7280);
+  margin: 10px 0 24px;
+}
+@media (max-width: 640px) {
+  .matrix__header, .matrix__row {
+    grid-template-columns: 100px repeat(3, 1fr);
+  }
+  .matrix__cell { padding: 10px 10px; font-size: 12px; }
+}

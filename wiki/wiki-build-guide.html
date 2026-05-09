@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wiki 构建指南 — HTML 骨架与手动搭建</title>
+    <style>    :root {
+        --background: #ffffff;
+        --foreground: #09090b;
+        --card: #ffffff;
+        --card-foreground: #09090b;
+        --popover: #ffffff;
+        --popover-foreground: #09090b;
+        --primary: #18181b;
+        --primary-foreground: #fafafa;
+        --secondary: #f4f4f5;
+        --secondary-foreground: #18181b;
+        --muted: #f4f4f5;
+        --muted-foreground: #a1a1aa;
+        --accent: #f4f4f5;
+        --accent-foreground: #18181b;
+        --destructive: #ef4444;
+        --destructive-foreground: #ffffff;
+        --border: #e4e4e7;
+        --input: #e4e4e7;
+        --ring: #18181b;
+        --radius: 0.75rem;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --code-bg: #18181b;
+        --code-text: #f4f4f5;
+        --sidebar-width: 260px;
+        --primary-5: rgba(24,24,27,0.05);
+        --primary-8: rgba(24,24,27,0.08);
+        --primary-10: rgba(24,24,27,0.10);
+        --primary-12: rgba(24,24,27,0.12);
+        --primary-15: rgba(24,24,27,0.15);
+        --primary-20: rgba(24,24,27,0.20);
+        --primary-30: rgba(24,24,27,0.30);
+        --success-5: rgba(16,185,129,0.05);
+        --success-15: rgba(16,185,129,0.15);
+        --warning-5: rgba(245,158,11,0.05);
+        --warning-15: rgba(245,158,11,0.15);
+        --danger-5: rgba(239,68,68,0.05);
+        --danger-15: rgba(239,68,68,0.15);
+        --shadow: 0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.07);
+        --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.08);
+    }    [data-theme="dark"] {
+        --background: #09090b;
+        --foreground: #fafafa;
+        --card: #18181b;
+        --card-foreground: #fafafa;
+        --popover: #27272a;
+        --popover-foreground: #fafafa;
+        --primary: #fafafa;
+        --primary-foreground: #18181b;
+        --secondary: #27272a;
+        --secondary-foreground: #fafafa;
+        --muted: #27272a;
+        --muted-foreground: #d4d4d8;
+        --accent: #27272a;
+        --accent-foreground: #fafafa;
+        --destructive: #ef4444;
+        --destructive-foreground: #ffffff;
+        --border: rgba(255,255,255,0.10);
+        --input: rgba(255,255,255,0.10);
+        --ring: #fafafa;
+        --success: #34d399;
+        --warning: #fbbf24;
+        --danger: #f87171;
+        --code-bg: #09090b;
+        --code-text: #f4f4f5;
+        --primary-5: rgba(250,250,250,0.05);
+        --primary-8: rgba(250,250,250,0.08);
+        --primary-10: rgba(250,250,250,0.10);
+        --primary-12: rgba(250,250,250,0.12);
+        --primary-15: rgba(250,250,250,0.15);
+        --primary-20: rgba(250,250,250,0.20);
+        --primary-30: rgba(250,250,250,0.30);
+        --success-5: rgba(52,211,153,0.05);
+        --success-15: rgba(52,211,153,0.15);
+        --warning-5: rgba(251,191,36,0.05);
+        --warning-15: rgba(251,191,36,0.15);
+        --danger-5: rgba(248,113,113,0.05);
+        --danger-15: rgba(248,113,113,0.15);
+        --shadow: 0 1px 3px 0 rgba(0,0,0,0.2);
+        --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.3);
+        --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.4);
+    }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--background);
+            color: var(--foreground);
+            line-height: 1.7;
+        }
+        .wiki-layout { display: flex; min-height: 100vh; }
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--card);
+            border-right: 1px solid var(--border);
+            padding: 28px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            top: 0; left: 0; z-index: 100;
+        }
+        .sidebar h1 { font-size: 1.15rem; color: var(--primary); margin-bottom: 6px; }
+        .sidebar .version { font-size: 0.75rem; color: var(--muted-foreground); margin-bottom: 24px; display: block; }
+        .sidebar nav ul { list-style: none; margin: 0; }
+        .sidebar nav li { margin: 4px 0; }
+        .sidebar nav a { display: block; color: var(--foreground); text-decoration: none; font-size: 0.88rem; padding: 6px 10px; border-radius: 6px; transition: background .15s, color .15s; }
+        .sidebar nav a:hover { background: var(--primary-8); color: var(--primary); }
+        .sidebar nav a.active { background: var(--primary-12); color: var(--primary); font-weight: 600; }
+        .sidebar .nav-group { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--border); }
+        .sidebar .nav-group-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); margin-bottom: 8px; padding-left: 10px; }
+        .theme-toggle {
+            margin-top: 24px; padding: 10px 12px; background: var(--background); border: 1px solid var(--border);
+            border-radius: 8px; cursor: pointer; font-size: 0.85rem; color: var(--foreground); width: 100%;
+            display: flex; align-items: center; justify-content: center; gap: 6px; transition: all .3s cubic-bezier(.4,0,.2,1);
+        }
+        .theme-toggle:hover { border-color: var(--primary); color: var(--primary); }
+        .main { margin-left: var(--sidebar-width); margin-right: var(--sidebar-width); flex: 1; max-width: 800px; padding: 48px 40px; background: var(--card); min-height: 100vh; border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+        .main h2 { font-size: 1.6rem; color: var(--primary); margin: 48px 0 20px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
+        .main h2:first-child { margin-top: 0; }
+        .main h3 { font-size: 1.2rem; color: var(--foreground); margin: 32px 0 14px; }
+        .main h4 { font-size: 1rem; color: var(--muted-foreground); margin: 22px 0 10px; font-weight: 600; }
+        .main p { margin-bottom: 14px; }
+        .main ul, .main ol { margin: 12px 0 12px 22px; }
+        .main li { margin: 6px 0; }
+        code { background: var(--primary-8); color: var(--primary); padding: 2px 6px; border-radius: 4px; font-family: "SF Mono", Monaco, "Cascadia Code", Consolas, monospace; font-size: 0.9em; }
+        pre { background: var(--code-bg); color: var(--code-text); padding: 18px 22px; border-radius: var(--radius); overflow-x: auto; margin: 16px 0; font-size: 0.88rem; line-height: 1.6; }
+        pre code { background: transparent; color: inherit; padding: 0; font-size: inherit; }
+        .callout { background: var(--primary-5); border: 1px solid var(--primary-15); border-left: 4px solid var(--primary); padding: 16px 20px; border-radius: var(--radius); margin: 18px 0; }
+        .callout.success { background: var(--success-5); border-color: var(--success-15); border-left-color: var(--success); }
+        .callout.warning { background: var(--warning-5); border-color: var(--warning-15); border-left-color: var(--warning); }
+        .callout.danger { background: var(--danger-5); border-color: var(--danger-15); border-left-color: var(--danger); }
+        .callout-title { font-weight: 600; margin-bottom: 6px; display: block; }
+        table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.92rem; }
+        th, td { border: 1px solid var(--border); padding: 10px 14px; text-align: left; }
+        th { background: var(--background); font-weight: 600; }
+        .tag { display: inline-flex; align-items: center; gap: 4px; background: var(--primary-10); color: var(--primary); font-size: 0.75rem; padding: 3px 10px; border-radius: 6px; margin-right: 4px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.03em; font-weight: 500; border: 1px solid var(--primary-20); }
+        .tag.outline { background: transparent; color: var(--primary); border: 1px solid var(--primary-30); }
+        .steps { counter-reset: step; list-style: none; margin: 16px 0; }
+        .steps > li { position: relative; padding-left: 44px; margin-bottom: 18px; min-height: 32px; }
+        .steps > li::before { counter-increment: step; content: counter(step); position: absolute; left: 0; top: 0; width: 28px; height: 28px; background: var(--primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; }
+        .toc-sidebar {
+            width: var(--sidebar-width);
+            background: var(--card);
+            border-left: 1px solid var(--border);
+            padding: 28px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            top: 0; right: 0; z-index: 100;
+        }
+        .toc-sidebar h2 {
+            font-size: 0.85rem;
+            color: var(--primary);
+            margin-bottom: 16px;
+            padding-left: 10px;
+            font-weight: 600;
+        }
+        .toc-sidebar nav ul { list-style: none; margin: 0; }
+        .toc-sidebar nav li { margin: 4px 0; }
+        .toc-sidebar nav a {
+            display: block; color: var(--foreground); text-decoration: none;
+            font-size: 0.85rem; padding: 5px 10px; border-radius: 6px;
+            transition: background .15s, color .15s;
+        }
+        .toc-sidebar nav a:hover { background: var(--primary-8); color: var(--primary); }
+        .toc-sidebar nav a.active { background: var(--primary-12); color: var(--primary); font-weight: 600; }
+        .toc-sidebar .nav-group { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+        .toc-sidebar .nav-group:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+        .toc-sidebar .nav-group-title {
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em;
+            color: var(--muted-foreground); margin-bottom: 8px; padding-left: 10px;
+        }
+        @media (max-width: 1200px) {
+            .toc-sidebar { display: none; }
+            .main { margin-right: 0; border-right: none; }
+        }
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); transition: transform .3s; box-shadow: 2px 0 12px rgba(0,0,0,0.1); }
+            .sidebar.open { transform: translateX(0); }
+            .main { margin-left: 0; padding: 24px 20px; max-width: 100%; }
+            .menu-toggle { display: block; position: fixed; top: 14px; left: 14px; z-index: 200; background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; font-size: 1rem; cursor: pointer; }
+        }
+        @media (min-width: 901px) { .menu-toggle { display: none; } }
+    </style>
+<link rel="stylesheet" href="../fr-themes.css">
+</head>
+<body>
+<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+<div class="wiki-layout">
+    <aside class="sidebar">
+        <h1>Wiki 构建指南</h1>
+        <span class="version">HTML 骨架与手动搭建</span>
+        <select class="theme-select" id="theme-select" onchange="changeTheme(this.value)">
+            <option value="">Light (Default)</option>
+            <option value="dark">Dark</option>
+            <option value="claude">Claude</option>
+            <option value="claude-dark">Claude Dark</option>
+            <option value="bumblebee">Bumblebee</option>
+            <option value="bumblebee-dark">Bumblebee Dark</option>
+            <option value="emerald">Emerald</option>
+            <option value="emerald-dark">Emerald Dark</option>
+            <option value="nord">Nord</option>
+            <option value="nord-dark">Nord Dark</option>
+            <option value="sunset">Sunset</option>
+            <option value="sunset-dark">Sunset Dark</option>
+            <option value="abyss">Abyss</option>
+            <option value="abyss-dark">Abyss Dark</option>
+            <option value="dracula">Dracula</option>
+            <option value="dracula-dark">Dracula Dark</option>
+            <option value="amethyst">Amethyst</option>
+            <option value="amethyst-dark">Amethyst Dark</option>
+            <option value="slate">Slate</option>
+            <option value="slate-dark">Slate Dark</option>
+            <option value="twitter">Twitter</option>
+            <option value="twitter-dark">Twitter Dark</option>
+        </select>
+        <nav>
+            <div class="nav-group">
+                <div class="nav-group-title">Wiki 导航</div>
+                <ul>
+                    <li><a href="../index.html">首页</a></li>
+                    <li><a href="theme-wiki.html">主题定制 Wiki</a></li>
+                    <li><a href="wiki-html-guide.html">HTML 编写指南</a></li>
+                    <li><a href="wiki-tailwind.html">Tailwind 结合使用</a></li>
+                    <li><a href="wiki-usage-guide.html">组件库使用指南</a></li>
+                    <li><a href="wiki-build-guide.html">Wiki 构建指南</a></li>
+                    <li><a href="wiki-html-tags.html">HTML 标签手册</a></li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+    <aside class="toc-sidebar">
+        <h2>目录</h2>
+        <nav>
+            <div class="nav-group">
+                <div class="nav-group-title">概览</div>
+                <ul>
+                    <li><a href="#overview" class="active">骨架总览</a></li>
+                    <li><a href="#structure">三层结构</a></li>
+                </ul>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-title">拆解</div>
+                <ul>
+                    <li><a href="#head">Head 与 CSS 变量</a></li>
+                    <li><a href="#body">Body 布局骨架</a></li>
+                    <li><a href="#sidebar">侧边栏导航</a></li>
+                    <li><a href="#main">主内容区</a></li>
+                    <li><a href="#js">JS 交互功能</a></li>
+                </ul>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-title">实战</div>
+                <ul>
+                    <li><a href="#build-steps">四步构建法</a></li>
+                    <li><a href="#template">最小可复制模板</a></li>
+                    <li><a href="#checklist">检查清单</a></li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+    <main class="main">
+
+        <h2 id="overview">骨架总览</h2>
+        <p>本项目中的所有 Wiki 页面（如 <code>theme-wiki.html</code>、<code>wiki-html-guide.html</code> 等）共享<strong>同一套 HTML 骨架</strong>。这套骨架是<strong>单文件、零依赖、自包含</strong>的——所有 CSS 和 JS 都内嵌在同一个 HTML 文件中，不需要任何外部构建工具或框架。</p>
+
+        <div class="callout success">
+            <span class="callout-title">核心特征</span>
+            <ul>
+                <li><strong>单文件</strong>：一个 <code>.html</code> 文件即可运行，无 node_modules，无构建步骤</li>
+                <li><strong>CSS 变量驱动</strong>：颜色、间距、圆角全部通过 <code>:root</code> 变量定义，一处修改全局生效</li>
+                <li><strong>暗色主题内置</strong>：通过 <code>[data-theme="dark"]</code> 覆盖变量，JS 一键切换</li>
+                <li><strong>响应式侧边栏</strong>：桌面端固定 260px 侧边导航，移动端自动收起为汉堡菜单</li>
+                <li><strong>滚动高亮</strong>：滚动主内容区时，侧边栏自动高亮当前章节</li>
+            </ul>
+        </div>
+
+        <h2 id="structure">三层结构</h2>
+        <p>从宏观上看，每个 Wiki 页面由三层组成：</p>
+
+        <table>
+            <tr><th>层级</th><th>内容</th><th>作用</th></tr>
+            <tr><td><span class="tag">Head</span></td><td><code>&lt;meta&gt;</code> + <code>&lt;style&gt;</code></td><td>定义字符集、视口、CSS 变量、全部组件样式</td></tr>
+            <tr><td><span class="tag">Body</span></td><td><code>.sidebar</code> + <code>.main</code></td><td>侧边栏导航 + 主内容阅读区</td></tr>
+            <tr><td><span class="tag">Script</span></td><td><code>&lt;script&gt;</code>（闭合标签前）</td><td>主题切换、滚动高亮、移动端菜单控制</td></tr>
+        </table>
+
+        <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+&lt;head&gt;
+  &lt;!-- 1. Head：meta + 全部 CSS --&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;页面标题&lt;/title&gt;
+  &lt;style&gt;
+    :root { /* CSS 变量 */ }
+    [data-theme="dark"] { /* 暗色覆盖 */ }
+    /* 布局 + 组件样式 */
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;!-- 2. Body：汉堡按钮 + 布局容器 --&gt;
+  &lt;button class="menu-toggle"&gt;☰&lt;/button&gt;
+  &lt;div class="wiki-layout"&gt;
+    &lt;aside class="sidebar"&gt;...&lt;/aside&gt;
+    &lt;main class="main"&gt;...&lt;/main&gt;
+  &lt;/div&gt;
+
+  &lt;!-- 3. Script：交互逻辑 --&gt;
+  &lt;script&gt;
+    /* 主题切换 + 滚动高亮 */
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+        <h2 id="head">Head 与 CSS 变量系统</h2>
+        <p>Head 内只有三个元素：<code>&lt;meta charset&gt;</code>、<code>&lt;meta viewport&gt;</code>、<code>&lt;title&gt;</code>，以及一个巨大的 <code>&lt;style&gt;</code> 块。</p>
+
+        <h3>CSS 变量定义顺序</h3>
+        <pre><code>&lt;style&gt;
+  /* 第 1 段：亮色主题变量 */
+  :root {
+    --background: #ffffff;
+    --foreground: #09090b;
+    --primary: #18181b;
+    --secondary: #f4f4f5;
+    --muted: #f4f4f5;
+    --border: #e4e4e7;
+    --radius: 0.75rem;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --sidebar-width: 260px;
+    /* ... 以及透明度阶梯变量 --primary-5, --primary-8 等 */
+  }
+
+  /* 第 2 段：暗色主题覆盖 */
+  [data-theme="dark"] {
+    --background: #09090b;
+    --foreground: #fafafa;
+    --primary: #fafafa;
+    --border: rgba(255,255,255,0.10);
+    /* ... 只覆盖需要变的变量 */
+  }
+
+  /* 第 3 段：基础重置 */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: ...; background: var(--background); color: var(--foreground); }
+
+  /* 第 4 段：布局与组件样式 */
+  .wiki-layout { display: flex; min-height: 100vh; }
+  .sidebar { ... }
+  .main { ... }
+  /* ... callout、table、code 等 */
+&lt;/style&gt;</code></pre>
+
+        <div class="callout warning">
+            <span class="callout-title">不要改错顺序</span>
+            <p><code>[data-theme="dark"]</code> 必须放在 <code>:root</code> 之后，否则覆盖不生效。基础重置（<code>*</code>、<code>body</code>）必须在变量定义之后，否则 <code>var(--background)</code> 还不可用。</p>
+        </div>
+
+        <h3>透明度变量的命名规律</h3>
+        <p>为了在做提示框背景、悬停态时不用写死 rgba，项目使用了一套<strong>数字后缀变量</strong>：</p>
+        <pre><code>--primary-5   → rgba(24,24,27,0.05)   /* 极淡背景 */
+--primary-8   → rgba(24,24,27,0.08)   /* 悬停态背景 */
+--primary-12  → rgba(24,24,27,0.12)   /* 激活态背景 */
+--primary-15  → rgba(24,24,27,0.15)   /* 边框 */
+--primary-20  → rgba(24,24,27,0.20)   /* 深边框 */
+--primary-30  → rgba(24,24,27,0.30)   /* 弱化文字 */</code></pre>
+        <p>暗色主题下，这些变量会自动切换为 <code>rgba(250,250,250, ...)</code>，确保对比度始终舒适。</p>
+
+        <h2 id="body">Body 布局骨架</h2>
+        <p>Body 内部只有三个顶层元素：</p>
+        <ol class="steps">
+            <li><strong>汉堡按钮</strong>：<code>&lt;button class="menu-toggle"&gt;</code>，只在移动端显示（<code>@media (max-width: 900px)</code> 控制）</li>
+            <li><strong>布局容器</strong>：<code>&lt;div class="wiki-layout"&gt;</code>，flex 横向排列</li>
+            <li><strong>脚本块</strong>：<code>&lt;script&gt;</code>，放在 <code>&lt;/body&gt;</code> 闭合前</li>
+        </ol>
+
+        <pre><code>&lt;body&gt;
+  &lt;!-- 移动端菜单开关 --&gt;
+  &lt;button class="menu-toggle"
+    onclick="document.querySelector('.sidebar').classList.toggle('open')"&gt;
+    ☰
+  &lt;/button&gt;
+
+  &lt;!--  flex 容器：sidebar + main --&gt;
+  &lt;div class="wiki-layout"&gt;
+    &lt;aside class="sidebar"&gt;...&lt;/aside&gt;
+    &lt;main class="main"&gt;...&lt;/main&gt;
+  &lt;/div&gt;
+
+  &lt;script&gt;...&lt;/script&gt;
+&lt;/body&gt;</code></pre>
+
+        <h2 id="sidebar">侧边栏导航</h2>
+        <p>侧边栏是一个固定定位的 <code>&lt;aside&gt;</code>，内部包含四个固定部分：</p>
+
+        <table>
+            <tr><th>部分</th><th>标签</th><th>作用</th></tr>
+            <tr><td>页面标题</td><td><code>&lt;h1&gt;</code></td><td>Wiki 页面名称，如 "Wiki 构建指南"</td></tr>
+            <tr><td>版本/副标题</td><td><code>&lt;span class="version"&gt;</code></td><td>简短描述，如 "HTML 骨架与手动搭建"</td></tr>
+            <tr><td>主题切换</td><td><code>&lt;button class="theme-toggle"&gt;</code></td><td>🌙/☀️ 图标 + "暗色模式" 文字</td></tr>
+            <tr><td>导航菜单</td><td><code>&lt;nav&gt;</code></td><td>按 <code>.nav-group</code> 分组，内部是 <code>&lt;ul&gt;&lt;li&gt;&lt;a&gt;</code></td></tr>
+        </table>
+
+        <h3>导航链接分组规范</h3>
+        <pre><code>&lt;nav&gt;
+  &lt;div class="nav-group"&gt;
+    &lt;div class="nav-group-title"&gt;概览&lt;/div&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href="#overview" class="active"&gt;骨架总览&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#structure"&gt;三层结构&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+  &lt;div class="nav-group"&gt;
+    &lt;div class="nav-group-title"&gt;Wiki 导航&lt;/div&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href="../index.html"&gt;首页&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="theme-wiki.html"&gt;主题定制 Wiki&lt;/a&gt;&lt;/li&gt;
+      &lt;!-- 其他 Wiki 页面 --&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</code></pre>
+
+        <div class="callout">
+            <span class="callout-title">关键点</span>
+            <ul>
+                <li>锚点链接（如 <code>href="#overview"</code>）对应主内容区 <code>&lt;h2 id="overview"&gt;</code></li>
+                <li>当前激活项加 <code>class="active"</code>，由 JS 滚动监听自动切换</li>
+                <li>"Wiki 导航"分组是<strong>必选项</strong>，用于在所有 Wiki 页面之间互相跳转</li>
+            </ul>
+        </div>
+
+        <h2 id="main">主内容区</h2>
+        <p>主内容区是一个 <code>&lt;main class="main"&gt;</code>，内部直接放各种内容元素。Wiki 系统内置了以下排版组件：</p>
+
+        <table>
+            <tr><th>元素</th><th>Class / 标签</th><th>用途</th></tr>
+            <tr><td>章节标题</td><td><code>&lt;h2 id="xxx"&gt;</code></td><td>必须带 id，用于锚点定位和滚动高亮</td></tr>
+            <tr><td>小节标题</td><td><code>&lt;h3&gt;</code></td><td>子章节，不带底边框</td></tr>
+            <tr><td>代码行</td><td><code>&lt;code&gt;</code></td><td>行内代码，自动带背景和圆角</td></tr>
+            <tr><td>代码块</td><td><code>&lt;pre&gt;&lt;code&gt;</code></td><td>深色背景块，带横向滚动条</td></tr>
+            <tr><td>提示框</td><td><code>.callout</code></td><td>普通提示；加 <code>.success</code> / <code>.warning</code> / <code>.danger</code> 变颜色</td></tr>
+            <tr><td>表格</td><td><code>&lt;table&gt;</code></td><td>全宽、带边框、表头灰色背景</td></tr>
+            <tr><td>标签</td><td><code>.tag</code></td><td>小徽章，用于标注状态或分类</td></tr>
+            <tr><td>步骤条</td><td><code>.steps &gt; li</code></td><td>自动编号（1、2、3…）的列表</td></tr>
+        </table>
+
+        <h3>提示框的使用</h3>
+        <pre><code>&lt;!-- 普通提示 --&gt;
+&lt;div class="callout"&gt;
+  &lt;span class="callout-title"&gt;提示&lt;/span&gt;
+  &lt;p&gt;这是一段普通说明文字。&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;!-- 成功 / 警告 / 危险 --&gt;
+&lt;div class="callout success"&gt;...&lt;/div&gt;
+&lt;div class="callout warning"&gt;...&lt;/div&gt;
+&lt;div class="callout danger"&gt;...&lt;/div&gt;</code></pre>
+
+        <h2 id="js">JS 交互功能</h2>
+        <p>每个 Wiki 页面末尾都有同一段脚本，负责三件事：</p>
+
+        <h3>1. 主题切换</h3>
+        <pre><code>function applyTheme(theme) {
+  if (theme === 'dark') {
+    html.setAttribute('data-theme', 'dark');
+    icon.textContent = '☀️';
+    label.textContent = '亮色模式';
+  } else {
+    html.removeAttribute('data-theme');
+    icon.textContent = '🌙';
+    label.textContent = '暗色模式';
+  }
+}
+function toggleTheme() {
+  const current = html.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  const next = current === 'dark' ? 'light' : 'dark';
+  applyTheme(next);
+  localStorage.setItem('theme', next);
+}
+// 初始化：优先读 localStorage，其次读系统偏好
+const saved = localStorage.getItem('theme');
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+applyTheme(saved || (prefersDark ? 'dark' : 'light'));</code></pre>
+
+        <h3>2. 滚动高亮当前章节</h3>
+        <pre><code>const links = document.querySelectorAll('.sidebar nav a');
+const sections = document.querySelectorAll('.main h2[id]');
+
+function onScroll() {
+  let current = '';
+  sections.forEach(sec => {
+    if (sec.getBoundingClientRect().top <= 120) current = sec.getAttribute('id');
+  });
+  links.forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
+}
+window.addEventListener('scroll', onScroll);
+onScroll();</code></pre>
+
+        <h3>3. 移动端点击链接后收起侧边栏</h3>
+        <pre><code>links.forEach(link => {
+  link.addEventListener('click', () => {
+    document.querySelector('.sidebar').classList.remove('open');
+  });
+});</code></pre>
+
+        <div class="callout success">
+            <span class="callout-title">JS 是通用的</span>
+            <p>这段脚本在所有 Wiki 页面中<strong>完全一致</strong>，不需要根据内容修改。复制粘贴即可。</p>
+        </div>
+
+        <h2 id="build-steps">四步构建法</h2>
+        <p>要手动创建一个新的 Wiki 页面，只需四步：</p>
+
+        <ol class="steps">
+            <li><strong>复制任意现有 Wiki 文件</strong>（如 <code>wiki-html-guide.html</code>），重命名为你的新文件名（如 <code>wiki-new-topic.html</code>）</li>
+            <li><strong>修改三个标识位</strong>：<code>&lt;title&gt;</code>、<code>.sidebar h1</code>、<code>.sidebar .version</code></li>
+            <li><strong>重写导航和内容</strong>：在 <code>.sidebar nav</code> 中定义章节锚点，在 <code>.main</code> 中写入正文，确保 <code>h2 id</code> 与 <code>a href</code> 一一对应</li>
+            <li><strong>更新所有 Wiki 文件的"Wiki 导航"分组</strong>：在每个现有 Wiki 页面和 <code>index.html</code> 的侧边栏中加入新页面链接</li>
+        </ol>
+
+        <h2 id="template">最小可复制模板</h2>
+        <p>以下是剥离所有内容后的最简骨架，可直接另存为新的 Wiki 页面：</p>
+
+        <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;新 Wiki 页面&lt;/title&gt;
+  &lt;style&gt;
+    :root {
+      --background: #ffffff; --foreground: #09090b;
+      --card: #ffffff; --primary: #18181b;
+      --secondary: #f4f4f5; --muted: #f4f4f5;
+      --muted-foreground: #a1a1aa; --border: #e4e4e7;
+      --radius: 0.75rem; --success: #10b981;
+      --warning: #f59e0b; --danger: #ef4444;
+      --code-bg: #18181b; --code-text: #f4f4f5;
+      --sidebar-width: 260px;
+      --primary-5: rgba(24,24,27,0.05);
+      --primary-8: rgba(24,24,27,0.08);
+      --primary-12: rgba(24,24,27,0.12);
+      --primary-15: rgba(24,24,27,0.15);
+      --primary-20: rgba(24,24,27,0.20);
+      --primary-30: rgba(24,24,27,0.30);
+      --success-5: rgba(16,185,129,0.05);
+      --success-15: rgba(16,185,129,0.15);
+      --warning-5: rgba(245,158,11,0.05);
+      --warning-15: rgba(245,158,11,0.15);
+      --danger-5: rgba(239,68,68,0.05);
+      --danger-15: rgba(239,68,68,0.15);
+    }
+    [data-theme="dark"] {
+      --background: #09090b; --foreground: #fafafa;
+      --card: #18181b; --primary: #fafafa;
+      --secondary: #27272a; --muted: #27272a;
+      --border: rgba(255,255,255,0.10);
+      --primary-5: rgba(250,250,250,0.05);
+      --primary-8: rgba(250,250,250,0.08);
+      --primary-12: rgba(250,250,250,0.12);
+      --primary-15: rgba(250,250,250,0.15);
+      --primary-20: rgba(250,250,250,0.20);
+      --primary-30: rgba(250,250,250,0.30);
+      --success-5: rgba(52,211,153,0.05);
+      --success-15: rgba(52,211,153,0.15);
+      --warning-5: rgba(251,191,36,0.05);
+      --warning-15: rgba(251,191,36,0.15);
+      --danger-5: rgba(248,113,113,0.05);
+      --danger-15: rgba(248,113,113,0.15);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                   "Helvetica Neue", Arial, sans-serif;
+      background: var(--background); color: var(--foreground); line-height: 1.7;
+    }
+    .wiki-layout { display: flex; min-height: 100vh; }
+    .sidebar {
+      width: var(--sidebar-width); background: var(--card);
+      border-right: 1px solid var(--border); padding: 28px 20px;
+      position: fixed; height: 100vh; overflow-y: auto;
+      top: 0; left: 0; z-index: 100;
+    }
+    .sidebar h1 { font-size: 1.15rem; color: var(--primary); margin-bottom: 6px; }
+    .sidebar .version { font-size: 0.75rem; color: var(--muted-foreground);
+                        margin-bottom: 24px; display: block; }
+    .sidebar nav ul { list-style: none; margin: 0; }
+    .sidebar nav li { margin: 4px 0; }
+    .sidebar nav a { display: block; color: var(--foreground); text-decoration: none;
+                     font-size: 0.88rem; padding: 6px 10px; border-radius: 6px;
+                     transition: background .15s, color .15s; }
+    .sidebar nav a:hover { background: var(--primary-8); color: var(--primary); }
+    .sidebar nav a.active { background: var(--primary-12); color: var(--primary);
+                            font-weight: 600; }
+    .sidebar .nav-group { margin-top: 18px; padding-top: 18px;
+                          border-top: 1px solid var(--border); }
+    .sidebar .nav-group-title { font-size: 0.7rem; text-transform: uppercase;
+                                letter-spacing: 0.05em; color: var(--muted-foreground);
+                                margin-bottom: 8px; padding-left: 10px; }
+    .theme-toggle {
+      margin-top: 24px; padding: 10px 12px; background: var(--background);
+      border: 1px solid var(--border); border-radius: 8px; cursor: pointer;
+      font-size: 0.85rem; color: var(--foreground); width: 100%;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      transition: all .3s cubic-bezier(.4,0,.2,1);
+    }
+    .theme-toggle:hover { border-color: var(--primary); color: var(--primary); }
+    .main { margin-left: var(--sidebar-width); margin-right: var(--sidebar-width); flex: 1; max-width: 800px;
+            padding: 48px 40px; background: var(--card); min-height: 100vh;
+            border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+    .main h2 { font-size: 1.6rem; color: var(--primary); margin: 48px 0 20px;
+               padding-bottom: 12px; border-bottom: 2px solid var(--border); }
+    .main h2:first-child { margin-top: 0; }
+    .main h3 { font-size: 1.2rem; color: var(--foreground); margin: 32px 0 14px; }
+    .main h4 { font-size: 1rem; color: var(--muted-foreground);
+               margin: 22px 0 10px; font-weight: 600; }
+    .main p { margin-bottom: 14px; }
+    .main ul, .main ol { margin: 12px 0 12px 22px; }
+    .main li { margin: 6px 0; }
+    code { background: var(--primary-8); color: var(--primary); padding: 2px 6px;
+           border-radius: 4px; font-family: "SF Mono", Monaco, "Cascadia Code",
+           Consolas, monospace; font-size: 0.9em; }
+    pre { background: var(--code-bg); color: var(--code-text); padding: 18px 22px;
+          border-radius: var(--radius); overflow-x: auto; margin: 16px 0;
+          font-size: 0.88rem; line-height: 1.6; }
+    pre code { background: transparent; color: inherit; padding: 0; font-size: inherit; }
+    .callout { background: var(--primary-5); border: 1px solid var(--primary-15);
+               border-left: 4px solid var(--primary); padding: 16px 20px;
+               border-radius: var(--radius); margin: 18px 0; }
+    .callout.success { background: var(--success-5); border-color: var(--success-15);
+                       border-left-color: var(--success); }
+    .callout.warning { background: var(--warning-5); border-color: var(--warning-15);
+                       border-left-color: var(--warning); }
+    .callout.danger { background: var(--danger-5); border-color: var(--danger-15);
+                      border-left-color: var(--danger); }
+    .callout-title { font-weight: 600; margin-bottom: 6px; display: block; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.92rem; }
+    th, td { border: 1px solid var(--border); padding: 10px 14px; text-align: left; }
+    th { background: var(--background); font-weight: 600; }
+    .tag { display: inline-flex; align-items: center; gap: 4px;
+           background: var(--primary-10); color: var(--primary); font-size: 0.75rem;
+           padding: 3px 10px; border-radius: 6px; margin-right: 4px;
+           vertical-align: middle; text-transform: uppercase;
+           letter-spacing: 0.03em; font-weight: 500; border: 1px solid var(--primary-20); }
+    .tag.outline { background: transparent; border: 1px solid var(--primary-30); }
+    .steps { counter-reset: step; list-style: none; margin: 16px 0; }
+    .steps > li { position: relative; padding-left: 44px; margin-bottom: 18px;
+                  min-height: 32px; }
+    .steps > li::before { counter-increment: step; content: counter(step);
+                          position: absolute; left: 0; top: 0; width: 28px; height: 28px;
+                          background: var(--primary); color: #fff; border-radius: 50%;
+                          display: flex; align-items: center; justify-content: center;
+                          font-size: 0.8rem; font-weight: 700; }
+    @media (max-width: 900px) {
+      .sidebar { transform: translateX(-100%); transition: transform .3s;
+                 box-shadow: 2px 0 12px rgba(0,0,0,0.1); }
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0; padding: 24px 20px; max-width: 100%; }
+      .menu-toggle { display: block; position: fixed; top: 14px; left: 14px;
+                     z-index: 200; background: var(--card);
+                     border: 1px solid var(--border); border-radius: 6px;
+                     padding: 8px 12px; font-size: 1rem; cursor: pointer; }
+    }
+    @media (min-width: 901px) { .menu-toggle { display: none; } }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;button class="menu-toggle"
+  onclick="document.querySelector('.sidebar').classList.toggle('open')"&gt;☰&lt;/button&gt;
+&lt;div class="wiki-layout"&gt;
+  &lt;aside class="sidebar"&gt;
+    &lt;h1&gt;页面标题&lt;/h1&gt;
+    &lt;span class="version"&gt;副标题描述&lt;/span&gt;
+    &lt;button class="theme-toggle" onclick="toggleTheme()"&gt;
+      &lt;span id="theme-icon"&gt;🌙&lt;/span&gt;
+      &lt;span id="theme-label"&gt;暗色模式&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;nav&gt;
+      &lt;div class="nav-group"&gt;
+        &lt;div class="nav-group-title"&gt;分组名&lt;/div&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href="#section-a" class="active"&gt;第一节&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href="#section-b"&gt;第二节&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+      &lt;div class="nav-group"&gt;
+        &lt;div class="nav-group-title"&gt;Wiki 导航&lt;/div&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href="../index.html"&gt;首页&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href="theme-wiki.html"&gt;主题定制 Wiki&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href="wiki-html-guide.html"&gt;HTML 编写指南&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href="wiki-tailwind.html"&gt;Tailwind 结合使用&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href="wiki-usage-guide.html"&gt;组件库使用指南&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+    &lt;/nav&gt;
+  &lt;/aside&gt;
+  &lt;main class="main"&gt;
+    &lt;h2 id="section-a"&gt;第一节&lt;/h2&gt;
+    &lt;p&gt;正文内容...&lt;/p&gt;
+
+    &lt;h2 id="section-b"&gt;第二节&lt;/h2&gt;
+    &lt;p&gt;正文内容...&lt;/p&gt;
+  &lt;/main&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  const html = document.documentElement;
+  const icon = document.getElementById('theme-icon');
+  const label = document.getElementById('theme-label');
+  function applyTheme(theme) {
+    if (theme === 'dark') {
+      html.setAttribute('data-theme', 'dark');
+      icon.textContent = '☀️'; label.textContent = '亮色模式';
+    } else {
+      html.removeAttribute('data-theme');
+      icon.textContent = '🌙'; label.textContent = '暗色模式';
+    }
+  }
+  function toggleTheme() {
+    const c = html.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    const n = c === 'dark' ? 'light' : 'dark';
+    applyTheme(n); localStorage.setItem('theme', n);
+  }
+  const saved = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  applyTheme(saved || (prefersDark ? 'dark' : 'light'));
+  const links = document.querySelectorAll('.sidebar nav a');
+  const sections = document.querySelectorAll('.main h2[id]');
+  function onScroll() {
+    let cur = '';
+    sections.forEach(s =&gt; {
+      if (s.getBoundingClientRect().top &lt;= 120) cur = s.getAttribute('id');
+    });
+    links.forEach(l =&gt; {
+      l.classList.toggle('active', l.getAttribute('href') === '#' + cur);
+    });
+  }
+  window.addEventListener('scroll', onScroll); onScroll();
+  links.forEach(l =&gt; l.addEventListener('click', () =&gt; {
+    document.querySelector('.sidebar').classList.remove('open');
+  }));
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+        <h2 id="checklist">检查清单</h2>
+        <p>发布新 Wiki 页面前，逐项确认：</p>
+        <ul>
+            <li><code>&lt;html lang="zh-CN"&gt;</code> 语言属性正确</li>
+            <li><code>&lt;title&gt;</code>、<code>.sidebar h1</code>、<code>.sidebar .version</code> 已更新为新内容</li>
+            <li>所有 <code>&lt;h2&gt;</code> 都带有 <code>id</code>，且与侧边栏 <code>&lt;a href&gt;</code> 一一对应</li>
+            <li>"Wiki 导航"分组中包含了新页面自身，以及指向其他所有 Wiki 页面的链接</li>
+            <li>所有现有 Wiki 页面和 <code>index.html</code> 的"Wiki 导航"中已加入新页面链接</li>
+            <li>在亮色和暗色主题下都预览过，无颜色异常</li>
+            <li>在移动端浏览器（宽度 &lt; 900px）下测试，汉堡菜单可正常打开/关闭</li>
+            <li>滚动页面时，侧边栏高亮项能正确跟随当前章节</li>
+        </ul>
+
+        <div class="callout success">
+            <span class="callout-title">最终建议</span>
+            <p>这套 Wiki 骨架的设计哲学是<strong>极简与自包含</strong>。不要引入外部 CSS 框架、不要拆分 CSS 到单独文件、不要增加构建步骤。保持所有内容在一个 HTML 文件中，是它能 10 年后依然可被打开的核心原因。</p>
+        </div>
+
+    </main>
+</div>
+
+<script>
+    const html = document.documentElement;
+    const themeSelect = document.getElementById('theme-select');
+    function applyTheme(theme) {
+        if (theme && theme !== 'light') { html.setAttribute('data-theme', theme); }
+        else { html.removeAttribute('data-theme'); }
+        if (themeSelect) themeSelect.value = theme || '';
+    }
+    function changeTheme(theme) { applyTheme(theme); localStorage.setItem('theme', theme); }
+    const saved = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(saved || (prefersDark ? 'dark' : ''));
+    const links = document.querySelectorAll('.sidebar nav a');
+    const sections = document.querySelectorAll('.main h2[id]');
+    function onScroll() { let cur = ''; sections.forEach(s => { if (s.getBoundingClientRect().top <= 120) cur = s.getAttribute('id'); }); links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + cur)); }
+    window.addEventListener('scroll', onScroll); onScroll();
+    links.forEach(l => l.addEventListener('click', () => document.querySelector('.sidebar').classList.remove('open')));
+</script>
+
+</body>
+</html>

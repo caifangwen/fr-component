@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主题定制与统一性 Wiki</title>
+    <style>    :root {
+        --background: #ffffff;
+        --foreground: #09090b;
+        --card: #ffffff;
+        --card-foreground: #09090b;
+        --popover: #ffffff;
+        --popover-foreground: #09090b;
+        --primary: #18181b;
+        --primary-foreground: #fafafa;
+        --secondary: #f4f4f5;
+        --secondary-foreground: #18181b;
+        --muted: #f4f4f5;
+        --muted-foreground: #a1a1aa;
+        --accent: #f4f4f5;
+        --accent-foreground: #18181b;
+        --destructive: #ef4444;
+        --destructive-foreground: #ffffff;
+        --border: #e4e4e7;
+        --input: #e4e4e7;
+        --ring: #18181b;
+        --radius: 0.75rem;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --code-bg: #18181b;
+        --code-text: #f4f4f5;
+        --sidebar-width: 260px;
+        --primary-5: rgba(24,24,27,0.05);
+        --primary-8: rgba(24,24,27,0.08);
+        --primary-10: rgba(24,24,27,0.10);
+        --primary-12: rgba(24,24,27,0.12);
+        --primary-15: rgba(24,24,27,0.15);
+        --primary-20: rgba(24,24,27,0.20);
+        --primary-30: rgba(24,24,27,0.30);
+        --success-5: rgba(16,185,129,0.05);
+        --success-15: rgba(16,185,129,0.15);
+        --warning-5: rgba(245,158,11,0.05);
+        --warning-15: rgba(245,158,11,0.15);
+        --danger-5: rgba(239,68,68,0.05);
+        --danger-15: rgba(239,68,68,0.15);
+        --shadow: 0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.07);
+        --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.08);
+    }    [data-theme="dark"] {
+        --background: #09090b;
+        --foreground: #fafafa;
+        --card: #18181b;
+        --card-foreground: #fafafa;
+        --popover: #27272a;
+        --popover-foreground: #fafafa;
+        --primary: #fafafa;
+        --primary-foreground: #18181b;
+        --secondary: #27272a;
+        --secondary-foreground: #fafafa;
+        --muted: #27272a;
+        --muted-foreground: #d4d4d8;
+        --accent: #27272a;
+        --accent-foreground: #fafafa;
+        --destructive: #ef4444;
+        --destructive-foreground: #ffffff;
+        --border: rgba(255,255,255,0.10);
+        --input: rgba(255,255,255,0.10);
+        --ring: #fafafa;
+        --success: #34d399;
+        --warning: #fbbf24;
+        --danger: #f87171;
+        --code-bg: #09090b;
+        --code-text: #f4f4f5;
+        --primary-5: rgba(250,250,250,0.05);
+        --primary-8: rgba(250,250,250,0.08);
+        --primary-10: rgba(250,250,250,0.10);
+        --primary-12: rgba(250,250,250,0.12);
+        --primary-15: rgba(250,250,250,0.15);
+        --primary-20: rgba(250,250,250,0.20);
+        --primary-30: rgba(250,250,250,0.30);
+        --success-5: rgba(52,211,153,0.05);
+        --success-15: rgba(52,211,153,0.15);
+        --warning-5: rgba(251,191,36,0.05);
+        --warning-15: rgba(251,191,36,0.15);
+        --danger-5: rgba(248,113,113,0.05);
+        --danger-15: rgba(248,113,113,0.15);
+        --shadow: 0 1px 3px 0 rgba(0,0,0,0.2);
+        --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.3);
+        --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.4);
+    }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--background);
+            color: var(--foreground);
+            line-height: 1.7;
+        }
+
+        /* ===== 布局 ===== */
+        .wiki-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ===== 侧边栏 ===== */
+        .sidebar {
+        width: var(--sidebar-width);
+        background: var(--card);
+        border-right: 1px solid var(--border);
+            padding: 28px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+        .sidebar h1 {
+            font-size: 1.15rem;
+            color: var(--primary);
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
+        .sidebar .version {
+            font-size: 0.75rem;
+            color: var(--muted-foreground);
+            margin-bottom: 24px;
+            display: block;
+        }
+        .sidebar nav ul {
+            list-style: none;
+            margin: 0;
+        }
+        .sidebar nav li {
+            margin: 4px 0;
+        }
+        .sidebar nav a {
+            display: block;
+            color: var(--foreground);
+            text-decoration: none;
+            font-size: 0.88rem;
+            padding: 6px 10px;
+            border-radius: 6px;
+            transition: background .15s, color .15s;
+        }
+        .sidebar nav a:hover {
+            background: rgba(37, 99, 235, 0.08);
+            color: var(--primary);
+        }
+        .sidebar nav a.active {
+            background: rgba(37, 99, 235, 0.12);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .sidebar .nav-group {
+            margin-top: 18px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border);
+        }
+        .sidebar .nav-group-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--muted-foreground);
+            margin-bottom: 8px;
+            padding-left: 10px;
+        }
+        .theme-toggle {
+        margin-top: 24px; padding: 10px 12px; background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: var(--foreground);
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all .3s cubic-bezier(.4,0,.2,1);
+        }
+        .theme-toggle:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* ===== 主内容区 ===== */
+        .main {
+            margin-left: var(--sidebar-width);
+            margin-right: var(--sidebar-width);
+            flex: 1;
+            max-width: 800px;
+            padding: 48px 40px;
+            background: var(--card);
+            min-height: 100vh;
+            border-left: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+        }
+        .main h2 {
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin: 48px 0 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border);
+        }
+        .main h2:first-child {
+            margin-top: 0;
+        }
+        .main h3 {
+            font-size: 1.2rem;
+            color: var(--foreground);
+            margin: 32px 0 14px;
+        }
+        .main h4 {
+            font-size: 1rem;
+            color: var(--muted-foreground);
+            margin: 22px 0 10px;
+            font-weight: 600;
+        }
+        .main p { margin-bottom: 14px; }
+        .main ul, .main ol { margin: 12px 0 12px 22px; }
+        .main li { margin: 6px 0; }
+
+        /* ===== 代码块 ===== */
+        code {
+            background: rgba(37, 99, 235, 0.08);
+            color: var(--primary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: "SF Mono", Monaco, "Cascadia Code", Consolas, monospace;
+            font-size: 0.9em;
+        }
+        pre { background: var(--code-bg); color: var(--code-text); padding: 18px 22px; border-radius: var(--radius);
+            overflow-x: auto;
+            margin: 16px 0;
+            font-size: 0.88rem;
+            line-height: 1.6;
+        }
+        pre code {
+            background: transparent;
+            color: inherit;
+            padding: 0;
+            font-size: inherit;
+        }
+
+        /* ===== 提示框 ===== */
+        .callout { background: var(--primary-5); border: 1px solid var(--primary-15); border-left: 4px solid var(--primary); padding: 16px 20px; border-radius: var(--radius); margin: 18px 0; }
+        .callout.success { background: var(--success-5); border-color: var(--success-15); border-left-color: var(--success); }
+        .callout.warning { background: var(--warning-5); border-color: var(--warning-15); border-left-color: var(--warning); }
+        .callout.danger { background: var(--danger-5); border-color: var(--danger-15); border-left-color: var(--danger); }
+        .callout-title {
+            font-weight: 600;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        /* ===== 表格 ===== */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.92rem;
+        }
+        th, td {
+            border: 1px solid var(--border);
+            padding: 10px 14px;
+            text-align: left;
+        }
+        th { background: var(--background);
+            font-weight: 600;
+        }
+
+        /* ===== 检查清单 ===== */
+        .checklist {
+            list-style: none;
+            margin: 14px 0;
+        }
+        .checklist li {
+            padding-left: 28px;
+            position: relative;
+        }
+        .checklist li::before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            color: var(--muted-foreground);
+            font-size: 1.1rem;
+        }
+
+        /* ===== 步骤条 ===== */
+        .steps {
+            counter-reset: step;
+            list-style: none;
+            margin: 16px 0;
+        }
+        .steps > li {
+            position: relative;
+            padding-left: 44px;
+            margin-bottom: 18px;
+            min-height: 32px;
+        }
+        .steps > li::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 28px;
+            height: 28px;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        /* ===== 标签 ===== */
+        .tag { display: inline-flex; align-items: center; gap: 4px; background: var(--primary-10); color: var(--primary); font-size: 0.75rem; padding: 3px 10px; border-radius: 6px; margin-right: 4px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.03em; font-weight: 500; border: 1px solid var(--primary-20); }
+        .tag.outline { background: transparent; color: var(--primary); border: 1px solid var(--primary-30); }
+
+        /* ===== 响应式 ===== */
+        .toc-sidebar {
+            width: var(--sidebar-width);
+            background: var(--card);
+            border-left: 1px solid var(--border);
+            padding: 28px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            top: 0; right: 0; z-index: 100;
+        }
+        .toc-sidebar h2 {
+            font-size: 0.85rem;
+            color: var(--primary);
+            margin-bottom: 16px;
+            padding-left: 10px;
+            font-weight: 600;
+        }
+        .toc-sidebar nav ul { list-style: none; margin: 0; }
+        .toc-sidebar nav li { margin: 4px 0; }
+        .toc-sidebar nav a {
+            display: block; color: var(--foreground); text-decoration: none;
+            font-size: 0.85rem; padding: 5px 10px; border-radius: 6px;
+            transition: background .15s, color .15s;
+        }
+        .toc-sidebar nav a:hover { background: var(--primary-8); color: var(--primary); }
+        .toc-sidebar nav a.active { background: var(--primary-12); color: var(--primary); font-weight: 600; }
+        .toc-sidebar .nav-group { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+        .toc-sidebar .nav-group:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+        .toc-sidebar .nav-group-title {
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em;
+            color: var(--muted-foreground); margin-bottom: 8px; padding-left: 10px;
+        }
+        @media (max-width: 1200px) {
+            .toc-sidebar { display: none; }
+            .main { margin-right: 0; border-right: none; }
+        }
+        @media (max-width: 900px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform .3s;
+                box-shadow: 2px 0 12px rgba(0,0,0,0.1);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .main {
+                margin-left: 0;
+                padding: 24px 20px;
+                max-width: 100%;
+            }
+            .menu-toggle {
+                display: block;
+                position: fixed;
+                top: 14px;
+                left: 14px;
+                z-index: 200;
+                background: var(--card);
+                border: 1px solid var(--border);
+                border-radius: 6px;
+                padding: 8px 12px;
+                font-size: 1rem;
+                cursor: pointer;
+            }
+        }
+        @media (min-width: 901px) {
+            .menu-toggle { display: none; }
+        }
+        .theme-select {
+            margin-top: 24px;
+            padding: 10px 12px;
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--foreground);
+            width: 100%;
+            cursor: pointer;
+            transition: all .3s cubic-bezier(.4,0,.2,1);
+        }
+        .theme-select:hover { border-color: var(--primary); }
+        .theme-select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-10); }
+    </style>
+<link rel="stylesheet" href="../fr-themes.css">
+</head>
+<body>
+
+<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<div class="wiki-layout">
+
+    <!-- 侧边栏导航 -->
+    <aside class="sidebar">
+        <h1>主题定制与统一性 Wiki</h1>
+        <span class="version">v1.0 · 团队协作指南</span>
+
+        <select class="theme-select" id="theme-select" onchange="changeTheme(this.value)">
+            <option value="">Light (Default)</option>
+            <option value="dark">Dark</option>
+            <option value="claude">Claude</option>
+            <option value="claude-dark">Claude Dark</option>
+            <option value="bumblebee">Bumblebee</option>
+            <option value="bumblebee-dark">Bumblebee Dark</option>
+            <option value="emerald">Emerald</option>
+            <option value="emerald-dark">Emerald Dark</option>
+            <option value="nord">Nord</option>
+            <option value="nord-dark">Nord Dark</option>
+            <option value="sunset">Sunset</option>
+            <option value="sunset-dark">Sunset Dark</option>
+            <option value="abyss">Abyss</option>
+            <option value="abyss-dark">Abyss Dark</option>
+            <option value="dracula">Dracula</option>
+            <option value="dracula-dark">Dracula Dark</option>
+            <option value="amethyst">Amethyst</option>
+            <option value="amethyst-dark">Amethyst Dark</option>
+            <option value="slate">Slate</option>
+            <option value="slate-dark">Slate Dark</option>
+            <option value="twitter">Twitter</option>
+            <option value="twitter-dark">Twitter Dark</option>
+        </select>
+
+        <nav>
+            <div class="nav-group">
+                <div class="nav-group-title">Wiki 导航</div>
+                <ul>
+                    <li><a href="../index.html">首页</a></li>
+                    <li><a href="theme-wiki.html">主题定制 Wiki</a></li>
+                    <li><a href="wiki-html-guide.html">HTML 编写指南</a></li>
+                    <li><a href="wiki-tailwind.html">Tailwind 结合使用</a></li>
+                    <li><a href="wiki-usage-guide.html">组件库使用指南</a></li>
+                    <li><a href="wiki-build-guide.html">Wiki 构建指南</a></li>
+                    <li><a href="wiki-html-tags.html">HTML 标签手册</a></li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+    <aside class="toc-sidebar">
+        <h2>目录</h2>
+        <nav>
+            <div class="nav-group">
+                <div class="nav-group-title">基础</div>
+                <ul>
+                    <li><a href="#overview" class="active">概述与原则</a></li>
+                    <li><a href="#tokens">设计令牌（Tokens）</a></li>
+                    <li><a href="#variables">CSS 变量使用规范</a></li>
+                </ul>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-title">定制</div>
+                <ul>
+                    <li><a href="#switch-theme">主题切换实现</a></li>
+                    <li><a href="#naming">命名技巧</a></li>
+                    <li><a href="#layered">分层架构</a></li>
+                </ul>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-title">统一</div>
+                <ul>
+                    <li><a href="#consistency">统一性检查清单</a></li>
+                    <li><a href="#ai-prompts">AI 提示词规范</a></li>
+                    <li><a href="#review">代码审查要点</a></li>
+                </ul>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-title">参考</div>
+                <ul>
+                    <li><a href="#tech-stack">技术栈对比</a></li>
+                    <li><a href="#quick-start">快速上手模板</a></li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- 主内容 -->
+    <main class="main">
+
+        <h2 id="overview">概述与原则</h2>
+        <p>本 Wiki 指导团队如何在项目中<strong>安全、一致、可维护</strong>地定制主题。所有成员在修改样式前，必须阅读并遵守以下三条核心原则：</p>
+
+        <div class="callout success">
+            <span class="callout-title">核心原则</span>
+            <ol>
+                <li><strong>不硬编码</strong>：任何颜色、间距、字体不得写死数值，必须通过变量引用。</li>
+                <li><strong>语义命名</strong>：变量名描述用途（如 <code>--color-danger</code>），而非视觉值（如 <code>--color-red</code>）。</li>
+                <li><strong>单一流真理</strong>：所有主题值只允许在 <code>:root</code> 或 <code>variables.css</code> 中定义。</li>
+            </ol>
+        </div>
+
+        <h2 id="tokens">设计令牌（Design Tokens）</h2>
+        <p>设计令牌是主题系统的"原子"。把视觉属性抽象为令牌，可确保跨平台、跨组件的一致性。</p>
+
+        <h3>令牌层级</h3>
+        <table>
+            <tr><th>层级</th><th>作用</th><th>示例</th></tr>
+            <tr>
+                <td><span class="tag">Global</span></td>
+                <td>最基础、无语义的原子值</td>
+                <td><code>--blue-500: #3b82f6;</code></td>
+            </tr>
+            <tr>
+                <td><span class="tag">Alias</span></td>
+                <td>带语义的映射，描述用途</td>
+                <td><code>--color-primary: var(--blue-500);</code></td>
+            </tr>
+            <tr>
+                <td><span class="tag">Component</span></td>
+                <td>组件级变量，面向开发者</td>
+                <td><code>--button-bg: var(--color-primary);</code></td>
+            </tr>
+        </table>
+
+        <h3>完整令牌示例</h3>
+        <pre><code>:root {
+  /* ========== Global: 颜色阶梯 ========== */
+  --blue-50:  #eff6ff;
+  --blue-100: #dbeafe;
+  --blue-500: #3b82f6;
+  --blue-600: #2563eb;
+  --blue-900: #1e3a8a;
+
+  --red-500:  #ef4444;
+  --red-600:  #dc2626;
+
+  /* ========== Alias: 语义映射 ========== */
+  --color-primary:        var(--blue-600);
+  --color-primary-hover:  var(--blue-500);
+  --color-primary-light:  var(--blue-50);
+  --color-danger:         var(--red-600);
+  --color-text:           #1e293b;
+  --color-text-light:     #64748b;
+  --color-bg:             #f8fafc;
+  --color-surface:        #ffffff;
+  --color-border:         #e2e8f0;
+
+  /* ========== Alias: 间距阶梯 ========== */
+  --space-1: 0.25rem;   /* 4px  */
+  --space-2: 0.5rem;    /* 8px  */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+
+  /* ========== Component: 组件变量 ========== */
+  --button-padding:  var(--space-2) var(--space-4);
+  --button-radius:   var(--radius-md);
+  --button-bg:       var(--color-primary);
+  --button-color:    #ffffff;
+
+  --card-bg:         var(--color-surface);
+  --card-padding:    var(--space-6);
+  --card-radius:     var(--radius-lg);
+  --card-shadow:     0 1px 3px rgba(0,0,0,0.08);
+}</code></pre>
+
+        <div class="callout warning">
+            <span class="callout-title">禁止事项</span>
+            <p>永远不要跨层级引用。例如 <code>--button-bg</code> 应该引用 <code>--color-primary</code>，而不是直接引用 <code>--blue-600</code>。这样当主色从蓝色变为紫色时，只需改 Alias 层。</p>
+        </div>
+
+        <h2 id="variables">CSS 变量使用规范</h2>
+
+        <h3>定义位置</h3>
+        <table>
+            <tr><th>场景</th><th>定义位置</th></tr>
+            <tr><td>全站通用变量</td><td><code>:root</code> 或 <code>base/variables.css</code></td></tr>
+            <tr><td>暗色主题覆盖</td><td><code>[data-theme="dark"] { ... }</code></td></tr>
+            <tr><td>组件局部变量</td><td>组件选择器内，如 <code>.btn { --btn-x: 1rem; }</code></td></tr>
+        </table>
+
+        <h3>回退值（Fallback）</h3>
+        <p>在可能缺失变量的场景，始终提供回退值：</p>
+        <pre><code>/* 不推荐 */
+background: var(--button-bg);
+
+/* 推荐 */
+background: var(--button-bg, var(--color-primary, #2563eb));</code></pre>
+
+        <h3>calc() 与变量结合</h3>
+        <pre><code>:root {
+  --header-height: 64px;
+}
+
+.main {
+  /* 动态计算剩余高度 */
+  min-height: calc(100vh - var(--header-height));
+}</code></pre>
+
+        <h2 id="switch-theme">主题切换实现</h2>
+
+        <h3>方案 A：Data Attribute（推荐）</h3>
+        <p>最轻量、零依赖、SEO 友好。</p>
+        <pre><code>/* CSS */
+[data-theme="dark"] {
+  --color-bg: #0f172a;
+  --color-text: #e2e8f0;
+  --color-surface: #1e293b;
+}
+
+/* JS */
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+}
+
+// 初始化：优先读取用户偏好
+const saved = localStorage.getItem('theme');
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+setTheme(saved || (prefersDark ? 'dark' : 'light'));</code></pre>
+
+        <h3>方案 B：Class 切换</h3>
+        <pre><code>/* 在 <html> 或 <body> 上切换 class */
+document.body.classList.toggle('theme-dark');</code></pre>
+
+        <h3>方案 C：CSS -only（利用 :has() 或 媒体查询）</h3>
+        <pre><code>@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #0f172a;
+    --color-text: #e2e8f0;
+  }
+}</code></pre>
+        <div class="callout">
+            <span class="callout-title">选择建议</span>
+            <p>如果需要给用户<strong>手动切换按钮</strong>，用方案 A；如果只需跟随系统，用方案 C；方案 B 适合与旧版 IE 兼容的 jQuery 项目。</p>
+        </div>
+
+        <h2 id="naming">命名技巧</h2>
+
+        <h3>颜色命名</h3>
+        <table>
+            <tr><th>类型</th><th>好示例</th><th>坏示例</th><th>原因</th></tr>
+            <tr>
+                <td>主色</td>
+                <td><code>--color-primary</code></td>
+                <td><code>--color-blue</code></td>
+                <td>主色可能换成其他色相</td>
+            </tr>
+            <tr>
+                <td>状态色</td>
+                <td><code>--color-success</code></td>
+                <td><code>--color-green</code></td>
+                <td>成功状态在不同主题下可能不是绿色</td>
+            </tr>
+            <tr>
+                <td>背景</td>
+                <td><code>--color-bg</code></td>
+                <td><code>--white</code></td>
+                <td>暗色模式下背景不是白色</td>
+            </tr>
+        </table>
+
+        <h3>间距命名</h3>
+        <p>使用数字阶梯（1, 2, 3, 4, 6, 8, 12, 16...），而非 <code>small</code> / <code>large</code>。数字系统更易扩展，AI 也更易理解。</p>
+        <pre><code>/* 推荐 */
+--space-1: 0.25rem;
+--space-2: 0.5rem;
+--space-3: 0.75rem;
+--space-4: 1rem;
+
+/* 不推荐 */
+--space-small: 0.5rem;
+--space-large: 2rem;</code></pre>
+
+        <h2 id="layered">分层架构</h2>
+        <p>一个可维护的主题系统应该像洋葱一样分层，外层依赖内层，内层不感知外层。</p>
+
+        <pre><code>styles/
+├── 01-tokens/           ← 最底层：颜色、间距、字体、阴影原子值
+│   ├── colors.css
+│   ├── spacing.css
+│   └── typography.css
+├── 02-themes/           ← 主题覆盖层
+│   ├── light.css
+│   └── dark.css
+├── 03-base/             ← 基础样式：reset、typography 规则
+│   ├── reset.css
+│   └── base.css
+├── 04-layout/           ← 布局系统：grid、header、footer
+│   ├── grid.css
+│   └── header.css
+├── 05-components/       ← 组件层：按钮、卡片、表单
+│   ├── button.css
+│   ├── card.css
+│   └── form.css
+└── main.css             ← @import 所有文件</code></pre>
+
+        <div class="callout success">
+            <span class="callout-title">依赖规则</span>
+            <ul>
+                <li>Token 层不引用任何其他层。</li>
+                <li>Theme 层只覆盖 Token。</li>
+                <li>Component 层只引用 Token 和 Theme，不互相引用。</li>
+                <li>Layout 层可引用 Component（如 Header 里放 Button）。</li>
+            </ul>
+        </div>
+
+        <h2 id="consistency">统一性检查清单</h2>
+        <p>在提交代码或让 AI 生成样式前，逐项确认：</p>
+        <ul class="checklist">
+            <li>所有色值是否来自 <code>:root</code> 变量，而非手写 <code>#xxxxxx</code>？</li>
+            <li>暗色主题下是否测试了新增组件？</li>
+            <li>是否使用了语义命名（primary / danger / bg）而非色相命名（blue / red / white）？</li>
+            <li>间距是否使用了 <code>--space-*</code> 阶梯，而非随机像素值？</li>
+            <li>组件是否有局部变量隔离，避免污染全局？</li>
+            <li>z-index 是否也纳入令牌管理（如 <code>--z-dropdown: 100</code>）？</li>
+            <li>阴影、边框、圆角是否使用了统一的设计令牌？</li>
+        </ul>
+
+        <h2 id="ai-prompts">AI 提示词规范</h2>
+        <p>当使用 AI（如 Kimi、ChatGPT、Claude）生成或修改样式时，必须在提示词中附加以下约束：</p>
+
+        <div class="callout">
+            <span class="callout-title">标准 AI 约束模板</span>
+            <pre style="margin:10px 0 0;"><code>约束：
+1. 所有颜色必须引用项目已有的 CSS 变量，禁止写死十六进制色值。
+2. 使用语义变量名（如 --color-primary），禁止使用 --color-blue 等色相名。
+3. 间距使用 --space-1 到 --space-12 的阶梯变量。
+4. 如需新增变量，必须在 :root 中定义，并提供暗色主题对应值。
+5. 输出完整的 CSS 规则块，不要省略选择器。
+6. 如果涉及交互状态（hover/focus/active），必须全部定义。</code></pre>
+        </div>
+
+        <h3>分场景 Prompt 示例</h3>
+        <h4>场景 1：修改现有组件</h4>
+        <pre><code>请修改以下按钮组件，添加一个 .btn-ghost 变体：
+【粘贴现有 .btn CSS，约 15 行】
+
+要求：
+- 透明背景，1px 边框使用 --color-primary；
+- hover 时背景变为 --color-primary-light，文字保持 --color-primary；
+- 复用现有变量，不新增色值；
+- 输出完整的 .btn-ghost 规则。</code></pre>
+
+        <h4>场景 2：生成新组件</h4>
+        <pre><code>请生成一个警告提示条（.alert）组件的 CSS。
+
+项目变量环境：
+--color-warning: #d97706;
+--color-warning-light: #fffbeb;
+--space-3: 0.75rem;
+--space-4: 1rem;
+--radius-md: 8px;
+
+要求：
+- 左侧 4px 实色边框，背景使用 --color-warning-light；
+- 内边距使用 --space-* 变量；
+- 提供 .alert-warning、.alert-success、.alert-danger 三个变体；
+- 禁止写死任何颜色和像素值。</code></pre>
+
+        <h2 id="review">代码审查要点</h2>
+        <table>
+            <tr><th>检查项</th><th>通过标准</th><th>常见问题</th></tr>
+            <tr>
+                <td>硬编码色值</td>
+                <td>全局搜索 <code>#</code>、<code>rgb(</code>、<code>hsl(</code>，非 Token 文件中出现即为违规</td>
+                <td>AI 生成的代码常偷偷写死颜色</td>
+            </tr>
+            <tr>
+                <td>特异性失控</td>
+                <td>组件选择器不超过 2 层嵌套</td>
+                <td><code>.card .body .title span</code> 这种过度嵌套</td>
+            </tr>
+            <tr>
+                <td>暗色主题遗漏</td>
+                <td>新增组件必须在 <code>[data-theme="dark"]</code> 下测试</td>
+                <td>白色卡片在暗色下还是白色，形成"光斑"</td>
+            </tr>
+            <tr>
+                <td>变量命名</td>
+                <td>只看变量名就能知道用途，看不出具体颜色</td>
+                <td><code>--blue</code>、<code>--gray-text</code></td>
+            </tr>
+        </table>
+
+        <h2 id="tech-stack">技术栈对比</h2>
+        <table>
+            <tr><th>技术</th><th>适用场景</th><th>主题切换能力</th><th>学习成本</th></tr>
+            <tr>
+                <td><strong>原生 CSS 变量</strong></td>
+                <td>小型项目、WordPress、无构建环境</td>
+                <td>⭐⭐⭐ 运行时切换，零成本</td>
+                <td>低</td>
+            </tr>
+            <tr>
+                <td><strong>Sass / SCSS</strong></td>
+                <td>中大型项目、需要函数/循环生成色阶</td>
+                <td>⭐⭐ 编译时生成多套主题文件</td>
+                <td>中</td>
+            </tr>
+            <tr>
+                <td><strong>Tailwind CSS</strong></td>
+                <td>快速开发、高度组件化、设计系统成熟</td>
+                <td>⭐⭐⭐ <code>darkMode: 'class'</code> 即可切换</td>
+                <td>中</td>
+            </tr>
+            <tr>
+                <td><strong>CSS-in-JS</strong><br><small>(styled-components)</small></td>
+                <td>React / Vue 组件库、需要 JS 动态主题</td>
+                <td>⭐⭐⭐ 通过 ThemeProvider 注入</td>
+                <td>高</td>
+            </tr>
+            <tr>
+                <td><strong>PostCSS</strong><br><small>+ postcss-custom-properties</small></td>
+                <td>需要兼容 IE11 的旧项目</td>
+                <td>⭐⭐ 编译后降级，运行时有限支持</td>
+                <td>中</td>
+            </tr>
+        </table>
+
+        <h3>选择决策树</h3>
+        <pre><code>项目需要什么？
+├── 无构建工具 / WordPress / 纯 HTML？
+│     └── 原生 CSS 变量（当前文件方案）✅
+├── 需要大量计算（色阶、网格）？
+│     └── Sass + CSS 变量混合
+├── 团队追求开发速度，接受 Utility 类？
+│     └── Tailwind CSS
+├── React/Vue 组件库，主题需动态计算？
+│     └── CSS-in-JS
+└── 必须兼容 IE11？
+      └── PostCSS 降级 + 纯色表方案</code></pre>
+
+        <h2 id="quick-start">快速上手模板</h2>
+        <p>复制以下模板到项目根目录的 <code>theme-system.css</code>，即可开始：</p>
+
+        <pre><code>/* ===== 1. 基础令牌 ===== */
+:root {
+  --blue-600: #2563eb;
+  --blue-500: #3b82f6;
+  --blue-50:  #eff6ff;
+  --red-600:  #dc2626;
+
+  --color-primary:       var(--blue-600);
+  --color-primary-hover: var(--blue-500);
+  --color-danger:        var(--red-600);
+  --color-bg:            #f8fafc;
+  --color-surface:       #ffffff;
+  --color-text:          #1e293b;
+  --color-text-light:    #64748b;
+  --color-border:        #e2e8f0;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
+/* ===== 2. 暗色主题覆盖 ===== */
+[data-theme="dark"] {
+  --color-bg:         #0f172a;
+  --color-surface:    #1e293b;
+  --color-text:       #e2e8f0;
+  --color-text-light: #94a3b8;
+  --color-border:     #334155;
+}
+
+/* ===== 3. 基础样式 ===== */
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* ===== 4. 组件示例 ===== */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+.btn:hover {
+  background: var(--color-primary-hover);
+}</code></pre>
+
+        <div class="callout success">
+            <span class="callout-title">下一步</span>
+            <ol class="steps">
+                <li>将上述模板保存为 <code>theme-system.css</code>，在 HTML 中引用。</li>
+                <li>在页面中加入切换按钮，绑定 <code>document.documentElement.setAttribute('data-theme', 'dark')</code>。</li>
+                <li>所有后续样式开发严格使用 <code>var(--xxx)</code>，禁止写死数值。</li>
+                <li>团队成员阅读本 Wiki，统一 AI 提示词中的约束模板。</li>
+            </ol>
+        </div>
+
+    </main>
+</div>
+
+<script>
+    /* ===== 主题切换逻辑 ===== */
+    const html = document.documentElement;
+    const themeSelect = document.getElementById('theme-select');
+
+    function applyTheme(theme) {
+        if (theme && theme !== 'light') {
+            html.setAttribute('data-theme', theme);
+        } else {
+            html.removeAttribute('data-theme');
+        }
+        if (themeSelect) themeSelect.value = theme || '';
+    }
+
+    function changeTheme(theme) {
+        applyTheme(theme);
+        localStorage.setItem('theme', theme);
+    }
+
+    // 初始化
+    const saved = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(saved || (prefersDark ? 'dark' : ''));
+
+    /* ===== 侧边栏高亮当前章节 ===== */
+    const links = document.querySelectorAll('.sidebar nav a');
+    const sections = document.querySelectorAll('.main h2[id]');
+
+    function onScroll() {
+        let current = '';
+        sections.forEach(sec => {
+            const rect = sec.getBoundingClientRect();
+            if (rect.top <= 120) current = sec.getAttribute('id');
+        });
+        links.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+        });
+    }
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+
+    /* ===== 点击侧边栏链接后移动端自动收起 ===== */
+    links.forEach(link => {
+        link.addEventListener('click', () => {
+            document.querySelector('.sidebar').classList.remove('open');
+        });
+    });
+</script>
+
+</body>
+</html>

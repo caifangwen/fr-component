@@ -1,0 +1,89 @@
+/* ========================================
+   提示框组件 (Alert / Callout)
+   ======================================== */
+
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+.alert__icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+}
+
+.alert__content {
+  flex: 1;
+}
+
+.alert__title {
+  font-weight: var(--font-semibold);
+  margin-bottom: var(--space-1);
+}
+
+.alert__text {
+  color: var(--color-text-light);
+}
+
+.alert__close {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity var(--transition-fast);
+}
+.alert__close:hover {
+  opacity: 1;
+}
+
+/* 变体：信息（默认） */
+.alert--info {
+  background: var(--color-primary-light);
+  border-color: var(--color-primary);
+  color: var(--color-primary-dark);
+}
+
+/* 变体：成功 */
+.alert--success {
+  background: var(--color-success-light);
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+
+/* 变体：警告 */
+.alert--warning {
+  background: var(--color-warning-light);
+  border-color: var(--color-warning);
+  color: #b45309;
+}
+
+/* 变体：危险 */
+.alert--danger {
+  background: var(--color-danger-light);
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}
+
+/* 简约变体：左侧色条 */
+.alert--border-left {
+  background: var(--color-surface);
+  border-left-width: 4px;
+  border-left-style: solid;
+  border-top-color: var(--color-border);
+  border-right-color: var(--color-border);
+  border-bottom-color: var(--color-border);
+}
+
+.alert--border-left.alert--info    { border-left-color: var(--color-primary); }
+.alert--border-left.alert--success { border-left-color: var(--color-success); }
+.alert--border-left.alert--warning { border-left-color: var(--color-warning); }
+.alert--border-left.alert--danger  { border-left-color: var(--color-danger); }

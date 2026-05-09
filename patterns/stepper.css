@@ -1,0 +1,60 @@
+/* ========================================
+   Pattern: Stepper / Progress Indicator
+   Usage: Include base CSS variables, then link this file.
+   Dependencies: None (uses CSS custom properties with fallbacks)
+   ======================================== */
+
+/* Stepper / Progress Indicator */
+text-decoration: none !important;
+  transition: all .2s;
+  border: 1px solid var(--color-text-strong, #111827);
+  letter-spacing: .3px;
+  cursor: pointer;
+}
+.hh-btn-primary:hover {
+  background: var(--color-surface, #ffffff);
+  color: var(--color-text-strong, #111827) !important;
+  border-color: var(--color-text-strong, #111827);
+  text-decoration: underline !important;
+}
+.hh-btn-outline {
+  display: inline-block;
+  background: none;
+  border: 1px solid var(--color-border-strong, #d1d5db);
+  color: var(--color-text, #374151) !important;
+  font-family: var(--font-head, Georgia, "Times New Roman", serif);
+  font-weight: 700;
+  font-size: 14px;
+  padding: 12px 30px;
+  border-radius: 3px;
+  text-decoration: underline !important;
+  transition: all .2s;
+  cursor: pointer;
+}
+.hh-btn-outline:hover {
+  background: var(--color-surface, #ffffff);
+  border-color: var(--color-text-strong, #111827);
+  color: var(--color-text-strong, #111827) !important;
+}
+
+.hh-verdict {
+  background: none;
+  border: 1px solid var(--color-border, #e2e8f0);
+  border-radius: 0;
+  padding: 24px 28px;
+  margin: 24px 0;
+}
+.hh-verdict-title {
+  font-family: var(--font-mono, "Courier New", monospace);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-text-muted, #6b7280);
+  margin-bottom: 16px;
+  display: block;
+}
+.hh-verdict-row {
+  display: flex;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border, #e2e8f0);

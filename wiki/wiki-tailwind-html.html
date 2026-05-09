@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tailwind-html 组件库 — 目录结构与使用指南</title>
+    <style>    :root {
+        --background: #ffffff;
+        --foreground: #09090b;
+        --card: #ffffff;
+        --card-foreground: #09090b;
+        --popover: #ffffff;
+        --popover-foreground: #09090b;
+        --primary: #18181b;
+        --primary-foreground: #fafafa;
+        --secondary: #f4f4f5;
+        --secondary-foreground: #18181b;
+        --muted: #f4f4f5;
+        --muted-foreground: #a1a1aa;
+        --accent: #f4f4f5;
+        --accent-foreground: #18181b;
+        --destructive: #ef4444;
+        --destructive-foreground: #ffffff;
+        --border: #e4e4e7;
+        --input: #e4e4e7;
+        --ring: #18181b;
+        --radius: 0.75rem;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --code-bg: #18181b;
+        --code-text: #f4f4f5;
+        --sidebar-width: 260px;
+        --primary-5: rgba(24,24,27,0.05);
+        --primary-8: rgba(24,24,27,0.08);
+        --primary-10: rgba(24,24,27,0.10);
+        --primary-12: rgba(24,24,27,0.12);
+        --primary-15: rgba(24,24,27,0.15);
+        --primary-20: rgba(24,24,27,0.20);
+        --primary-30: rgba(24,24,27,0.30);
+        --success-5: rgba(16,185,129,0.05);
+        --success-15: rgba(16,185,129,0.15);
+        --warning-5: rgba(245,158,11,0.05);
+        --warning-15: rgba(245,158,11,0.15);
+        --danger-5: rgba(239,68,68,0.05);
+        --danger-15: rgba(239,68,68,0.15);
+        --shadow: 0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.07);
+        --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.08);
+    }    [data-theme="dark"] {
+        --background: #09090b;
+        --foreground: #fafafa;
+        --card: #18181b;
+        --card-foreground: #fafafa;
+        --popover: #27272a;
+        --popover-foreground: #fafafa;
+        --primary: #fafafa;
+        --primary-foreground: #18181b;
+        --secondary: #27272a;
+        --secondary-foreground: #fafafa;
+        --muted: #27272a;
+        --muted-foreground: #d4d4d8;
+        --accent: #27272a;
+        --accent-foreground: #fafafa;
+        --destructive: #ef4444;
+        --destructive-foreground: #ffffff;
+        --border: rgba(255,255,255,0.10);
+        --input: rgba(255,255,255,0.10);
+        --ring: #fafafa;
+        --success: #34d399;
+        --warning: #fbbf24;
+        --danger: #f87171;
+        --code-bg: #09090b;
+        --code-text: #f4f4f5;
+        --primary-5: rgba(250,250,250,0.05);
+        --primary-8: rgba(250,250,250,0.08);
+        --primary-10: rgba(250,250,250,0.10);
+        --primary-12: rgba(250,250,250,0.12);
+        --primary-15: rgba(250,250,250,0.15);
+        --primary-20: rgba(250,250,250,0.20);
+        --primary-30: rgba(250,250,250,0.30);
+        --success-5: rgba(52,211,153,0.05);
+        --success-15: rgba(52,211,153,0.15);
+        --warning-5: rgba(251,191,36,0.05);
+        --warning-15: rgba(251,191,36,0.15);
+        --danger-5: rgba(248,113,113,0.05);
+        --danger-15: rgba(248,113,113,0.15);
+        --shadow: 0 1px 3px 0 rgba(0,0,0,0.2);
+        --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.3);
+        --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.4);
+    }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--background);
+            color: var(--foreground);
+            line-height: 1.7;
+        }
+        .wiki-layout { display: flex; min-height: 100vh; }
+        .sidebar {
+        width: var(--sidebar-width);
+        background: var(--card);
+        border-right: 1px solid var(--border);
+            padding: 28px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            top: 0; left: 0; z-index: 100;
+        }
+        .sidebar h1 { font-size: 1.15rem; color: var(--primary); margin-bottom: 6px; }
+        .sidebar .version { font-size: 0.75rem; color: var(--muted-foreground); margin-bottom: 24px; display: block; }
+        .sidebar nav ul { list-style: none; margin: 0; }
+        .sidebar nav li { margin: 4px 0; }
+        .sidebar nav a { display: block; color: var(--foreground); text-decoration: none; font-size: 0.88rem; padding: 6px 10px; border-radius: 6px; transition: background .15s, color .15s; }
+        .sidebar nav a:hover { background: var(--primary-8); color: var(--primary); }
+        .sidebar nav a.active { background: var(--primary-12); color: var(--primary); font-weight: 600; }
+        .sidebar .nav-group { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--border); }
+        .sidebar .nav-group-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); margin-bottom: 8px; padding-left: 10px; }
+        .theme-toggle {
+        margin-top: 24px; padding: 10px 12px; background: var(--background); border: 1px solid var(--border);
+            border-radius: 8px; cursor: pointer; font-size: 0.85rem; color: var(--foreground); width: 100%;
+            display: flex; align-items: center; justify-content: center; gap: 6px; transition: all .3s cubic-bezier(.4,0,.2,1);
+        }
+        .theme-toggle:hover { border-color: var(--primary); color: var(--primary); }
+        .main { margin-left: var(--sidebar-width); margin-right: var(--sidebar-width); flex: 1; max-width: 800px; padding: 48px 40px; background: var(--card); min-height: 100vh; border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+        .main h2 { font-size: 1.6rem; color: var(--primary); margin: 48px 0 20px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
+        .main h2:first-child { margin-top: 0; }
+        .main h3 { font-size: 1.2rem; color: var(--foreground); margin: 32px 0 14px; }
+        .main h4 { font-size: 1rem; color: var(--muted-foreground); margin: 22px 0 10px; font-weight: 600; }
+        .main p { margin-bottom: 14px; }
+        .main ul, .main ol { margin: 12px 0 12px 22px; }
+        .main li { margin: 6px 0; }
+        code { background: var(--primary-8); color: var(--primary); padding: 2px 6px; border-radius: 4px; font-family: "SF Mono", Monaco, "Cascadia Code", Consolas, monospace; font-size: 0.9em; }
+        pre { background: var(--code-bg); color: var(--code-text); padding: 18px 22px; border-radius: var(--radius); overflow-x: auto; margin: 16px 0; font-size: 0.88rem; line-height: 1.6; }
+        pre code { background: transparent; color: inherit; padding: 0; font-size: inherit; }
+        .callout { background: var(--primary-5); border: 1px solid var(--primary-15); border-left: 4px solid var(--primary); padding: 16px 20px; border-radius: var(--radius); margin: 18px 0; }
+        .callout.success { background: var(--success-5); border-color: var(--success-15); border-left-color: var(--success); }
+        .callout.warning { background: var(--warning-5); border-color: var(--warning-15); border-left-color: var(--warning); }
+        .callout.danger { background: var(--danger-5); border-color: var(--danger-15); border-left-color: var(--danger); }
+        .callout-title { font-weight: 600; margin-bottom: 6px; display: block; }
+        table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.92rem; }
+        th, td { border: 1px solid var(--border); padding: 10px 14px; text-align: left; }
+        th { background: var(--background); font-weight: 600; }
+        .tag { display: inline-flex; align-items: center; gap: 4px; background: var(--primary-10); color: var(--primary); font-size: 0.75rem; padding: 3px 10px; border-radius: 6px; margin-right: 4px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.03em; font-weight: 500; border: 1px solid var(--primary-20); }
+        .tag.outline { background: transparent; color: var(--primary); border: 1px solid var(--primary-30); }
+        .tag.app { background: rgba(99,102,241,0.10); color: #6366f1; border-color: rgba(99,102,241,0.25); }
+        .tag.ecom { background: rgba(236,72,153,0.10); color: #ec4899; border-color: rgba(236,72,153,0.25); }
+        .tag.mkt { background: rgba(16,185,129,0.10); color: #10b981; border-color: rgba(16,185,129,0.25); }
+        .steps { counter-reset: step; list-style: none; margin: 16px 0; }
+        .steps > li { position: relative; padding-left: 44px; margin-bottom: 18px; min-height: 32px; }
+        .steps > li::before { counter-increment: step; content: counter(step); position: absolute; left: 0; top: 0; width: 28px; height: 28px; background: var(--primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; }
+        .toc-sidebar {
+            width: var(--sidebar-width);
+            background: var(--card);
+            border-left: 1px solid var(--border);
+            padding: 28px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            top: 0; right: 0; z-index: 100;
+        }
+        .toc-sidebar h2 {
+            font-size: 0.85rem;
+            color: var(--primary);
+            margin-bottom: 16px;
+            padding-left: 10px;
+            font-weight: 600;
+        }
+        .toc-sidebar nav ul { list-style: none; margin: 0; }
+        .toc-sidebar nav li { margin: 4px 0; }
+        .toc-sidebar nav a {
+            display: block; color: var(--foreground); text-decoration: none;
+            font-size: 0.85rem; padding: 5px 10px; border-radius: 6px;
+            transition: background .15s, color .15s;
+        }
+        .toc-sidebar nav a:hover { background: var(--primary-8); color: var(--primary); }
+        .toc-sidebar nav a.active { background: var(--primary-12); color: var(--primary); font-weight: 600; }
+        .toc-sidebar .nav-group { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+        .toc-sidebar .nav-group:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+        .toc-sidebar .nav-group-title {
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em;
+            color: var(--muted-foreground); margin-bottom: 8px; padding-left: 10px;
+        }
+        .file-tree { font-family: "SF Mono", Monaco, Consolas, monospace; font-size: 0.85rem; line-height: 1.8; background: var(--background); padding: 18px 22px; border-radius: var(--radius); border: 1px solid var(--border); margin: 16px 0; }
+        .file-tree .dir { color: var(--primary); font-weight: 600; }
+        .file-tree .file { color: var(--muted-foreground); }
+        .file-tree .count { color: var(--success); font-weight: 600; }
+        @media (max-width: 1200px) {
+            .toc-sidebar { display: none; }
+            .main { margin-right: 0; border-right: none; }
+        }
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); transition: transform .3s; box-shadow: 2px 0 12px rgba(0,0,0,0.1); }
+            .sidebar.open { transform: translateX(0); }
+            .main { margin-left: 0; padding: 24px 20px; max-width: 100%; }
+            .menu-toggle { display: block; position: fixed; top: 14px; left: 14px; z-index: 200; background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; font-size: 1rem; cursor: pointer; }
+        }
+        @media (min-width: 901px) { .menu-toggle { display: none; } }
+    </style>
+<link rel="stylesheet" href="../fr-themes.css">
+</head>
+<body>
+<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+<div class="wiki-layout">
+    <aside class="sidebar">
+        <h1>tailwind-html</h1>
+        <span class="version">704 个 Tailwind UI HTML 组件</span>
+        <select class="theme-select" id="theme-select" onchange="changeTheme(this.value)">
+            <option value="">Light (Default)</option>
+            <option value="dark">Dark</option>
+            <option value="claude">Claude</option>
+            <option value="claude-dark">Claude Dark</option>
+            <option value="bumblebee">Bumblebee</option>
+            <option value="bumblebee-dark">Bumblebee Dark</option>
+            <option value="emerald">Emerald</option>
+            <option value="emerald-dark">Emerald Dark</option>
+            <option value="nord">Nord</option>
+            <option value="nord-dark">Nord Dark</option>
+            <option value="sunset">Sunset</option>
+            <option value="sunset-dark">Sunset Dark</option>
+            <option value="abyss">Abyss</option>
+            <option value="abyss-dark">Abyss Dark</option>
+            <option value="dracula">Dracula</option>
+            <option value="dracula-dark">Dracula Dark</option>
+            <option value="amethyst">Amethyst</option>
+            <option value="amethyst-dark">Amethyst Dark</option>
+            <option value="slate">Slate</option>
+            <option value="slate-dark">Slate Dark</option>
+            <option value="twitter">Twitter</option>
+            <option value="twitter-dark">Twitter Dark</option>
+        </select>
+        <nav>
+            <div class="nav-group">
+                <div class="nav-group-title">Wiki 导航</div>
+                <ul>
+                    <li><a href="../index.html">首页</a></li>
+                    <li><a href="theme-wiki.html">主题定制 Wiki</a></li>
+                    <li><a href="wiki-html-guide.html">HTML 编写指南</a></li>
+                    <li><a href="wiki-tailwind.html">Tailwind 结合使用</a></li>
+                    <li><a href="wiki-usage-guide.html">组件库使用指南</a></li>
+                    <li><a href="wiki-build-guide.html">Wiki 构建指南</a></li>
+                    <li><a href="wiki-html-tags.html">HTML 标签手册</a></li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+    <aside class="toc-sidebar">
+        <h2>目录</h2>
+        <nav>
+            <div class="nav-group">
+                <div class="nav-group-title">概览</div>
+                <ul>
+                    <li><a href="#overview" class="active">什么是 tailwind-html</a></li>
+                    <li><a href="#structure">文件结构总览</a></li>
+                    <li><a href="#tech">技术特征</a></li>
+                </ul>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-title">三大分类</div>
+                <ul>
+                    <li><a href="#application-ui">Application UI</a></li>
+                    <li><a href="#ecommerce">Ecommerce</a></li>
+                    <li><a href="#marketing">Marketing</a></li>
+                </ul>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-title">使用指南</div>
+                <ul>
+                    <li><a href="#how-to-use">如何使用</a></li>
+                    <li><a href="#vs-native">与原生库对比</a></li>
+                    <li><a href="#tips">实用技巧</a></li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+    <main class="main">
+
+        <h2 id="overview">什么是 tailwind-html</h2>
+        <p><code>tailwind-html/</code> 目录下收录了 <strong>704 个纯 HTML 组件片段</strong>，全部使用 Tailwind CSS 的 Utility Class 编写。这些组件来源于 Tailwind UI 的设计体系，覆盖后台管理、电商、营销三类场景，可直接复制到项目中使用。</p>
+
+        <div class="callout success">
+            <span class="callout-title">核心定位</span>
+            <p>tailwind-html 是<strong>即拿即用的 HTML 片段库</strong>。没有构建步骤，没有 JS 依赖，不需要 npm install。找到需要的组件，复制 HTML 代码，粘贴到你的页面中即可渲染。</p>
+        </div>
+
+        <h3>与 Tailwind CSS 的关系</h3>
+        <p>tailwind-html 中的组件假设你的项目已经引入了 Tailwind CSS。每个 HTML 文件只包含结构代码和 Tailwind 类名，不包含任何自定义 CSS 或 JavaScript。</p>
+
+        <pre><code>&lt;!-- 典型结构：div + Tailwind classes --&gt;
+&lt;div class="bg-white rounded-lg shadow p-6"&gt;
+  &lt;h2 class="text-lg font-semibold text-gray-900"&gt;标题&lt;/h2&gt;
+  &lt;p class="mt-2 text-sm text-gray-600"&gt;描述文字&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+
+        <h2 id="structure">文件结构总览</h2>
+        <p>704 个 HTML 文件按三大场景组织，每个场景下再按组件类型细分：</p>
+
+        <div class="file-tree">
+<span class="dir">tailwind-html/</span>
+├── <span class="dir">application-ui/</span> <span class="count">380 HTML</span>
+│   ├── <span class="dir">application-shells/</span> <span class="count">23</span> — 后台布局框架
+│   ├── <span class="dir">data-display/</span> <span class="count">20</span> — 日历、统计、描述列表
+│   ├── <span class="dir">elements/</span> <span class="count">49</span> — 头像、徽章、按钮、下拉菜单
+│   ├── <span class="dir">feedback/</span> <span class="count">12</span> — 警告提示、空状态
+│   ├── <span class="dir">forms/</span> <span class="count">77</span> — 表单布局、输入框、单选、复选
+│   ├── <span class="dir">headings/</span> <span class="count">29</span> — 页面标题、卡片标题、段落标题
+│   ├── <span class="dir">layout/</span> <span class="count">38</span> — 卡片、容器、分割线、媒体对象
+│   ├── <span class="dir">lists/</span> <span class="count">47</span> — 动态列表、表格、网格
+│   ├── <span class="dir">navigation/</span> <span class="count">55</span> — 面包屑、导航栏、分页、侧边栏
+│   ├── <span class="dir">overlays/</span> <span class="count">24</span> — 抽屉、模态框、通知
+│   └── <span class="dir">page-examples/</span> <span class="count">6</span> — 完整页面示例
+│
+├── <span class="dir">ecommerce/</span> <span class="count">114 HTML</span>
+│   ├── <span class="dir">components/</span> <span class="count">84</span> — 商品列表、购物车、结算表单
+│   └── <span class="dir">page-examples/</span> <span class="count">30</span> — 商品页、分类页、购物车页
+│
+└── <span class="dir">marketing/</span> <span class="count">210 HTML</span>
+    ├── <span class="dir">elements/</span> <span class="count">32</span> — 横幅、导航头部、弹出菜单
+    ├── <span class="dir">feedback/</span> <span class="count">5</span> — 404 页面
+    ├── <span class="dir">page-examples/</span> <span class="count">10</span> — 落地页、关于页、定价页
+    └── <span class="dir">sections/</span> <span class="count">163</span> — 功能区块、CTA、FAQ、团队
+</div>
+
+        <h2 id="tech">技术特征</h2>
+        <table>
+            <tr><th>特征</th><th>说明</th></tr>
+            <tr><td>纯 Utility Class</td><td>100% 使用 Tailwind 原子类，无自定义 CSS</td></tr>
+            <tr><td>语义化 HTML</td><td>使用正确的标签（table、nav、form、aria-* 等）</td></tr>
+            <tr><td>响应式设计</td><td>大量使用 sm: / md: / lg: / xl: 断点前缀</td></tr>
+            <tr><td>暗黑模式支持</td><td>部分组件提供 "on dark" 变体</td></tr>
+            <tr><td>SVG 图标</td><td>使用内联 SVG，不依赖外部图标库</td></tr>
+            <tr><td>无 JS 依赖</td><td>纯 HTML + CSS，交互逻辑需自行实现</td></tr>
+            <tr><td>Tailwind UI 图源</td><td>图片使用 tailwindui.com/plus-assets 域名</td></tr>
+        </table>
+
+        <h3>类名风格示例</h3>
+        <pre><code>/* 布局 */
+flex items-center justify-between
+grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3
+
+/* 尺寸与间距 */
+mx-auto max-w-2xl px-4 py-16 sm:px-6 lg:max-w-7xl
+mt-4 text-sm text-gray-700
+
+/* 交互状态 */
+hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-indigo-600
+group-hover:opacity-75
+
+/* 深色变体 */
+bg-white text-gray-900        /* 亮色 */
+bg-gray-900 text-white        /* 暗色 */</code></pre>
+
+        <h2 id="application-ui">Application UI <span class="tag app">380 组件</span></h2>
+        <p>面向后台管理系统 (Dashboard / SaaS / Admin Panel) 的组件，风格简洁、信息密度高。</p>
+
+        <h3>重点子分类</h3>
+        <table>
+            <tr><th>分类</th><th>组件数</th><th>典型用途</th></tr>
+            <tr><td>Application Shells</td><td>23</td><td>后台整体布局：侧边栏、顶部导航、多栏布局</td></tr>
+            <tr><td>Forms</td><td>77</td><td>各种表单控件和布局模式</td></tr>
+            <tr><td>Lists / Tables</td><td>47</td><td>数据列表、表格展示</td></tr>
+            <tr><td>Navigation</td><td>55</td><td>面包屑、分页、命令面板、标签页</td></tr>
+            <tr><td>Overlays</td><td>24</td><td>模态框、抽屉、通知提示</td></tr>
+            <tr><td>Elements</td><td>49</td><td>按钮、徽章、头像、下拉菜单等原子组件</td></tr>
+        </table>
+
+        <h4>示例：基础表格</h4>
+        <pre><code>&lt;!-- application-ui/lists/tables/simple.html --&gt;
+&lt;table class="min-w-full divide-y divide-gray-300"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900"&gt;Name&lt;/th&gt;
+      &lt;th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"&gt;Title&lt;/th&gt;
+      &lt;th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"&gt;Email&lt;/th&gt;
+      &lt;th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"&gt;Role&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody class="divide-y divide-gray-200"&gt;
+    &lt;tr&gt;
+      &lt;td class="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900"&gt;Lindsay Walton&lt;/td&gt;
+      &lt;td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500"&gt;Front-end Developer&lt;/td&gt;
+      &lt;td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500"&gt;lindsay@example.com&lt;/td&gt;
+      &lt;td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500"&gt;Member&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+
+        <h2 id="ecommerce">Ecommerce <span class="tag ecom">114 组件</span></h2>
+        <p>面向电商网站的组件，包括商品展示、购物车、结算流程、订单管理等。</p>
+
+        <h3>重点子分类</h3>
+        <table>
+            <tr><th>分类</th><th>组件数</th><th>典型用途</th></tr>
+            <tr><td>Product Lists</td><td>11</td><td>商品网格列表、横向滚动、带色卡选择</td></tr>
+            <tr><td>Product Overviews</td><td>5</td><td>商品详情页布局</td></tr>
+            <tr><td>Shopping Carts</td><td>6</td><td>购物车弹窗、侧边栏、全页面</td></tr>
+            <tr><td>Checkout Forms</td><td>5</td><td>单步/多步结算表单</td></tr>
+            <tr><td>Category Filters</td><td>5</td><td>商品筛选侧边栏、下拉筛选</td></tr>
+            <tr><td>Page Examples</td><td>30</td><td>完整的商品页、分类页、订单页</td></tr>
+        </table>
+
+        <h4>示例：商品网格</h4>
+        <pre><code>&lt;!-- ecommerce/components/product-lists/simple.html --&gt;
+&lt;div class="grid grid-cols-1 gap-x-6 gap-y-10
+            sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8"&gt;
+  &lt;a href="#" class="group"&gt;
+    &lt;img src="..." class="aspect-square w-full rounded-lg bg-gray-200
+                          object-cover group-hover:opacity-75"&gt;
+    &lt;h3 class="mt-4 text-sm text-gray-700"&gt;Earthen Bottle&lt;/h3&gt;
+    &lt;p class="mt-1 text-lg font-medium text-gray-900"&gt;$48&lt;/p&gt;
+  &lt;/a&gt;
+&lt;/div&gt;</code></pre>
+
+        <h2 id="marketing">Marketing <span class="tag mkt">210 组件</span></h2>
+        <p>面向营销网站、落地页 (Landing Page)、企业官网的区块组件，视觉表现力更强。</p>
+
+        <h3>重点子分类</h3>
+        <table>
+            <tr><th>分类</th><th>组件数</th><th>典型用途</th></tr>
+            <tr><td>Heroes</td><td>12</td><td>首屏大图、分屏布局、App 截图展示</td></tr>
+            <tr><td>Feature Sections</td><td>20</td><td>产品功能介绍区块</td></tr>
+            <tr><td>Pricing</td><td>14</td><td>定价表格、三栏/四栏定价卡片</td></tr>
+            <tr><td>CTA Sections</td><td>11</td><td>行动召唤区块</td></tr>
+            <tr><td>Testimonials</td><td>9</td><td>用户评价展示</td></tr>
+            <tr><td>Footers</td><td>14</td><td>页脚布局（亮色/暗色多种变体）</td></tr>
+            <tr><td>Page Examples</td><td>10</td><td>完整的落地页、关于页、定价页</td></tr>
+        </table>
+
+        <h4>示例：Hero 区块</h4>
+        <pre><code>&lt;!-- marketing/sections/heroes/simple_centered.html --&gt;
+&lt;div class="relative isolate px-6 pt-14 lg:px-8"&gt;
+  &lt;div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56"&gt;
+    &lt;div class="text-center"&gt;
+      &lt;h1 class="text-5xl font-semibold tracking-tight text-balance
+                 text-gray-900 sm:text-7xl"&gt;
+        Data to enrich your online business
+      &lt;/h1&gt;
+      &lt;p class="mt-8 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8"&gt;
+        Anim aute id magna aliqua ad ad non deserunt sunt...
+      &lt;/p&gt;
+      &lt;div class="mt-10 flex items-center justify-center gap-x-6"&gt;
+        &lt;a href="#" class="rounded-md bg-indigo-600 px-3.5 py-2.5
+                           text-sm font-semibold text-white shadow-xs
+                           hover:bg-indigo-500"&gt;Get started&lt;/a&gt;
+        &lt;a href="#" class="text-sm/6 font-semibold text-gray-900"&gt;
+          Learn more →
+        &lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+        <h2 id="how-to-use">如何使用</h2>
+
+        <h3>前置条件</h3>
+        <p>使用这些组件前，确保你的项目已引入 Tailwind CSS：</p>
+        <pre><code>&lt;!-- 方式 1：CDN（仅开发测试） --&gt;
+&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;
+
+&lt;!-- 方式 2：构建后引入（生产推荐） --&gt;
+&lt;link rel="stylesheet" href="dist/output.css"&gt;</code></pre>
+
+        <h3>使用步骤</h3>
+        <ol class="steps">
+            <li>浏览目录找到需要的组件类型（如 <code>marketing/sections/heroes/</code>）</li>
+            <li>打开 HTML 文件，复制全部代码</li>
+            <li>粘贴到你的页面中</li>
+            <li>替换占位文字和图片 URL</li>
+            <li>根据品牌调整颜色（将 indigo/gray 替换为你的品牌色）</li>
+        </ol>
+
+        <h3>快速查找组件</h3>
+        <p>项目根目录提供了索引文件：</p>
+        <table>
+            <tr><th>文件</th><th>用途</th></tr>
+            <tr><td><code>tailwind-html-index.md</code></td><td>Markdown 格式的完整文件清单</td></tr>
+            <tr><td><code>tailwind-html-index.json</code></td><td>JSON 格式，含路径和文件大小</td></tr>
+        </table>
+
+        <div class="callout warning">
+            <span class="callout-title">注意：图片资源</span>
+            <p>组件中的示例图片使用 <code>tailwindui.com/plus-assets</code> 域名。生产环境请替换为你自己的图片地址。</p>
+        </div>
+
+        <h2 id="vs-native">与原生组件库对比</h2>
+        <p>tailwind-html 与本项目其他 CSS 体系（<code>components/</code>、<code>huahao-blog/</code>、<code>nichehub/</code>）的区别：</p>
+
+        <table>
+            <tr><th>维度</th><th>tailwind-html</th><th>原生组件库</th></tr>
+            <tr><td>技术栈</td><td>Tailwind CSS</td><td>纯 CSS（BEM 命名）</td></tr>
+            <tr><td>文件形式</td><td>HTML 片段</td><td>CSS 类 + HTML 示例</td></tr>
+            <tr><td>构建依赖</td><td>需要 Tailwind 构建</td><td>零依赖</td></tr>
+            <tr><td>定制难度</td><td>改 class 即可</td><td>需修改 CSS 文件</td></tr>
+            <tr><td>文件体积</td><td>Tailwind Purge 后极小</td><td>全量加载</td></tr>
+            <tr><td>适用场景</td><td>Tailwind 项目 / 现代前端</td><td>WordPress / 纯 HTML</td></tr>
+            <tr><td>暗色模式</td><td>dark: 前缀或 on-dark 变体</td><td>[data-theme="dark"]</td></tr>
+        </table>
+
+        <div class="callout">
+            <span class="callout-title">选择建议</span>
+            <p>如果你的项目已经在使用 Tailwind CSS，tailwind-html 是最自然的组件来源。如果你的项目使用本项目的原生 CSS 体系，建议继续使用 <code>components/</code> 目录下的组件，风格更统一。</p>
+        </div>
+
+        <h2 id="tips">实用技巧</h2>
+
+        <h3>1. 批量替换品牌色</h3>
+        <p>Tailwind 组件默认使用 <code>indigo</code> 作为主色调。替换品牌色的最简单方法是使用编辑器的查找替换：</p>
+        <pre><code># 将 indigo 替换为你的品牌色
+indigo → blue    # 蓝色品牌
+indigo → emerald # 绿色品牌
+indigo → rose    # 红色品牌</code></pre>
+
+        <h3>2. 提取 @apply 组件</h3>
+        <p>如果同一个样式组合频繁出现，可以提取为 CSS 组件：</p>
+        <pre><code>/* 在你的 CSS 文件中 */
+.btn-primary {
+  @apply rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold
+         text-white shadow-xs hover:bg-indigo-500
+         focus-visible:outline-2 focus-visible:outline-offset-2
+         focus-visible:outline-indigo-600;
+}</code></pre>
+
+        <h3>3. 与本项目 CSS 变量结合</h3>
+        <p>可以在 tailwind.config.js 中映射本项目的 CSS 变量，实现两套系统共存：</p>
+        <pre><code>// tailwind.config.js
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          DEFAULT: 'var(--primary)',
+          foreground: 'var(--primary-foreground)',
+        },
+      },
+    },
+  },
+}</code></pre>
+
+        <h3>4. 移动端优先</h3>
+        <p>Tailwind 采用移动优先的响应式策略。理解这个规则有助于快速修改布局：</p>
+        <pre><code>&lt;!-- 默认是移动端样式，sm/md/lg 是更大的屏幕 --&gt;
+&lt;div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"&gt;
+  &lt;!-- 手机 1 列 → 平板 2 列 → 桌面 3 列 --&gt;
+&lt;/div&gt;</code></pre>
+
+        <div class="callout success">
+            <span class="callout-title">总结</span>
+            <p>tailwind-html 提供了 704 个即用即走的 Tailwind UI 风格组件，是现代前端项目（React/Vue/纯 HTML + Tailwind）的绝佳素材库。按三大场景（后台/电商/营销）组织的目录结构，让查找和复用变得高效。</p>
+        </div>
+
+    </main>
+</div>
+
+<script>
+    const html = document.documentElement;
+    const themeSelect = document.getElementById('theme-select');
+    function applyTheme(theme) {
+        if (theme && theme !== 'light') { html.setAttribute('data-theme', theme); }
+        else { html.removeAttribute('data-theme'); }
+        if (themeSelect) themeSelect.value = theme || '';
+    }
+    function changeTheme(theme) { applyTheme(theme); localStorage.setItem('theme', theme); }
+    const saved = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(saved || (prefersDark ? 'dark' : ''));
+    const links = document.querySelectorAll('.sidebar nav a');
+    const sections = document.querySelectorAll('.main h2[id]');
+    function onScroll() { let cur = ''; sections.forEach(s => { if (s.getBoundingClientRect().top <= 120) cur = s.getAttribute('id'); }); links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + cur)); }
+    window.addEventListener('scroll', onScroll); onScroll();
+    links.forEach(l => l.addEventListener('click', () => document.querySelector('.sidebar').classList.remove('open')));
+</script>
+
+</body>
+</html>

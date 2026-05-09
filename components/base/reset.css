@@ -1,0 +1,93 @@
+/* ========================================
+   现代 CSS Reset
+   基于 Andy Bell 的 "A Modern CSS Reset"
+   ======================================== */
+
+/* Box-sizing 全局统一 */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 移除默认 margin 和 padding */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* 平滑滚动 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 文本渲染优化 */
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: var(--leading-normal);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 媒体元素默认 block，防止底部间隙 */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 表单元素继承字体 */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+/* 按钮重置 */
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+/* 列表重置 */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+/* 链接继承颜色 */
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+/* 表格简化 */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* 减少动画（尊重用户偏好） */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

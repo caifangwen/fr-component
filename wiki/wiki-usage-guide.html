@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组件库使用指南 — 三层架构完全手册</title>
+    <style>    :root {
+        --background: #ffffff;
+        --foreground: #09090b;
+        --card: #ffffff;
+        --card-foreground: #09090b;
+        --popover: #ffffff;
+        --popover-foreground: #09090b;
+        --primary: #18181b;
+        --primary-foreground: #fafafa;
+        --secondary: #f4f4f5;
+        --secondary-foreground: #18181b;
+        --muted: #f4f4f5;
+        --muted-foreground: #a1a1aa;
+        --accent: #f4f4f5;
+        --accent-foreground: #18181b;
+        --destructive: #ef4444;
+        --destructive-foreground: #ffffff;
+        --border: #e4e4e7;
+        --input: #e4e4e7;
+        --ring: #18181b;
+        --radius: 0.75rem;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --code-bg: #18181b;
+        --code-text: #f4f4f5;
+        --sidebar-width: 260px;
+        --primary-5: rgba(24,24,27,0.05);
+        --primary-8: rgba(24,24,27,0.08);
+        --primary-10: rgba(24,24,27,0.10);
+        --primary-12: rgba(24,24,27,0.12);
+        --primary-15: rgba(24,24,27,0.15);
+        --primary-20: rgba(24,24,27,0.20);
+        --primary-30: rgba(24,24,27,0.30);
+        --success-5: rgba(16,185,129,0.05);
+        --success-15: rgba(16,185,129,0.15);
+        --warning-5: rgba(245,158,11,0.05);
+        --warning-15: rgba(245,158,11,0.15);
+        --danger-5: rgba(239,68,68,0.05);
+        --danger-15: rgba(239,68,68,0.15);
+        --shadow: 0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.07);
+        --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.08);
+    }    [data-theme="dark"] {
+        --background: #09090b;
+        --foreground: #fafafa;
+        --card: #18181b;
+        --card-foreground: #fafafa;
+        --popover: #27272a;
+        --popover-foreground: #fafafa;
+        --primary: #fafafa;
+        --primary-foreground: #18181b;
+        --secondary: #27272a;
+        --secondary-foreground: #fafafa;
+        --muted: #27272a;
+        --muted-foreground: #d4d4d8;
+        --accent: #27272a;
+        --accent-foreground: #fafafa;
+        --destructive: #ef4444;
+        --destructive-foreground: #ffffff;
+        --border: rgba(255,255,255,0.10);
+        --input: rgba(255,255,255,0.10);
+        --ring: #fafafa;
+        --success: #34d399;
+        --warning: #fbbf24;
+        --danger: #f87171;
+        --code-bg: #09090b;
+        --code-text: #f4f4f5;
+        --primary-5: rgba(250,250,250,0.05);
+        --primary-8: rgba(250,250,250,0.08);
+        --primary-10: rgba(250,250,250,0.10);
+        --primary-12: rgba(250,250,250,0.12);
+        --primary-15: rgba(250,250,250,0.15);
+        --primary-20: rgba(250,250,250,0.20);
+        --primary-30: rgba(250,250,250,0.30);
+        --success-5: rgba(52,211,153,0.05);
+        --success-15: rgba(52,211,153,0.15);
+        --warning-5: rgba(251,191,36,0.05);
+        --warning-15: rgba(251,191,36,0.15);
+        --danger-5: rgba(248,113,113,0.05);
+        --danger-15: rgba(248,113,113,0.15);
+        --shadow: 0 1px 3px 0 rgba(0,0,0,0.2);
+        --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.3);
+        --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.4);
+    }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--background);
+            color: var(--foreground);
+            line-height: 1.7;
+        }
+        .wiki-layout { display: flex; min-height: 100vh; }
+        .sidebar {
+        width: var(--sidebar-width);
+        background: var(--card);
+        border-right: 1px solid var(--border);
+            padding: 28px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            top: 0; left: 0; z-index: 100;
+        }
+        .sidebar h1 { font-size: 1.15rem; color: var(--primary); margin-bottom: 6px; }
+        .sidebar .version { font-size: 0.75rem; color: var(--muted-foreground); margin-bottom: 24px; display: block; }
+        .sidebar nav ul { list-style: none; margin: 0; }
+        .sidebar nav li { margin: 4px 0; }
+        .sidebar nav a { display: block; color: var(--foreground); text-decoration: none; font-size: 0.88rem; padding: 6px 10px; border-radius: 6px; transition: background .15s, color .15s; }
+        .sidebar nav a:hover { background: var(--primary-8); color: var(--primary); }
+        .sidebar nav a.active { background: var(--primary-12); color: var(--primary); font-weight: 600; }
+        .sidebar .nav-group { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--border); }
+        .sidebar .nav-group-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); margin-bottom: 8px; padding-left: 10px; }
+        .theme-toggle {
+        margin-top: 24px; padding: 10px 12px; background: var(--background); border: 1px solid var(--border);
+            border-radius: 8px; cursor: pointer; font-size: 0.85rem; color: var(--foreground); width: 100%;
+            display: flex; align-items: center; justify-content: center; gap: 6px; transition: all .3s cubic-bezier(.4,0,.2,1);
+        }
+        .theme-toggle:hover { border-color: var(--primary); color: var(--primary); }
+        .main { margin-left: var(--sidebar-width); margin-right: var(--sidebar-width); flex: 1; max-width: 800px; padding: 48px 40px; background: var(--card); min-height: 100vh; border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+        .main h2 { font-size: 1.6rem; color: var(--primary); margin: 48px 0 20px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
+        .main h2:first-child { margin-top: 0; }
+        .main h3 { font-size: 1.2rem; color: var(--foreground); margin: 32px 0 14px; }
+        .main h4 { font-size: 1rem; color: var(--muted-foreground); margin: 22px 0 10px; font-weight: 600; }
+        .main p { margin-bottom: 14px; }
+        .main ul, .main ol { margin: 12px 0 12px 22px; }
+        .main li { margin: 6px 0; }
+        code { background: var(--primary-8); color: var(--primary); padding: 2px 6px; border-radius: 4px; font-family: "SF Mono", Monaco, "Cascadia Code", Consolas, monospace; font-size: 0.9em; }
+        pre { background: var(--code-bg); color: var(--code-text); padding: 18px 22px; border-radius: var(--radius); overflow-x: auto; margin: 16px 0; font-size: 0.88rem; line-height: 1.6; }
+        pre code { background: transparent; color: inherit; padding: 0; font-size: inherit; }
+        .callout { background: var(--primary-5); border: 1px solid var(--primary-15); border-left: 4px solid var(--primary); padding: 16px 20px; border-radius: var(--radius); margin: 18px 0; }
+        .callout.success { background: var(--success-5); border-color: var(--success-15); border-left-color: var(--success); }
+        .callout.warning { background: var(--warning-5); border-color: var(--warning-15); border-left-color: var(--warning); }
+        .callout.danger { background: var(--danger-5); border-color: var(--danger-15); border-left-color: var(--danger); }
+        .callout-title { font-weight: 600; margin-bottom: 6px; display: block; }
+        table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.92rem; }
+        th, td { border: 1px solid var(--border); padding: 10px 14px; text-align: left; }
+        th { background: var(--background); font-weight: 600; }
+        .tag { display: inline-flex; align-items: center; gap: 4px; background: var(--primary-10); color: var(--primary); font-size: 0.75rem; padding: 3px 10px; border-radius: 6px; margin-right: 4px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.03em; font-weight: 500; border: 1px solid var(--primary-20); }
+        .tag.outline { background: transparent; color: var(--primary); border: 1px solid var(--primary-30); }
+        .checklist { list-style: none; margin: 14px 0; }
+        .checklist li { padding-left: 28px; position: relative; }
+        .checklist li::before { content: "☐"; position: absolute; left: 0; color: var(--muted-foreground); font-size: 1.1rem; }
+        .steps { counter-reset: step; list-style: none; margin: 16px 0; }
+        .steps > li { position: relative; padding-left: 44px; margin-bottom: 18px; min-height: 32px; }
+        .steps > li::before { counter-increment: step; content: counter(step); position: absolute; left: 0; top: 0; width: 28px; height: 28px; background: var(--primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; }
+        .file-tree { font-family: var(--font-mono, monospace); font-size: 0.88rem; background: var(--code-bg); color: var(--code-text); padding: 18px 22px; border-radius: var(--radius); overflow-x: auto; margin: 16px 0; line-height: 1.8; }
+        .file-tree .dir { color: #60a5fa; }
+        .file-tree .file { color: #e2e8f0; }
+        .file-tree .comment { color: #94a3b8; }
+        .toc-sidebar {
+            width: var(--sidebar-width);
+            background: var(--card);
+            border-left: 1px solid var(--border);
+            padding: 28px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            top: 0; right: 0; z-index: 100;
+        }
+        .toc-sidebar h2 {
+            font-size: 0.85rem;
+            color: var(--primary);
+            margin-bottom: 16px;
+            padding-left: 10px;
+            font-weight: 600;
+        }
+        .toc-sidebar nav ul { list-style: none; margin: 0; }
+        .toc-sidebar nav li { margin: 4px 0; }
+        .toc-sidebar nav a {
+            display: block; color: var(--foreground); text-decoration: none;
+            font-size: 0.85rem; padding: 5px 10px; border-radius: 6px;
+            transition: background .15s, color .15s;
+        }
+        .toc-sidebar nav a:hover { background: var(--primary-8); color: var(--primary); }
+        .toc-sidebar nav a.active { background: var(--primary-12); color: var(--primary); font-weight: 600; }
+        .toc-sidebar .nav-group { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+        .toc-sidebar .nav-group:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+        .toc-sidebar .nav-group-title {
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em;
+            color: var(--muted-foreground); margin-bottom: 8px; padding-left: 10px;
+        }
+        @media (max-width: 1200px) {
+            .toc-sidebar { display: none; }
+            .main { margin-right: 0; border-right: none; }
+        }
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); transition: transform .3s; box-shadow: 2px 0 12px rgba(0,0,0,0.1); }
+            .sidebar.open { transform: translateX(0); }
+            .main { margin-left: 0; padding: 24px 20px; max-width: 100%; }
+            .menu-toggle { display: block; position: fixed; top: 14px; left: 14px; z-index: 200; background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; font-size: 1rem; cursor: pointer; }
+        }
+        @media (min-width: 901px) { .menu-toggle { display: none; } }
+    </style>
+<link rel="stylesheet" href="../fr-themes.css">
+</head>
+<body>
+<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+<div class="wiki-layout">
+    <aside class="sidebar">
+        <h1>组件库使用指南</h1>
+        <span class="version">三层架构完全手册</span>
+        <select class="theme-select" id="theme-select" onchange="changeTheme(this.value)">
+            <option value="">Light (Default)</option>
+            <option value="dark">Dark</option>
+            <option value="claude">Claude</option>
+            <option value="claude-dark">Claude Dark</option>
+            <option value="bumblebee">Bumblebee</option>
+            <option value="bumblebee-dark">Bumblebee Dark</option>
+            <option value="emerald">Emerald</option>
+            <option value="emerald-dark">Emerald Dark</option>
+            <option value="nord">Nord</option>
+            <option value="nord-dark">Nord Dark</option>
+            <option value="sunset">Sunset</option>
+            <option value="sunset-dark">Sunset Dark</option>
+            <option value="abyss">Abyss</option>
+            <option value="abyss-dark">Abyss Dark</option>
+            <option value="dracula">Dracula</option>
+            <option value="dracula-dark">Dracula Dark</option>
+            <option value="amethyst">Amethyst</option>
+            <option value="amethyst-dark">Amethyst Dark</option>
+            <option value="slate">Slate</option>
+            <option value="slate-dark">Slate Dark</option>
+            <option value="twitter">Twitter</option>
+            <option value="twitter-dark">Twitter Dark</option>
+        </select>
+        <nav>
+            <div class="nav-group">
+                <div class="nav-group-title">Wiki 导航</div>
+                <ul>
+                    <li><a href="../index.html">首页</a></li>
+                    <li><a href="theme-wiki.html">主题定制 Wiki</a></li>
+                    <li><a href="wiki-html-guide.html">HTML 编写指南</a></li>
+                    <li><a href="wiki-tailwind.html">Tailwind 结合使用</a></li>
+                    <li><a href="wiki-usage-guide.html">组件库使用指南</a></li>
+                    <li><a href="wiki-build-guide.html">Wiki 构建指南</a></li>
+                    <li><a href="wiki-html-tags.html">HTML 标签手册</a></li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+    <aside class="toc-sidebar">
+        <h2>目录</h2>
+        <nav>
+            <div class="nav-group">
+                <div class="nav-group-title">开始</div>
+                <ul>
+                    <li><a href="#overview" class="active">整体架构</a></li>
+                    <li><a href="#choose">该用哪一层？</a></li>
+                </ul>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-title">项目</div>
+                <ul>
+                    <li><a href="#general">通用组件库 components/</a></li>
+                    <li><a href="#huahao">Huahao 博客库 huahao-blog/</a></li>
+                    <li><a href="#nichehub">NicheHub 知识中心 nichehub/</a></li>
+                    <li><a href="#patterns">可复用模式 patterns/</a></li>
+                </ul>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-title">实战</div>
+                <ul>
+                    <li><a href="#wordpress">WordPress 集成</a></li>
+                    <li><a href="#new-project">新建项目模板</a></li>
+                    <li><a href="#ai-prompts">AI 协作提示词</a></li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+    <main class="main">
+
+        <h2 id="overview">整体架构</h2>
+        <p>你的项目现在由 <strong>三个独立项目 + 一个模式层</strong> 组成，共享同一套分层哲学，但服务于不同场景。</p>
+
+        <div class="file-tree">
+<span class="dir">html-css-js/</span>
+│
+├── <span class="dir">components/</span>          <span class="comment">← 通用基础组件库（网站界面）</span>
+│   ├── <span class="dir">base/</span>
+│   │   ├── <span class="file">variables.css</span>
+│   │   ├── <span class="file">reset.css</span>
+│   │   └── <span class="file">typography.css</span>
+│   ├── <span class="dir">layout/</span>
+│   │   ├── <span class="file">container.css</span>
+│   │   └── <span class="file">grid.css</span>
+│   ├── <span class="dir">components/</span>
+│   │   ├── <span class="file">button.css</span>
+│   │   ├── <span class="file">card.css</span>
+│   │   ├── <span class="file">alert.css</span>
+│   │   ├── <span class="file">form.css</span>
+│   │   ├── <span class="file">modal.css</span>
+│   │   ├── <span class="file">table.css</span>
+│   │   ├── <span class="file">navigation.css</span>
+│   │   ├── <span class="file">badge.css</span>
+│   │   └── <span class="file">utility.css</span>
+│   ├── <span class="file">components.html</span>   <span class="comment">← 文档站 + 测试页</span>
+│   └── <span class="file">demo.js</span>
+│
+├── <span class="dir">huahao-blog/</span>         <span class="comment">← B2B制造业博客库（WordPress文章）</span>
+│   ├── <span class="file">index.html</span>          <span class="comment">← 46个组件展示文档</span>
+│   ├── <span class="file">hh-variables.css</span>
+│   ├── <span class="file">hh-base.css</span>
+│   ├── <span class="file">hh-components.css</span>
+│   ├── <span class="file">hh-wordpress-bundle.css</span>  <span class="comment">← 贴进WP用</span>
+│   └── <span class="file">README.md</span>
+│
+├── <span class="dir">nichehub/</span>            <span class="comment">← 刀具知识中心（多页网站）</span>
+│   ├── <span class="file">index.html</span>          <span class="comment">← LeeKnives Hub主页</span>
+│   ├── <span class="file">nh-variables.css</span>
+│   ├── <span class="file">nh-base.css</span>
+│   ├── <span class="file">nh-components.css</span>
+│   ├── <span class="file">nh-responsive.css</span>
+│   ├── <span class="file">nichehub-bundle.css</span>      <span class="comment">← 贴进WP用</span>
+│   └── <span class="file">README.md</span>
+│
+└── <span class="dir">patterns/</span>            <span class="comment">← 跨项目可复用模式</span>
+    ├── <span class="file">accordion.css</span>
+    ├── <span class="file">comparison-matrix.css</span>
+    ├── <span class="file">data-viz-bars.css</span>
+    ├── <span class="file">decision-tree.css</span>
+    ├── <span class="file">donut.css</span>
+    ├── <span class="file">heatmap.css</span>
+    ├── <span class="file">pros-cons.css</span>
+    ├── <span class="file">score-card.css</span>
+    ├── <span class="file">stepper.css</span>
+    ├── <span class="file">timeline.css</span>
+    └── <span class="file">README.md</span>
+        </div>
+
+        <h2 id="choose">该用哪一层？</h2>
+        <p>拿到一个新需求时，按以下决策树选择：</p>
+
+        <pre><code>我要做什么？
+│
+├── 搭建一个全新的网站界面？
+│     └── 用 components/（按钮、卡片、导航、弹窗…）
+│
+├── 写一篇 WordPress 博客文章，需要丰富的内容组件？
+│     ├── 制造业 / B2B / 工厂主题？
+│     │     └── 用 huahao-blog/（对比矩阵、评分卡、流程图…）
+│     │
+│     └── 刀具 / 厨具 / 产品评测主题？
+│           └── 用 nichehub/（知识卡片、Steel Finder、对比条…）
+│
+├── 第三个项目也需要对比矩阵 / 决策树 / 评分卡？
+│     └── 用 patterns/（通用命名，适配任何品牌色）
+│
+└── 只改颜色不改结构？
+      └── 改对应项目的 variables.css，组件自动跟随</code></pre>
+
+        <table>
+            <tr><th>场景</th><th>选哪个</th><th>原因</th></tr>
+            <tr><td>企业官网、落地页、后台系统</td><td><span class="tag">components</span></td><td>需要完整的界面原子：按钮、表单、表格、弹窗</td></tr>
+            <tr><td>无纺布/制造业博客文章</td><td><span class="tag">huahao</span></td><td>已有46个B2B内容块，直接复制HTML进WordPress</td></tr>
+            <tr><td>刀具/厨具知识中心</td><td><span class="tag">nichehub</span></td><td>专为Steel Finder、材料对比、工艺路线设计</td></tr>
+            <tr><td>评测网站、导购页面</td><td><span class="tag">patterns</span></td><td>提取的通用模式，换色即可复用</td></tr>
+        </table>
+
+        <h2 id="general">通用组件库 components/</h2>
+        <p>用于搭建<strong>任何网站的界面层</strong>。设计理念是"原子化 + 变量驱动"。</p>
+
+        <h3>加载顺序（不可变）</h3>
+        <pre><code>&lt;!-- 1. 基础层：必须先加载 --&gt;
+&lt;link rel="stylesheet" href="components/base/variables.css"&gt;
+&lt;link rel="stylesheet" href="components/base/reset.css"&gt;
+&lt;link rel="stylesheet" href="components/base/typography.css"&gt;
+
+&lt;!-- 2. 布局层 --&gt;
+&lt;link rel="stylesheet" href="components/layout/container.css"&gt;
+&lt;link rel="stylesheet" href="components/layout/grid.css"&gt;
+
+&lt;!-- 3. 按需加载组件层 --&gt;
+&lt;link rel="stylesheet" href="components/components/button.css"&gt;
+&lt;link rel="stylesheet" href="components/components/card.css"&gt;
+&lt;link rel="stylesheet" href="components/components/form.css"&gt;
+&lt;!-- ...其他组件 --&gt;</code></pre>
+
+        <div class="callout warning">
+            <span class="callout-title">纪律</span>
+            <p><code>variables.css</code> 必须在第一位。它定义了所有颜色和间距令牌，后续组件都依赖这些变量。没有它，组件会显示为黑白色。</p>
+        </div>
+
+        <h3>修改主题色</h3>
+        <p>打开 <code>components/base/variables.css</code>，找到以下行修改：</p>
+        <pre><code>:root {
+  --color-primary: #2563eb;        /* 改这里 → 主品牌色 */
+  --color-success: #059669;        /* 改这里 → 成功色 */
+  --color-danger: #dc2626;         /* 改这里 → 危险色 */
+  --font-sans: "Inter", sans-serif; /* 改这里 → 正文字体 */
+}</code></pre>
+
+        <h3>常用组件速查</h3>
+        <table>
+            <tr><th>组件</th><th>关键 Class</th><th>变体</th></tr>
+            <tr><td>按钮</td><td><code>.btn</code></td><td><code>.btn--primary</code> <code>.btn--secondary</code> <code>.btn--ghost</code> <code>.btn--danger</code> <code>.btn--sm</code> <code>.btn--lg</code></td></tr>
+            <tr><td>卡片</td><td><code>.card</code></td><td><code>.card--shadow</code> <code>.card--clickable</code> <code>.card--highlight</code> <code>.card--compact</code></td></tr>
+            <tr><td>提示框</td><td><code>.alert</code></td><td><code>.alert--info</code> <code>.alert--success</code> <code>.alert--warning</code> <code>.alert--danger</code> <code>.alert--border-left</code></td></tr>
+            <tr><td>表单</td><td><code>.form-input</code></td><td><code>.form-input--error</code> + <code>.form-label--required</code></td></tr>
+            <tr><td>弹窗</td><td><code>.modal-backdrop</code> + <code>.modal</code></td><td><code>.modal--sm</code> <code>.modal--lg</code> <code>.modal--xl</code></td></tr>
+            <tr><td>表格</td><td><code>.table</code></td><td><code>.table--striped</code> <code>.table--compact</code> <code>.table--responsive</code></td></tr>
+            <tr><td>徽章</td><td><code>.badge</code></td><td><code>.badge--primary</code> <code>.badge--success</code> <code>.badge--outline</code></td></tr>
+        </table>
+
+        <h2 id="huahao">Huahao 博客库 huahao-blog/</h2>
+        <p>专为 <strong>WordPress 博客文章</strong>设计。46个内容组件，全部使用 <code>hh-</code> 前缀，避免与主题冲突。</p>
+
+        <h3>WordPress 使用（推荐）</h3>
+        <ol class="steps">
+            <li>打开 <code>huahao-blog/hh-wordpress-bundle.css</code></li>
+            <li>全选复制（约 84KB）</li>
+            <li>进入 WP 后台 → 外观 → 自定义 → 额外 CSS</li>
+            <li>粘贴 → 点击发布</li>
+            <li>在文章编辑器中添加「自定义 HTML」块，粘贴组件 HTML</li>
+        </ol>
+
+        <h3>获取组件 HTML</h3>
+        <p>打开 <code>huahao-blog/index.html</code>（本地双击即可），找到你想用的组件，复制对应的 HTML 代码。例如：</p>
+        <pre><code>&lt;!-- 对比矩阵 --&gt;
+&lt;div class="hh-matrix"&gt;
+  &lt;div class="hh-matrix-header"&gt;...&lt;/div&gt;
+  &lt;div class="hh-matrix-row"&gt;...&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- 评分卡 --&gt;
+&lt;div class="hh-scorecards"&gt;
+  &lt;div class="hh-scorecard"&gt;...&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+        <h3>修改品牌色</h3>
+        <p>Huahao 使用灰度极简直线框风格。如需调整，编辑 <code>huahao-blog/hh-variables.css</code>：</p>
+        <pre><code>:root {
+  --hh-ink: #111827;        /* 主标题色 */
+  --hh-text: #374151;       /* 正文色 */
+  --hh-border: #e5e7eb;     /* 边框色 */
+  --hh-font-head: Georgia, serif;  /* 标题字体 */
+}</code></pre>
+
+        <div class="callout success">
+            <span class="callout-title">优势</span>
+            <p>Huahao 组件全部使用 <strong>纯 CSS</strong>，无 JS 依赖。手风琴用 <code>&lt;details&gt;&lt;summary&gt;</code>，进度条用 <code>div</code> 宽度，条形图用 <code>grid</code> 布局。粘贴进 WordPress 即可生效，不需要安装任何插件。</p>
+        </div>
+
+        <h2 id="nichehub">NicheHub 知识中心 nichehub/</h2>
+        <p>专为 <strong>刀具/厨具知识型网站</strong>设计。包含 Steel Finder、材料对比、工艺路线等垂直领域组件。</p>
+
+        <h3>本地开发</h3>
+        <p>双击 <code>nichehub/index.html</code> 即可查看完整的 LeeKnives Knowledge Center 页面。所有 CSS 已改为模块化引用：</p>
+        <pre><code>&lt;link rel="stylesheet" href="nh-variables.css"/&gt;
+&lt;link rel="stylesheet" href="nh-base.css"/&gt;
+&lt;link rel="stylesheet" href="nh-components.css"/&gt;
+&lt;link rel="stylesheet" href="nh-responsive.css"/&gt;</code></pre>
+
+        <h3>WordPress 使用</h3>
+        <ol class="steps">
+            <li>打开 <code>nichehub/nichehub-bundle.css</code></li>
+            <li>全选复制（约 129KB）</li>
+            <li>进入 WP → 外观 → 自定义 → 额外 CSS → 粘贴 → 发布</li>
+        </ol>
+
+        <h3>修改品牌色</h3>
+        <p>NicheHub 默认使用黑红配色（<code>#1a1a1a + #E53E3E</code>）。编辑 <code>nichehub/nh-variables.css</code>：</p>
+        <pre><code>:root {
+  --primary: #1a1a1a;          /* 主背景/文字 */
+  --secondary: #E53E3E;        /* 强调色 → 改成你的品牌色 */
+  --secondary-hover: #C53030;  /* 悬停色 */
+  --text: #333333;             /* 正文色 */
+}</code></pre>
+
+        <h3>特有组件速查</h3>
+        <table>
+            <tr><th>组件</th><th>Class</th><th>用途</th></tr>
+            <tr><td>Family Row</td><td><code>.family-row</code></td><td>知识分类卡片（左图右文）</td></tr>
+            <tr><td>Steel Finder</td><td><code>.finder-box</code></td><td>交互式钢材筛选器</td></tr>
+            <tr><td>Product Card</td><td><code>.product-card</code></td><td>产品展示卡片</td></tr>
+            <tr><td>Compare Bar</td><td><code>.compare-bar</code></td><td>双栏对比条</td></tr>
+            <tr><td>Progress Bar</td><td><code>.d-bar-fill</code></td><td>数据进度条（带动画）</td></tr>
+            <tr><td>Region Card</td><td><code>.region-card</code></td><td>地区/产区介绍卡片</td></tr>
+            <tr><td>Process Grid</td><td><code>.process-grid</code></td><td>制造工艺流程</td></tr>
+        </table>
+
+        <h2 id="patterns">可复用模式 patterns/</h2>
+        <p>从 <code>huahao-blog</code> 中提取的 <strong>通用内容组件</strong>，已替换为语义化命名，可适配任何品牌。</p>
+
+        <h3>使用方式</h3>
+        <pre><code>&lt;!-- 1. 加载你的基础变量 --&gt;
+&lt;link rel="stylesheet" href="components/base/variables.css"&gt;
+
+&lt;!-- 2. 加载需要的模式 --&gt;
+&lt;link rel="stylesheet" href="patterns/comparison-matrix.css"&gt;
+&lt;link rel="stylesheet" href="patterns/score-card.css"&gt;
+
+&lt;!-- 3. 写 HTML --&gt;
+&lt;div class="matrix"&gt;...&lt;/div&gt;
+&lt;div class="score-cards"&gt;...&lt;/div&gt;</code></pre>
+
+        <h3>模式清单</h3>
+        <table>
+            <tr><th>模式</th><th>源组件</th><th>新 Class</th><th>依赖</th></tr>
+            <tr><td>手风琴</td><td><code>.hh-faq</code></td><td><code>.accordion</code></td><td>无（纯CSS）</td></tr>
+            <tr><td>时间轴</td><td><code>.hh-timeline</code></td><td><code>.timeline</code></td><td>无</td></tr>
+            <tr><td>步骤器</td><td><code>.hh-progress</code></td><td><code>.stepper</code></td><td>无</td></tr>
+            <tr><td>对比矩阵</td><td><code>.hh-matrix</code></td><td><code>.matrix</code></td><td>无</td></tr>
+            <tr><td>评分卡</td><td><code>.hh-scorecards</code></td><td><code>.score-card</code></td><td>无</td></tr>
+            <tr><td>决策树</td><td><code>.hh-decision</code></td><td><code>.decision-tree</code></td><td>无</td></tr>
+            <tr><td>优缺点</td><td><code>.hh-pros-cons</code></td><td><code>.pros-cons</code></td><td>无</td></tr>
+            <tr><td>条形图</td><td><code>.hh-bars</code></td><td><code>.bar-chart</code></td><td>无</td></tr>
+            <tr><td>热力图</td><td><code>.hh-heatmap</code></td><td><code>.heatmap</code></td><td>无</td></tr>
+            <tr><td>甜甜圈</td><td><code>.hh-donut</code></td><td><code>.donut-list</code></td><td>无（conic-gradient）</td></tr>
+        </table>
+
+        <div class="callout">
+            <span class="callout-title">变量约定</span>
+            <p>模式使用通用变量名并带有 fallback。只要你的项目定义了 <code>--color-text</code>、<code>--color-border</code>、<code>--color-primary</code> 等变量，模式就会自动适配。如果没有定义，也会用默认灰度色正常显示。</p>
+        </div>
+
+        <h2 id="wordpress">WordPress 集成指南</h2>
+
+        <h3>方式一：额外 CSS（适合单站）</h3>
+        <p>最简单的方式，无需 FTP 或子主题。</p>
+        <ol>
+            <li>打开对应项目的 <code>*-bundle.css</code></li>
+            <li>全选复制</li>
+            <li>WP 后台 → 外观 → 自定义 → 额外 CSS</li>
+            <li>粘贴 → 发布</li>
+        </ol>
+
+        <h3>方式二：子主题（适合长期维护）</h3>
+        <p>如果样式量大、需要版本控制，使用子主题：</p>
+        <pre><code>/* 在子主题 functions.php 中 */
+add_action('wp_enqueue_scripts', function () {
+    wp_enqueue_style('nichehub-style',
+        get_stylesheet_directory_uri() . '/nichehub/nichehub-bundle.css',
+        [], '1.0'
+    );
+});</code></pre>
+
+        <h3>方式三：单篇文章（适合一次性）</h3>
+        <p>只在特定文章使用组件时，在文章顶部添加「自定义 HTML」块：</p>
+        <pre><code>&lt;style&gt;
+  /* 只粘贴该文章需要的组件CSS */
+&lt;/style&gt;</code></pre>
+
+        <div class="callout warning">
+            <span class="callout-title">性能注意</span>
+            <p>额外 CSS 会加载在每一页。如果只在博客文章使用，而首页不用，建议用方式二（子主题条件加载）或方式三（单篇加载）。</p>
+        </div>
+
+        <h2 id="new-project">新建项目模板</h2>
+        <p>无论你用哪个项目，标准 HTML 骨架如下：</p>
+
+        <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;页面标题&lt;/title&gt;
+
+  &lt;!-- 基础层（必须） --&gt;
+  &lt;link rel="stylesheet" href="components/base/variables.css"&gt;
+  &lt;link rel="stylesheet" href="components/base/reset.css"&gt;
+  &lt;link rel="stylesheet" href="components/base/typography.css"&gt;
+
+  &lt;!-- 布局层 --&gt;
+  &lt;link rel="stylesheet" href="components/layout/container.css"&gt;
+  &lt;link rel="stylesheet" href="components/layout/grid.css"&gt;
+
+  &lt;!-- 通用组件层（按需） --&gt;
+  &lt;link rel="stylesheet" href="components/components/button.css"&gt;
+  &lt;link rel="stylesheet" href="components/components/card.css"&gt;
+
+  &lt;!-- 业务组件层（按需） --&gt;
+  &lt;!-- &lt;link rel="stylesheet" href="patterns/comparison-matrix.css"&gt; --&gt;
+  &lt;!-- &lt;link rel="stylesheet" href="patterns/score-card.css"&gt; --&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;main class="container"&gt;
+    &lt;!-- 你的内容 --&gt;
+  &lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+        <h2 id="ai-prompts">AI 协作提示词</h2>
+        <p>使用 AI 生成代码时，在提示词中附加以下约束，确保生成的代码与组件库兼容：</p>
+
+        <div class="callout success">
+            <span class="callout-title">标准约束模板</span>
+            <pre style="margin:10px 0 0;"><code>项目环境约束：
+1. 本项目使用原生 CSS 变量系统，禁止写死色值。
+2. 通用组件使用 components/base/variables.css 中的变量。
+3. Huahao 博客组件使用 hh- 前缀，NicheHub 组件不使用前缀。
+4. 按钮用 .btn 类，卡片用 .card 类，禁止自己发明新命名。
+5. 响应式断点：640px（手机）、768px（平板）、1024px（桌面）。
+6. 输出完整的 HTML + CSS 代码块，不要省略。</code></pre>
+        </div>
+
+        <h3>分场景 Prompt 示例</h3>
+        <p><strong>场景 A：为 Huahao 博客添加新组件</strong></p>
+        <pre><code>请为 Huahao 博客添加一个时间线组件，用于展示订单生产流程。
+
+环境：
+- 使用 hh- 前缀命名
+- 颜色引用 var(--hh-border)、var(--hh-ink)、var(--hh-muted)
+- 字体引用 var(--hh-font-head)、var(--hh-font-mono)
+- 参考现有 .hh-timeline 的结构风格
+
+要求：
+- 垂直时间线，左侧圆点 + 右侧内容卡片
+- 支持已完成、进行中、未开始三种状态
+- 纯 CSS，不使用 JavaScript</code></pre>
+
+        <p><strong>场景 B：为 NicheHub 修改品牌色</strong></p>
+        <pre><code>请将 NicheHub 的强调色从红色 (#E53E3E) 改为蓝色 (#2563eb)。
+
+文件：nichehub/nh-variables.css
+
+要求：
+- 只修改 --secondary、--secondary-hover、--secondary-bright
+- 保持所有其他变量不变
+- 输出修改后的完整 :root 块</code></pre>
+
+        <p><strong>场景 C：从 patterns 引入对比矩阵到新项目</strong></p>
+        <pre><code>请写一个使用 patterns/comparison-matrix.css 的完整 HTML 示例。
+
+环境：
+- 已加载 components/base/variables.css（定义了 --color-primary 等）
+- 已加载 patterns/comparison-matrix.css
+
+内容：
+- 比较三款刀具钢材：VG-10、AUS-8、D2
+- 维度：硬度、防锈性、易磨性、价格
+- 使用 .matrix 类结构
+- 最佳项用 .matrix__best 标注</code></pre>
+
+        <div class="callout">
+            <span class="callout-title">最终建议</span>
+            <p>把这套架构当作你的<strong>设计系统基础设施</strong>。不要每次新项目都从零写样式，而是从已有层中复制、修改、扩展。遇到好的新组件，回写到对应的项目中，形成复利效应。</p>
+        </div>
+
+    </main>
+</div>
+
+<script>
+    const html = document.documentElement;
+    const themeSelect = document.getElementById('theme-select');
+    function applyTheme(theme) {
+        if (theme && theme !== 'light') { html.setAttribute('data-theme', theme); }
+        else { html.removeAttribute('data-theme'); }
+        if (themeSelect) themeSelect.value = theme || '';
+    }
+    function changeTheme(theme) { applyTheme(theme); localStorage.setItem('theme', theme); }
+    const saved = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(saved || (prefersDark ? 'dark' : ''));
+    const links = document.querySelectorAll('.sidebar nav a');
+    const sections = document.querySelectorAll('.main h2[id]');
+    function onScroll() { let cur = ''; sections.forEach(s => { if (s.getBoundingClientRect().top <= 120) cur = s.getAttribute('id'); }); links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + cur)); }
+    window.addEventListener('scroll', onScroll); onScroll();
+    links.forEach(l => l.addEventListener('click', () => document.querySelector('.sidebar').classList.remove('open')));
+</script>
+
+</body>
+</html>

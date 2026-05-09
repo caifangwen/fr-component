@@ -1,0 +1,51 @@
+/* ========================================
+   Huahao Blog — Design Tokens
+   ======================================== */
+/* ════════════════════════════════════════════════════════════════
+   § 0  DESIGN TOKENS
+   All brand values live here. Change once, updates everywhere.
+   ════════════════════════════════════════════════════════════════ */
+:root {
+  /* Brand palette - grayscale with subtle blue-gray tones */
+  --hh-blue:         #374151;
+  --hh-blue-dark:    #1f2937;
+  --hh-blue-mid:     #4b5563;
+  --hh-blue-light:   #e5e7eb;
+  --hh-blue-pale:    transparent;
+
+  --hh-amber:        #6b7280;
+  --hh-amber-light:  transparent;
+
+  --hh-red:          #6b7280;
+  --hh-red-light:    transparent;
+
+  --hh-green:        #6b7280;
+  --hh-green-light:  transparent;
+
+  /* Subtle blue-gray accent - used for highlights only */
+  --hh-accent:       #64748b;
+  --hh-accent-light: #e2e8f0;
+  --hh-accent-border:#cbd5e1;
+
+  /* Neutrals - minimalist */
+  --hh-ink:          #111827;
+  --hh-text:         #374151;
+  --hh-muted:        #6b7280;
+  --hh-border:       #e5e7eb;
+  --hh-border-strong:#d1d5db;
+  --hh-bg:           #ffffff;
+  --hh-white:        #ffffff;
+
+  /* Typography */
+  --hh-font-head:    'Georgia', 'Times New Roman', serif;
+  --hh-font-body:    'Roboto', sans-serif;
+  --hh-font-mono:    'Courier New', monospace;
+
+  /* Spacing & shape */
+  --hh-r:            5px;
+  --hh-r-sm:         3px;
+  --hh-r-lg:         12px;
+  --hh-shadow:       0 2px 8px rgba(28,41,59,.08);
+  --hh-shadow-md:    0 4px 16px rgba(28,41,59,.1);
+  --hh-shadow-lg:    0 8px 32px rgba(28,41,59,.12);
+}

@@ -1,0 +1,61 @@
+/* ========================================
+   Pattern: Horizontal Timeline
+   Usage: Include base CSS variables, then link this file.
+   Dependencies: None (uses CSS custom properties with fallbacks)
+   ======================================== */
+
+/* Horizontal Timeline */
+.timeline {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  overflow-x: auto;
+  padding: 8px 0 20px;
+  margin: 24px 0;
+  scroll-snap-type: x mandatory;
+}
+.timeline__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  min-width: 100px;
+  position: relative;
+  scroll-snap-align: start;
+  padding: 0 4px;
+}
+.timeline__item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: calc(50% + 14px);
+  right: calc(-50% + 14px);
+  height: 2px;
+  background: var(--color-border, #e2e8f0);
+}
+.timeline__dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: none;
+  border: 2px solid var(--color-border, #e2e8f0);
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+}
+.timeline__label {
+  font-family: var(--font-mono, "Courier New", monospace);
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--color-text-muted, #6b7280);
+  margin-bottom: 4px;
+  text-align: center;
+}
+.timeline__title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text-strong, #111827);
+  text-align: center;
+  line-height: 1.3;
+}
